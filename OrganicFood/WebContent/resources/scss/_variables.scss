@@ -41,7 +41,8 @@ $colors: (
 
 
 $theme-colors: (
-  primary:         #b66dff,
+  
+	primary:         #38b76c,
   secondary:       #d8d8d8,
   success:         #1bcfb4,
   info:            #198ae3,
@@ -52,7 +53,9 @@ $theme-colors: (
 );
 
 $theme-gradient-colors: (
-  primary:         linear-gradient(to right, #da8cff, #9a55ff),
+  //primary:         linear-gradient(to right, #da8cff, #9a55ff),
+	primary:         linear-gradient(to right, #f3f34a, #38b76c),
+
   secondary:       linear-gradient(to right, #e7ebf0, #868e96),
   success:         linear-gradient(to right, #84d9d2, #07cdae),
   info:            linear-gradient(to right, #90caf9, #047edf 99%),
