@@ -1,0 +1,62 @@
+.errorMessage {
+    font-size: 13px;
+    font-weight: 400;
+    opacity: 0.8;
+    font-style: italic;
+    margin-top: 10px;
+    padding-top: 20px;
+    margin-left: 2px;
+    color: #eb4f34;
+}
+.message 
+{
+    text-align: center;
+    background: #ff6161;
+    color: #fff;
+    font-weight: 400;
+    padding: 5px 0;
+    border-radius: 3px;
+    opacity: 0.7;
+}
+.form-check .form-check-label input[type="checkbox"] + .input-helper:before {
+  border: solid #38b76c;
+}
+.form-check .form-check-label input[type="checkbox"]:checked + .input-helper:after{
+  background: #38b76c;
+}
+.form-check .form-check-label input[type="checkbox"]:checked + .input-helper:before {
+  background: linear-gradient(to right, #38ef7d, #11998e);
+}
+.brand-logo {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+}
+.language-group {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	
+}
+.language-item {
+	cursor: pointer;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+	padding-bottom: 6px;
+	font-size: 13px;
+	font-weight: 300;
+	align-items: center;
+	
+	
+}
+.language-item:first-child {
+	margin-right: 5px;
+	border-right: 2px solid #888;
+	padding: 5px;
+}
+.language-group .language-item img {
+	width: 25px;
+	height: 15px;
+	padding-right: 3px;
+}

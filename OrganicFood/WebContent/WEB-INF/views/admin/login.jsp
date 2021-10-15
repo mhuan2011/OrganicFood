@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="s" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,39 +19,23 @@
 
   <link rel="shortcut icon" href="resources/images/favicon.png" />
   
-  <style type="text/css">
-  	.errorMessage {
-  		font-size: 13px;
-  		font-weight: 400;
-  		opacity: 0.8;
-  		font-style: italic;
-  		margin-top: 10px;
-  		padding-top: 20px;
-  		margin-left: 2px;
-  		color: #eb4f34;
-  	}
-  	.message {
-  		text-align: center;
-  		background: #ff6161;
-  		color: #fff;
-  		font-weight: 400;
-  		padding: 5px 0;
-  		border-radius: 3px;
-  		opacity: 0.7;
-  	}
-	.form-check .form-check-label input[type="checkbox"] + .input-helper:before {
-		border: solid #38b76c;
-	}
-	.form-check .form-check-label input[type="checkbox"]:checked + .input-helper:after{
-		background: #38b76c;
-	}
-	.form-check .form-check-label input[type="checkbox"]:checked + .input-helper:before {
-		background: linear-gradient(to right, #38ef7d, #11998e);
-	}
-  </style>
+  <link rel="stylesheet" href="resources/css/login_style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
+<script type="text/javascript">
+              	$(function() {
+					$("a[data-lang]".click(function() {
+						var lang = $(this).attr("data-lang");
+						$get("admin/login.html?language="+lang, function() {
+							location.reload();
+						});
+						return false;
+					});
+				});
+              </script>
+
   <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
       <div class="content-wrapper d-flex align-items-center auth">
@@ -59,9 +44,17 @@
             <div class="auth-form-light text-left p-5">
               <div class="brand-logo">
                 <img src="resources/images/logoOF.svg">
+                
+                <div class="language-group">
+                	<div class="language-item"><a href="admin/login.html?language=vn" data-lang="vn"><img src="resources/images/language/vn-flag.png"> VN</a></div>
+                	<div class="language-item"><a href="admin/login.html?language=en" data-lang="en"><img src="resources/images/language/en-flag.png"> EN</a></div>
+                </div>
               </div>
+              
+              
+              
               <h4>Hello! let's get started</h4>
-              <h6 class="font-weight-light">Đăng nhập để tiếp tục</h6>
+              <h6 class="font-weight-light"><s:message code="adminlogin.Sub.title" /> </h6>
               <form:form class="pt-3" action="admin/login.html" method="post" modelAttribute="account">
               	<c:if test="${message != null}">
               		<p class="message">${message }</p>
@@ -69,25 +62,26 @@
               		
               	
                 <div class="form-group">
-                  
-                  <form:input path="username" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Enter ID"/>
+                  <s:message code="adminlogin.Id.placeholder" var="placeholderId"/> 
+                  <form:input path="username" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="${placeholderId }"/>
                   <form:errors class="errorMessage" path="username"/>
                 </div>
                 <div class="form-group">
-                  <form:input path ="password"  type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password"/>
+                	<s:message code="adminlogin.Password.placeholder" var="placeholderPass"/> 
+                  <form:input path ="password"  type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="${placeholderPass }"/>
                   <form:errors class="errorMessage" path="password"/>
                 </div>
                 <div class="mt-3">
-                  <button type="submit" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn">Đăng nhập</button>
+                  <button type="submit" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn"><s:message code="adminlogin.Button.title" /></button>
                 </div>
                 <div class="my-2 d-flex justify-content-between align-items-center">
                   <div class="form-check">
                     <label class="form-check-label text-muted">
                       <input type="checkbox" class="form-check-input">
-                      Giữ tài khoản đăng nhập
+                      <s:message code="adminlogin.Remember.title" /> 
                     </label>
                   </div>
-                  <a href="#" class="auth-link text-black">Quên mật khẩu?</a>
+                  <a href="#" class="auth-link text-black"><s:message code="adminlogin.ForgotPassword.title" /></a>
                 </div>
 
               </form:form>
@@ -106,6 +100,7 @@
   <script src="resources/js/off-canvas.js"></script>
   <script src="resources/js/misc.js"></script>
 
+	
 </body>
 
 </html>

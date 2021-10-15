@@ -1,3 +1,5 @@
 eclipse.preferences.version=1
+encoding//i18n-res/adminlogin_en.properties=UTF-8
+encoding//i18n-res/adminlogin_vi.properties=UTF-8
 encoding//src/organicfood/controller/AdminController.java=UTF-8
 encoding//src/organicfood/controller/FrontendController.java=UTF-8
