@@ -47,7 +47,15 @@
 	font-size: 13px;
 	font-weight: 300;
 	align-items: center;
+	padding: 5px;
 	
+}
+.language-item a {
+	text-decoration: none;
+	color: #111;
+	align-items: center;
+	display: flex;
+	align-items: flex-end;
 	
 }
 .language-item:first-child {
@@ -59,4 +67,7 @@
 	width: 25px;
 	height: 15px;
 	padding-right: 3px;
+}
+.navbar.default-layout-navbar .navbar-brand-wrapper .navbar-brand img {
+	height: 30px;
 }

@@ -24,7 +24,7 @@
 </head>
 
 <body>
-<script type="text/javascript">
+<%-- <script type="text/javascript">
               	$(function() {
 					$("a[data-lang]".click(function() {
 						var lang = $(this).attr("data-lang");
@@ -34,7 +34,7 @@
 						return false;
 					});
 				});
-              </script>
+              </script> --%>
 
   <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
@@ -46,14 +46,14 @@
                 <img src="resources/images/logoOF.svg">
                 
                 <div class="language-group">
-                	<div class="language-item"><a href="admin/login.html?language=vn" data-lang="vn"><img src="resources/images/language/vn-flag.png"> VN</a></div>
-                	<div class="language-item"><a href="admin/login.html?language=en" data-lang="en"><img src="resources/images/language/en-flag.png"> EN</a></div>
+                	<div class="language-item"><a href="admin/login.html?language=vi" ><img src="resources/images/language/vn-flag.png"> VN</a></div>
+                	<div class="language-item"><a href="admin/login.html?language=en" ><img src="resources/images/language/en-flag.png"> EN</a></div>
                 </div>
               </div>
               
               
               
-              <h4>Hello! let's get started</h4>
+              <h4><s:message code="adminlogin.Main.title" /></h4>
               <h6 class="font-weight-light"><s:message code="adminlogin.Sub.title" /> </h6>
               <form:form class="pt-3" action="admin/login.html" method="post" modelAttribute="account">
               	<c:if test="${message != null}">
