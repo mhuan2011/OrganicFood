@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +11,24 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Admin</title>
+  
+  
+	<!-- -------------------------------- -->
+	
+	<!-- ajax jquery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- bootstrap 4 -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- bootbox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
+    <!-- -------------------------------- -->
+    
+  
+  
   <!-- plugins:css -->
   <link rel="stylesheet" href="resources/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
 
@@ -20,7 +39,11 @@
   <link rel="stylesheet" href="resources/css/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="resources/images/favicon.png" />
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/6.2.95/css/materialdesignicons.min.css" integrity="sha512-tYefTUoWKpCvU14EKu/b/VxnSaT3+1ZBlL0BhTPSYCiqsMTbGylad3l6HCr9i4vpsDgJIFke+LQBq3MCXko6Qw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	
+    <script type="text/javascript" src="resources/ckeditor/ckeditor.js"/></script>
+    <script type="text/javascript" src="resources/ckfinder/ckfinder.js"></script>
 </head>
 <body>
   <div class="container-scroller">
@@ -203,12 +226,15 @@
               <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
             </a>
           </li>
+          
+          <!-- Danh mục -->
           <li class="nav-item">
             <a class="nav-link" href="admin/home.html">
               <span class="menu-title">Tổng quan</span>
               <i class="mdi mdi-home menu-icon"></i>
             </a>
           </li>
+          <!-- End danh mục -->
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
               <span class="menu-title">Nông sản</span>
@@ -218,10 +244,38 @@
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="admin/product/category.html">Danh mục nông sản</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#">Danh sách nông sản</a></li>
+                <li class="nav-item"> <a class="nav-link" href="admin/product/index.html">Danh sách nông sản</a></li>
               </ul>
             </div>
           </li>
+          
+          <li class="nav-item">
+            <a class="nav-link collapsed" data-toggle="collapse" href="#general-pages" aria-expanded="false" aria-controls="general-pages">
+              <span class="menu-title">Bài viết</span>
+              <i class="menu-arrow"></i>
+              <i class="mdi mdi-book-open menu-icon"></i>
+            </a>
+            <div class="collapse" id="general-pages" style="">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/blank-page.html"> Danh mục bài viết </a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/login.html"> Danh sách bài viết </a></li>
+              </ul>
+              </div>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span class="menu-title">Khách hàng</span>
+              <i class="mdi mdi-account-multiple menu-icon"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span class="menu-title">Đơn hàng</span>
+              <i class="mdi mdi-cart-outline menu-icon"></i>
+            </a>
+          </li>
+          
           
    
           

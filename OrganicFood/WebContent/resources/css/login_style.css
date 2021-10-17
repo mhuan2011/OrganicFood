@@ -71,3 +71,9 @@
 .navbar.default-layout-navbar .navbar-brand-wrapper .navbar-brand img {
 	height: 30px;
 }
+th {
+	font-weight: bold;
+}
+.form-control {
+	padding: 0;	
+}

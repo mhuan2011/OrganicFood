@@ -14,8 +14,12 @@
                   <h4 class="card-title">Danh mục nông sản</h4>
                   <p class="card-description">
                     Quản lí danh mục nông sản của công ty
-                    ${message}
+                    
                   </p>
+ 
+                  <%-- Hello <b><%= request.getParameter("message") %></b>! --%>
+                  <c:set var = "mess"  value = "${message }"/>
+                  <c:out value="${mess}"></c:out>
                   <c:if test="${message != null}">  
 					<div class="alert alert-success alert-dismissible fade show " role="alert">
 					  <strong>${message}</strong>
@@ -29,7 +33,7 @@
                     
                     
                       <tr>
-                        <th style="width: 5%">
+                        <th style="width: 5%; font-weight: bold;">
                           STT
                         </th>
                         <th style="width: 20%">
@@ -65,31 +69,43 @@
 	                          <a href="admin/product/category/update/${s.getId()}.html">Edit</a>
 	                        </td>
 	                        <td>
-	                          <a class="text-danger" href="admin/product/category/delete/${s.getId()}.html">Delete</a>
+	                        <!-- Button trigger modal -->
+	                        
+	                          <a class="text-danger show-mess" data-toggle="modal" data-target="#${s.getId() }" href="admin/product/category/delete/${s.getId()}.html"  >Delete</a>
+			                  
+	                        
+	
+								<!-- Modal -->
+								<div class="modal fade" id="${s.getId() }" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								  <div class="modal-dialog" role="document">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								          <span aria-hidden="true">&times;</span>
+								        </button>
+								      </div>
+								      <div class="modal-body">
+								       Mục này sẽ được xóa
+								      </div>
+								      <div class="modal-footer">
+								        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+								        <a type="button" href="admin/product/category/delete/${s.getId()}.html" class="btn btn-gradient-danger ">Xóa</a>
+								      </div>
+								    </div>
+								  </div>
+								</div>
+	                        	
+	                        	
+	                        
 	                        </td>
 	                      </tr>
                     
                     
                     </c:forEach>
-                      <!-- <tr>
-	                        <td>
-	                          1
-	                        </td>
-	                        <td>
-	                         	MNS
-	                        </td>
-	                        <td>
-	                          	TAM
-	                        </td>
-	                        <td>
-	                          Delete
-	                        </td>
-	                        <td>
-	                          Edit
-	                        </td>
-	                      </tr>
-                       -->
+
                     </tbody>
+                    
                   </table>
                   <a href="admin/product/add-category.html" class="btn btn-gradient-primary mr-2" style="margin-top: 15px;">Thêm danh mục</a>
                 </div>
@@ -97,8 +113,7 @@
             </div>
             
         </div>
-
-
+		
         
       <!-- main-panel ends -->
 <%@include file="/WEB-INF/views/includes/footer.jsp"%>

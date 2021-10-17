@@ -26,6 +26,7 @@ import organicfood.entity.LoaiNongSan;
 
 
 
+
 @Controller
 @Transactional
 @RequestMapping("/admin/")
@@ -161,8 +162,8 @@ public class AdminController {
 		}
 		List<LoaiNongSan> list = getCategoryList();
 		model.addAttribute("LoaiNongSan", list);
-//		return "redirect:/admin/product/category.html";
-		return "admin/product/category";
+		return "redirect:/admin/product/category.html";
+//		return "admin/product/category";
 	}
 	
 	public Integer updateCategory(LoaiNongSan category) {
@@ -180,6 +181,28 @@ public class AdminController {
 			session.close();
 		}
 		return 0;
+	}
+	//delete category
+	@RequestMapping(value="/product/category/delete/{id}.html")
+	public String deleteCategory( ModelMap model, @PathVariable("id") String id, @ModelAttribute("LoaiNongSan") LoaiNongSan lns) {
+		
+		lns = this.getCategoryProduct(id);
+		Session session = factory.openSession();
+		Transaction t = session.beginTransaction();
+		try {
+			session.delete(lns);
+			t.commit();
+			model.addAttribute("message", "Xóa thành công");
+		} catch (Exception e) {
+			// TODO: handle exception
+			t.rollback();
+			model.addAttribute("message", "Xóa thất bại");
+		} finally {
+			session.close();
+		}
+		List<LoaiNongSan> list = getCategoryList();
+		model.addAttribute("LoaiNongSan", list);
+		return "redirect:/admin/product/category.html";
 	}
 }
 

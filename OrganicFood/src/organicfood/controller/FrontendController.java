@@ -18,6 +18,11 @@ public class FrontendController {
 	@Autowired
 	SessionFactory factory;
 	
+	@RequestMapping("")
+	public String index() {
+		return "frontend/index";
+	}
+	
 	@RequestMapping("index")
 	public String showIndex() {
 		return "frontend/index";
