@@ -63,12 +63,12 @@
               	
                 <div class="form-group">
                   <s:message code="adminlogin.Id.placeholder" var="placeholderId"/> 
-                  <form:input path="username" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="${placeholderId }"/>
+                  <form:input path="username" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="${placeholderId }" style="padding-left: 5px"/>
                   <form:errors class="errorMessage" path="username"/>
                 </div>
                 <div class="form-group">
                 	<s:message code="adminlogin.Password.placeholder" var="placeholderPass"/> 
-                  <form:input path ="password"  type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="${placeholderPass }"/>
+                  <form:input path ="password"  type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="${placeholderPass }" style="padding-left: 5px"/>
                   <form:errors class="errorMessage" path="password"/>
                 </div>
                 <div class="mt-3">

@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import organicfood.bean.Account;
+import organicfood.entity.DVVC;
+import organicfood.entity.DatHang;
+import organicfood.entity.KhachHang;
 import organicfood.entity.LoaiNongSan;
 
 
@@ -204,5 +207,174 @@ public class AdminController {
 		model.addAttribute("LoaiNongSan", list);
 		return "redirect:/admin/product/category.html";
 	}
+	
+	
+	//Nhan da o day ===============================================================
+//	-------------------------------------------------------------------client-----------------------------------------------------------------------
+	@RequestMapping("/client")
+	public String showClient(ModelMap model) {
+		List<KhachHang> list = getClient();
+		model.addAttribute("KhachHang", list);
+		return "admin/client/client";
+	}
+	public List<KhachHang> getClient(){
+		Session session = factory.getCurrentSession();
+		String hql = "FROM KhachHang";
+		Query query = session.createQuery(hql);
+		List<KhachHang> list = query.list();
+		return list;
+	}
+//	--------------------------------------------------------------don vi van chuyen------------------------------------------------------------------
+	@RequestMapping("/dvvc")
+	public String showDVVC(ModelMap model) {
+		List<DVVC> list = getDVVC();
+		model.addAttribute("DonViVanChuyen", list);
+		return "admin/dvvc/dvvc";
+	}
+	public List<DVVC> getDVVC(){
+		Session session = factory.getCurrentSession();
+		String hql = "FROM DVVC";
+		Query query = session.createQuery(hql);
+		List<DVVC> list = query.list();
+		return list;
+	}
+	//add don vi van chuyen
+	
+	@RequestMapping("/dvvc/add-dvvc")
+	public String addDvvc(ModelMap model) {
+		model.addAttribute("DVVC", new DVVC());
+		model.addAttribute("btnStatus", "btnAdd");
+		return "admin/dvvc/addDVVC";
+	}
+	@RequestMapping(value="/dvvc/insert-dvvc", method=RequestMethod.POST, params = "btnAdd")
+	public String insertDvvc(ModelMap model, @ModelAttribute("DVVC") DVVC dvvc) {
+		Session session = factory.openSession();
+		Transaction t = session.beginTransaction();
+		try {
+			session.save(dvvc);
+			t.commit();
+			model.addAttribute("message", "Thêm mới thành công!");
+		} catch (Exception e) {
+			// TODO: handle exception
+			t.rollback();
+			model.addAttribute("message", "Thêm mới thất bại!");
+		} finally {
+			session.close();
+		}
+		List<DVVC> list = getDVVC();
+		model.addAttribute("DVVC", list);
+		return "redirect:/admin/dvvc.html";
+		//return "admin/dvvc/dvvc";
+	}
+	//update đơn vị vận chuyển
+		@RequestMapping(value="/dvvc/update/{madv}.html")
+		public String updateDvvc( ModelMap model, @PathVariable("madv") String madv, @ModelAttribute("DVVC") DVVC dvvc) {
+			
+			dvvc = this.get1DVVC(madv);
+			model.addAttribute("DVVC", dvvc);
+			model.addAttribute("btnStatus", "btnUpdate");
+			return "admin/dvvc/addDVVC";
+		}
+		public DVVC get1DVVC(String madv) {
+			Session session = factory.getCurrentSession();
+			String hql = "FROM DVVC where madv = :madv";
+			Query query = session.createQuery(hql);
+			query.setParameter("madv", madv);
+			DVVC u = (DVVC) query.list().get(0);
+			return u;
+		}
+		@RequestMapping(value="/dvvc/insert-dvvc", method=RequestMethod.POST, params = "btnUpdate")
+		public String updateDvvc(ModelMap model, @ModelAttribute("DVVC") DVVC dvvc) {
+			Integer temp = this.updateDvvc(dvvc);
+			
+			if(temp==1) {
+				model.addAttribute("message", "Cập nhật thành công");
+			}
+			else {
+				model.addAttribute("message", "Cập nhật thất bại");
+			}
+			List<DVVC> list = getDVVC();
+			model.addAttribute("DVVC", list);
+			return "redirect:/admin/dvvc.html";
+			//return "admin/dvvc/dvvc";
+		}
+		
+		public Integer updateDvvc(DVVC dvvc) {
+			Session session = factory.openSession();
+			Transaction t = session.beginTransaction();
+			try {
+				session.update(dvvc);
+				t.commit();
+				return 1;
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+				t.rollback();	
+			} finally {
+				session.close();
+			}
+			return 0;
+		}
+//----------------------------------------------dat hang--------------------------------
+		@RequestMapping("/dathang")
+		public String showDatHang(ModelMap model) {
+			List<DatHang> list = getDatHang();
+			model.addAttribute("DatHang", list);
+			return "admin/dathang/dathang";
+		}
+		public List<DatHang> getDatHang(){
+			Session session = factory.getCurrentSession();
+			String hql = "FROM DatHang";
+			Query query = session.createQuery(hql);
+			List<DatHang> list = query.list();
+			return list;
+		}
+		//update đơn vị vận chuyển
+		@RequestMapping(value="/dathang/edit/{masoddh}.html")
+		public String updateDatHang( ModelMap model, @PathVariable("masoddh") String masoddh, @ModelAttribute("DatHang") DatHang dathang) {
+			
+			dathang = this.get1Dathang(masoddh);
+			model.addAttribute("DatHang", dathang);
+			return "admin/dathang/editDathang";
+		}
+		public DatHang get1Dathang(String masoddh) {
+			Session session = factory.getCurrentSession();
+			String hql = "FROM DatHang where masoddh = :masoddh";
+			Query query = session.createQuery(hql);
+			query.setParameter("masoddh", masoddh);
+			DatHang u = (DatHang) query.list().get(0);
+			return u;
+		}
+		@RequestMapping(value="dathang/edit-dathang", method=RequestMethod.POST)
+		public String updateDatHang(ModelMap model, @ModelAttribute("DatHang") DatHang dathang) {
+			Integer temp = this.updateDathang(dathang);
+			
+			if(temp==1) {
+				model.addAttribute("message", "Cập nhật thành công");
+			}
+			else {
+				model.addAttribute("message", "Cập nhật thất bại");
+			}
+			List<DatHang> list = getDatHang();
+			model.addAttribute("DatHang", list);
+			return "redirect:/admin/dathang.html";
+		}
+		
+		public Integer updateDathang(DatHang dathang) {
+			Session session = factory.openSession();
+			Transaction t = session.beginTransaction();
+			try {
+				session.update(dathang);
+				t.commit();
+				return 1;
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+				t.rollback();	
+			} finally {
+				session.close();
+			}
+			return 0;
+		}
 }
 

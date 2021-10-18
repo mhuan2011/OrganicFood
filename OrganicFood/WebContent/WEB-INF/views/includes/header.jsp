@@ -264,15 +264,21 @@
           </li>
           
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="admin/client.html">
               <span class="menu-title">Khách hàng</span>
-              <i class="mdi mdi-account-multiple menu-icon"></i>
+              <i class="mdi mdi-home menu-icon"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="admin/dathang.html">
               <span class="menu-title">Đơn hàng</span>
-              <i class="mdi mdi-cart-outline menu-icon"></i>
+              <i class="mdi mdi-home menu-icon"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="admin/dvvc.html">
+              <span class="menu-title">Đơn vị vận chuyển</span>
+              <i class="mdi mdi-home menu-icon"></i>
             </a>
           </li>
           

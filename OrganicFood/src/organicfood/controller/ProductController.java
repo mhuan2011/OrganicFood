@@ -47,7 +47,7 @@ public class ProductController {
 		return list;
 	}
 	
-	@RequestMapping("/add-product")
+	@RequestMapping(value="/add-product", method=RequestMethod.GET)
 	public String addCategory(ModelMap model) {
 		model.addAttribute("product", new NongSan());
 		model.addAttribute("btnStatus", "btnAdd");
@@ -67,6 +67,7 @@ public class ProductController {
 	public String addProduct(ModelMap model, @ModelAttribute("product") NongSan product) {
 		
 		
+		product.getImage();
 		return "redirect:/admin/product.html";
 	}
 }
