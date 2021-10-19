@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="tg" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@include file="/WEB-INF/views/includes/header.jsp"%>
       <!-- partial -->
       <div class="main-panel">
@@ -28,6 +30,25 @@
 					  </button>
 					</div>
 				</c:if>
+				<!-- Pagination -->
+				<%-- <div>
+					 <jsp:useBean id="pagedListHolder" scope="request"
+						type="org.springframework.beans.support.PagedListHolder" />
+					<c:url value="admin/product/" var="pagedLink">
+						<c:param name="p" value="~" />
+					</c:url> 
+					
+					<div class="d-flex flex-row justify-content-between">
+						
+						 <div>
+							<tg:paging pagedListHolder="${pagedListHolder}"
+								pagedLink="${pagedLink}" />
+						</div>  
+		
+		
+		
+					</div>  --%>
+				<!-- Pagination -->
                   <table class="table table-bordered">
                     <thead>
                     
@@ -36,7 +57,7 @@
                         <th style="width: 5%; font-weight: bold;">
                           STT
                         </th>
-                        <th style="width: 20%">
+                        <th style="width: 10%">
                           Mã số
                         </th>
                         <th >
@@ -65,7 +86,8 @@
                     <tbody>
  
                     <% int count = 1; %>
-                   <c:forEach var="s" items="${product }" varStatus="count">
+                   <c:forEach var="s" items="${product }" varStatus="count"> 
+                   <%-- <c:forEach var="s" items="${pagedListHolder.pageList}">   --%>
 	                    <tr>
 	                        <td>
 	                          <%=count++%>
@@ -88,7 +110,10 @@
 	                        </td>
 	                        
 	                        <td>
-	                          	${s.getName() }
+	                      		<c:if test="${s.getImage() != null}">
+	                      			<img alt="" src="UploadFiles/${s.getImage() }" style="width: 100px; height: 50px; border-radius: 4px;">
+	                      		</c:if>
+	                          	
 	                        </td>
 	                        <td>
 	                          <a href="admin/product/update/${s.getId()}.html">Edit</a>
@@ -132,6 +157,12 @@
                     </tbody>
                     
                   </table>
+                  <!-- Pagination -->
+                  <%-- <tg:paging pagedListHolder="${pagedListHolder}"
+				pagedLink="${pagedLink}" />
+
+		</div>  --%>
+				<!-- Pagination -->
                   <a href="admin/product/add-product.html" class="btn btn-gradient-primary mr-2" style="margin-top: 15px;">Thêm sản phẩm</a>
                 </div>
               </div>

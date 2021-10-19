@@ -9,24 +9,38 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Thêm sản phẩm mới</h4>
-                  <form:form action="admin/product/add-product.html" class="form-sample" modelAttribute="product" method="post" enctype="multipart/form-data">
-                    <p class="card-description">
-                      Thông tin sản phẩm	
-                    </p>
-                    <div class="row">
+    
+                  
+                  <form:form action="admin/product/add-product.html" class="form-sample"
+                    modelAttribute="product" method="post"   enctype="multipart/form-data"> <!-- enctype="multipart/form-data" -->
+	                  <p class="card-description">
+	                      Thông tin sản phẩm	
+	                    </p>
+                  		<div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Mã sản phẩm</label>
+                          
+                          
+                          
                           <div class="col-sm-9">
-                            <form:input path="id" type="text" class="form-control"/>
+                           
+                            
+                            <c:if test="${btnStatus == 'btnUpdate'}">  
+		                    	<form:input path="id" type="text" class="form-control" readonly="true"/>
+							</c:if>
+							<c:if test="${btnStatus == 'btnAdd'}">  
+		                    	<form:input path="id" type="text" class="form-control"/>
+							</c:if>
                           </div>
                         </div>
-                      </div>
+                      </div> 
                       <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Tên sản phẩm</label>
                           <div class="col-sm-9">
                             <form:input path="name" type="text" class="form-control"/>
+                            
                           </div>
                         </div>
                       </div>
@@ -73,26 +87,60 @@
                       </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row"> 
                       <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Hình ảnh:</label>
                           <div class="col-sm-9" >
-                            <form:input path="image" type="file" class="form-control" />
+                 
+                            	<input name="hinhanh" type="file" class="form-control" id="imgChoosen" value="${imgLink }">
+                           
+                            
+                            
+                            <form:input path="image" type="text" class="form-control" id="fullImgPath"/>
                           </div>
                         </div>
                       </div> 
-                      <div class="col-md-6">
+                       <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Khuyến mãi:</label>
                           <div class="col-sm-9">
                           
-                            <form:input id="imgInp" path="discount" type="number" class="form-control" onchange="loadFile(event)"/>
+                            <input path="discount" type="number" class="form-control" />
+                            <script type="text/javascript">
+                            	imgChoosen.onchange = evt => {
+                            	  const [file] = imgChoosen.files
+                            	  if (file) {
+                            		  showImg.src = URL.createObjectURL(file);
+                            		  fullImgPath.value =  URL.createObjectURL(file)
+                            	  }
+                            	}
+                            	
+                            </script>
                           </div>
                         </div>
                       </div> 
                     </div>
+                    <div class="row">
+                    	<div class="col-md-6">
+                    		<div class="form-group row">
+                    			<label class="col-sm-3 col-form-label">Preview: </label>
+                    		<div class="col-sm-9">
+                    			<c:if test="${imageLink != null }">
+                    					<img alt="preview img" src="${imageLink }" id="showImg" style="width: 200px; height: 120px;">
+                    			</c:if>
+                    			<c:if test="${imageLink == null }">
+                    					<img alt="preview img" src="resources/images/vector/uploadfile.jpg" id="showImg" style="width: 200px; height: 120px;">
+                    			</c:if>
+                    			
+                    		</div>
+                    		</div>
+                    		
+                    	</div>
+                     
                     
+                    	
+                    </div>
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group row">
@@ -103,18 +151,17 @@
                         </div>
                       </div>
                       
-                    </div>
-                   <button name="${btnStatus }" class="btn btn-gradient-info btn-fw">Lưu</button>
-                   
-                  </form:form>
+                    </div>  
+                  		<button name="${btnStatus }" type="submit" class="btn btn-gradient-info btn-fw">Lưu</button>
+                  </form:form > 
+                  
+                  
                 </div>
               </div>
             </div>   
         </div>
-		<!-- <script type="text/javascript">
-			CKEDITOR.replace('descriptionProduct');
-		</script> -->
-		<script type="text/javascript">
+	
+		 <script type="text/javascript">
 		var ckeditor=CKEDITOR.replace('descriptionProduct');
 		CKFinder.setupCKEditor(ckeditor,'${pageContext.request.contextPath}/resources/ckfinder/');
 		</script>

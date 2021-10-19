@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans 
-	xmlns="http://www.springframework.org/schema/beans"
+<beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:p="http://www.springframework.org/schema/p" 
@@ -15,17 +14,16 @@
 			http://www.springframework.org/schema/mvc 
 			http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 	
-	<!-- Spring MVC Annotation -->
-	<context:annotation-config />
-
-	<mvc:annotation-driven/>
-	
-	<!-- Cấu hình view -->
-	<bean id="viewResolver" 
-		p:prefix="/WEB-INF/views/" p:suffix=".jsp"
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver"/>
-   	
-   	<!-- Cấu hình package chứa các controller -->
-	<context:component-scan base-package="organicfood.controller,organicfood.bean"/>
-
+	<bean id="multipartResolver" 
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	 	<!-- maxUploadSize=20MB -->
+	 	<property name="maxUploadSize" value="20971520"/>
+	</bean>
+	<bean id="uploadfile" 
+		class="organicfood.bean.Uploadfile">
+	 	<!-- maxUploadSize=2MB -->
+	 	<property name="basePath" value="D:\\Document PTIT\\Hoc ki 7\\LAP TRINH WEB\\BT\\DuLieu\\OrganicFood\\WebContent\\UploadFiles"/>
+	</bean>
 </beans>
+
+
