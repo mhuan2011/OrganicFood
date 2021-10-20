@@ -53,8 +53,8 @@
                     <thead>
                     
                     
-                      <tr>
-                        <th style="width: 5%; font-weight: bold;">
+                      <tr style="font-weight: bold;">
+                        <th style="width: 5%;">
                           STT
                         </th>
                         <th style="width: 10%">
