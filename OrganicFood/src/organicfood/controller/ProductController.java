@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,13 +55,15 @@ public class ProductController {
 	public String index(HttpServletRequest request, ModelMap model) {
 		
 		List<NongSan> list = getProductList();
-		/*
-		 * PagedListHolder pagedListHolder = new PagedListHolder(list); int page =
-		 * ServletRequestUtils.getIntParameter(request, "p", 0);
-		 * pagedListHolder.setPage(page); pagedListHolder.setMaxLinkedPages(5);
-		 * pagedListHolder.setPageSize(5);
-		 */
-		model.addAttribute("product", list);
+		
+		 PagedListHolder pagedListHolder = new PagedListHolder(list); 
+		 int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		 pagedListHolder.setPage(page); 
+		 pagedListHolder.setMaxLinkedPages(5);
+		 pagedListHolder.setPageSize(2);
+		 model.addAttribute("pagedListHolder", pagedListHolder);
+		
+		//model.addAttribute("product", list);
 		return "admin/product/index";
 	}
 	public List<NongSan> getProductList(){
@@ -90,8 +94,14 @@ public class ProductController {
 		return list;
 	}
 	//add product
-	@RequestMapping(value="/add-product", method=RequestMethod.POST, params = "btnAdd")
-	public String addProduct(ModelMap model,@ModelAttribute("product") NongSan product, @RequestParam("hinhanh") MultipartFile image) {
+	@RequestMapping(value="/add-product", method=RequestMethod.POST, params = "btnAdd" )
+	public String addProduct(HttpServletRequest request, ModelMap model,@Validated @ModelAttribute("product") NongSan product, @RequestParam("hinhanh") MultipartFile image,
+			BindingResult bindingResult
+			) {
+		if (bindingResult.hasErrors()) {
+			System.out.print("check");
+	         return "admin/product/addProduct";
+		}
 		
 		try { 
 			String date =
@@ -122,7 +132,15 @@ public class ProductController {
 		 System.out.print(product.getDescription());
 		 //product.setImage(imgName);
 		 List<NongSan> list = getProductList();
-		 model.addAttribute("product", list);
+//		 model.addAttribute("product", list);
+		 
+		 PagedListHolder pagedListHolder = new PagedListHolder(list); 
+		 int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		 pagedListHolder.setPage(page); 
+		 pagedListHolder.setMaxLinkedPages(5);
+		 pagedListHolder.setPageSize(2);
+		 model.addAttribute("pagedListHolder", pagedListHolder);
+		 
 		 return "admin/product/index"; } 
 		
 		catch (Exception e) {
@@ -134,7 +152,8 @@ public class ProductController {
 		
 		List<NongSan> list = getProductList();
 		model.addAttribute("product", list);
-		return "admin/product/add-product";
+		//return "admin/product/add-product";
+		return "redirect:/admin/product/index.html";
 	}
 	//update
 	@RequestMapping(value="update/{id}.html", method = RequestMethod.GET)
@@ -159,7 +178,7 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/add-product", method=RequestMethod.POST, params = "btnUpdate")
-	public String updateCategory(ModelMap model, @ModelAttribute("CategoryProduct") NongSan ns, @RequestParam("hinhanh") MultipartFile image) {
+	public String updateCategory(HttpServletRequest request, ModelMap model, @ModelAttribute("CategoryProduct") NongSan ns, @RequestParam("hinhanh") MultipartFile image) {
 		
 		if(!image.isEmpty()) {
 			try { 
@@ -167,8 +186,8 @@ public class ProductController {
 			 LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyMMddHHmmss"));
 			 String imgName = date +image.getOriginalFilename(); 
 			 String photoPath =
-			 baseuploadfile.getBasePath()+File.separator +imgName; image.transferTo(new
-			 File(photoPath));
+			 baseuploadfile.getBasePath()+File.separator +imgName; 
+			 image.transferTo(new File(photoPath));
 			 
 			 ns.setImage(imgName);
 			 Thread.sleep(2000);
@@ -177,6 +196,7 @@ public class ProductController {
 			 model.addAttribute("message", "Lỗi lưu file!"); 
 			 
 			 }
+			
 		}
 		
 		
@@ -191,9 +211,16 @@ public class ProductController {
 			}
 			
 			List<NongSan> list = getProductList();
-			model.addAttribute("product", list);
+			//model.addAttribute("product", list);
+			PagedListHolder pagedListHolder = new PagedListHolder(list); 
+			 int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+			 pagedListHolder.setPage(page); 
+			 pagedListHolder.setMaxLinkedPages(5);
+			 pagedListHolder.setPageSize(2);
+			 model.addAttribute("pagedListHolder", pagedListHolder);
 			
 			return "redirect:/admin/product/index.html";
+			
 
 	}
 	public Integer updateProduct(NongSan product) {
@@ -213,5 +240,38 @@ public class ProductController {
 		return 0;
 	}
 	//delete product
+	
+	
+	//search
+	@RequestMapping(value = "index", params = "btnsearch")
+	public String seachPro(HttpServletRequest request, ModelMap model,
+			@RequestParam("search") String product_name
+			
+			) {
+		
+
+		List<NongSan> products = this.searchProducts(product_name);
+		PagedListHolder pagedListHolder = new PagedListHolder(products); 
+		 int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		 pagedListHolder.setPage(page); 
+		 pagedListHolder.setMaxLinkedPages(5);
+		 pagedListHolder.setPageSize(2);
+		 model.addAttribute("pagedListHolder", pagedListHolder);
+		//model.addAttribute("product", products);
+		model.addAttribute("searchText", product_name);
+		
+		return "admin/product/index";
+	}
+	
+	public List<NongSan> searchProducts(String product_name) {
+
+		Session session = factory.getCurrentSession();
+		String hql = "FROM NongSan where name LIKE :product_name";
+		Query query = session.createQuery(hql);
+		query.setParameter("product_name", "%" + product_name + "%");
+		List<NongSan> list = query.list();
+
+		return list;
+	}
 	
 }

@@ -7,12 +7,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+
 
 @Entity
 @Table(name="NONGSAN")
 public class NongSan {
 	@Id
 	@Column(name = "MANS")
+	@NotEmpty(message = "Mã sản phẩm không được để trống")
 	private String id;
 	
 	@Column(name = "TENNS")
@@ -25,6 +29,7 @@ public class NongSan {
 	private int number;
 	
 	@Column(name = "GIA")
+	
 	private float price;
 	
 	@Column(name = "HINHANH")
