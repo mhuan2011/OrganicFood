@@ -10,6 +10,8 @@ import org.hibernate.Query;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -37,6 +39,7 @@ import organicfood.entity.NongSan;
 
 
 @Controller
+@Validated
 @Transactional
 @RequestMapping("/admin/product/")
 public class ProductController {
@@ -95,21 +98,46 @@ public class ProductController {
 	}
 	//add product
 	@RequestMapping(value="/add-product", method=RequestMethod.POST, params = "btnAdd" )
-	public String addProduct(HttpServletRequest request, ModelMap model,@Validated @ModelAttribute("product") NongSan product, @RequestParam("hinhanh") MultipartFile image,
-			BindingResult bindingResult
+	public String addProduct(@Validated @ModelAttribute("product") NongSan product,HttpServletRequest request, ModelMap model,
+			@RequestParam("hinhanh") MultipartFile image, BindingResult errors
 			) {
-		if (bindingResult.hasErrors()) {
-			System.out.print("check");
-	         return "admin/product/addProduct";
+
+		if(errors.hasErrors()){
+			model.addAttribute("message", "Vui lòng sửa các lỗi sau đây !");
+			return "admin/product/addProduct";
 		}
 		
+		boolean check = true;
+		if(product.getId().equals("")) {
+			errors.rejectValue("id", "product", "Vui lòng nhập id !");
+			check=false;
+		}
+		if(product.getName().equals("")) {
+			errors.rejectValue("name", "product", "Vui lòng nhập tên !");
+			check=false;
+		}
+		if(product.getPrice()==0) {
+			errors.rejectValue("price", "product", "Vui lòng nhập giá !");
+			check=false;
+		}
+		if(product.getUnit().equals("")) {
+			errors.rejectValue("Unit", "product", "Vui lòng nhập đơn vị tính !");
+			check=false;
+		}
+
+		if(!check) {
+			model.addAttribute("btnStatus", "btnAdd");
+			return "admin/product/addProduct";
+		}
 		try { 
+			
 			String date =
 		 LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyMMddHHmmss"));
 		 String imgName = date +image.getOriginalFilename(); 
 		 String photoPath =
 		 baseuploadfile.getBasePath()+File.separator +imgName; image.transferTo(new
 		 File(photoPath));
+		 Thread.sleep(2000);
 		 
 		 product.setImage(imgName);
 		//start - save db
@@ -178,7 +206,7 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/add-product", method=RequestMethod.POST, params = "btnUpdate")
-	public String updateCategory(HttpServletRequest request, ModelMap model, @ModelAttribute("CategoryProduct") NongSan ns, @RequestParam("hinhanh") MultipartFile image) {
+	public String updateCategory(HttpServletRequest request, ModelMap model,@ModelAttribute("CategoryProduct") NongSan ns, @RequestParam("hinhanh") MultipartFile image) {
 		
 		if(!image.isEmpty()) {
 			try { 

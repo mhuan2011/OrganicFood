@@ -7,18 +7,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
-
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 @Entity
 @Table(name="NONGSAN")
 public class NongSan {
+	
+	
 	@Id
 	@Column(name = "MANS")
-	@NotEmpty(message = "Mã sản phẩm không được để trống")
+	@NotNull(message="Mã nông sản không được để trống")
 	private String id;
 	
+	//@NotBlank(message = "Tên nông sản không được để trống")
 	@Column(name = "TENNS")
 	private String name;
 	
@@ -29,7 +34,6 @@ public class NongSan {
 	private int number;
 	
 	@Column(name = "GIA")
-	
 	private float price;
 	
 	@Column(name = "HINHANH")

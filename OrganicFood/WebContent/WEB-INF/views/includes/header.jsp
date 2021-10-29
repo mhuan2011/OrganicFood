@@ -45,6 +45,7 @@
 	
     <script type="text/javascript" src="resources/ckeditor/ckeditor.js"/></script>
     <script type="text/javascript" src="resources/ckfinder/ckfinder.js"></script>
+    <link rel="stylesheet" href="resources/css/substyle.css">
 </head>
 <body>
   <div class="container-scroller">
