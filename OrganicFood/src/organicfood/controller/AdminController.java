@@ -92,6 +92,7 @@ public class AdminController {
 	
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
+		
 		session.removeAttribute("account");
 		return "redirect:/admin/login.html";
 	}

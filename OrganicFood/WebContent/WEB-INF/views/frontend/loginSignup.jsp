@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!doctype html>
 <html lang="en">
   <head>
@@ -35,6 +36,12 @@
               	<img alt="" src="resources/images/logoOF.svg">
               </div>
               <!-- <h3 class="text-uppercase"><strong>Đăng nhập</strong></h3> -->
+              <c:if test="${not empty message}">
+                    
+                    	<div class="mess-alert">
+                    		${message }
+                    	</div>
+                    </c:if>
               <form action="login.html" method="post" modelAttribute="user">
                 <div class="form-group first">
                   <label for="username">Số điện thoại</label>
@@ -61,7 +68,7 @@
                 
                 
                 
-                <div class="signup">Chưa có tài khoản <a href="signup">Đăng ký ngay</a></div>
+                <div class="signup">Chưa có tài khoản <a href="signup.html">Đăng ký ngay</a></div>
                 <div class="">
                 <a href="#" class="btn btn-block py-2 btn-facebook">
                   <span class="icon-facebook mr-3"></span> Đăng nhập với facebook
