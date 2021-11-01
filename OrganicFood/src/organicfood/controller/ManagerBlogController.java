@@ -53,7 +53,6 @@ public class ManagerBlogController {
 	
 	@RequestMapping("index")
 	public String managerBlog(ModelMap model) {
-		
 		List<BaiViet> list = this.getBlogs();
 		model.addAttribute("blogs", list);
 		return "admin/blog/index";
