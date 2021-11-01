@@ -20,14 +20,11 @@
                   <%-- Hello <b><%= request.getParameter("message") %></b>! --%>
                   <c:set var = "mess"  value = "${message }"/>
                   <c:out value="${mess}"></c:out>
-                  <c:if test="${message != null}">  
-					<div class="alert alert-success alert-dismissible fade show " role="alert">
-					  <strong>${message}</strong>
-					  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					    <span aria-hidden="true">&times;</span>
-					  </button>
-					</div>
-				</c:if>
+                  <%
+					    if (request.getParameter("message") != null) {
+					        out.println("<div class='alert alert-success alert-dismissible fade show'> <strong>"+request.getParameter("message")+"</strong> <button type='button' class='close' data-dismiss='alert' aria-label='Close'> <span aria-hidden='true'>&times;</span> </button> </div>");
+					    }
+					%>
                   <table class="table table-bordered">
                     <thead>
                     
@@ -41,6 +38,9 @@
                         </th>
                         <th >
                           Tên
+                        </th>
+                        <th >
+                          Hình ảnh
                         </th>
                         <th style="width: 10%">
                           
@@ -64,6 +64,12 @@
 	                        </td>
 	                        <td>
 	                          	${s.getName() }
+	                        </td>
+	                        <td>
+	                      		<c:if test="${s.getImage() != null}">
+	                      			<img alt="" src="UploadFiles/${s.getImage() }" style="width: 100px; height: 50px; border-radius: 4px;">
+	                      		</c:if>
+	                          	
 	                        </td>
 	                        <td>
 	                          <a href="admin/product/category/update/${s.getId()}.html">Edit</a>
