@@ -26,6 +26,9 @@ public class KhachHang {
 	@Column(name = "MATKHAU")
 	private String password;
 
+	@Column(name = "EMAIL")
+	private String email;
+		
 	public String getPhone() {
 		return phone;
 	}
@@ -56,6 +59,14 @@ public class KhachHang {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	

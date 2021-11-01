@@ -8,13 +8,22 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 @Entity
 @Table(name="NONGSAN")
 public class NongSan {
+	
+	
 	@Id
 	@Column(name = "MANS")
+	@NotNull(message="Mã nông sản không được để trống")
 	private String id;
 	
+	//@NotBlank(message = "Tên nông sản không được để trống")
 	@Column(name = "TENNS")
 	private String name;
 	

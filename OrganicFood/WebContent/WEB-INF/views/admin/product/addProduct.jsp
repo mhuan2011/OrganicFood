@@ -32,7 +32,9 @@
 							<c:if test="${btnStatus == 'btnAdd'}">  
 		                    	<form:input path="id" type="text" class="form-control"/>
 							</c:if>
+							<form:errors path = "id" class="text-danger mess-error-validate" />
                           </div>
+                          
                         </div>
                       </div> 
                       <div class="col-md-6">
@@ -40,7 +42,7 @@
                           <label class="col-sm-3 col-form-label">Tên sản phẩm</label>
                           <div class="col-sm-9">
                             <form:input path="name" type="text" class="form-control"/>
-                            
+                            <form:errors path = "name" class="text-danger  mess-error-validate" />
                           </div>
                         </div>
                       </div>
@@ -52,7 +54,7 @@
                           <div class="col-sm-9">
        
                               <form:input path="Unit" type="text" class="form-control"/>
-            
+            					<form:errors path = "Unit" class="text-danger  mess-error-validate" />
                           </div>
                         </div>
                       </div>
@@ -61,6 +63,7 @@
                           <label class="col-sm-3 col-form-label">Số lượng tồn</label>
                           <div class="col-sm-9">
                             <form:input type="number" path="number" class="form-control"/>
+                            
                           </div>
                         </div>
                       </div>
@@ -81,6 +84,7 @@
                           <label class="col-sm-3 col-form-label">Giá</label>
                           <div class="col-sm-9">
                             <form:input path="price" type="money" class="form-control" />
+                           <form:errors path = "price" class="text-danger mess-error-validate" />
                           </div>
                           
                         </div>
@@ -106,7 +110,7 @@
                           <label class="col-sm-3 col-form-label">Khuyến mãi:</label>
                           <div class="col-sm-9">
                           
-                            <input path="discount" type="number" class="form-control" />
+                            <form:input path="discount" type="number" class="form-control" step="0.01" />
                             <script type="text/javascript">
                             	imgChoosen.onchange = evt => {
                             	  const [file] = imgChoosen.files
@@ -163,7 +167,7 @@
 	
 		 <script type="text/javascript">
 		var ckeditor=CKEDITOR.replace('descriptionProduct');
-		CKFinder.setupCKEditor(ckeditor,'${pageContext.request.contextPath}/resources/ckfinder/');
+		/* CKFinder.setupCKEditor(ckeditor,'${pageContext.request.contextPath}/resources/ckfinder/'); */
 		</script>
 
 <!-- main-panel ends -->

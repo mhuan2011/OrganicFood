@@ -14,42 +14,56 @@
               
                 <div class="card-body">
                   <h4 class="card-title">Danh sách nông sản</h4>
+                  
                   <p class="card-description">
                     Danh sách tất cả các nông sản
                     
                   </p>
- 
-                  <%-- Hello <b><%= request.getParameter("message") %></b>! --%>
-                  <c:set var = "mess"  value = "${message }"/>
-                  <c:out value="${mess}"></c:out>
-                  <c:if test="${message != null}">  
+ 					<%
+					    if (request.getParameter("message") != null) {
+					        out.println("<div class='alert alert-success alert-dismissible fade show'> <strong>"+request.getParameter("message")+"</strong> <button type='button' class='close' data-dismiss='alert' aria-label='Close'> <span aria-hidden='true'>&times;</span> </button> </div>");
+					    }
+					%>
+					
+					
+                  <c:if test="${mess != null}">  
 					<div class="alert alert-success alert-dismissible fade show " role="alert">
-					  <strong>${message}</strong>
+					  <strong>${mess}</strong>
 					  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 					    <span aria-hidden="true">&times;</span>
 					  </button>
 					</div>
 				</c:if>
+                  
+				
+				<!-- Search -->
+				<form class="form-group col-6 float-right m-0 pr-0" action="admin/product/index.html" method="post">
+					<div class="form-group ">
+                    <div class="input-group">
+                      <input name="search" type="text" value="${searchText }"  class="form-control" placeholder="Nhập tên sản phẩm cần tìm" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                      <div class="input-group-append">
+                        <button name="btnsearch" class="btn btn-sm btn-gradient-primary" type="submit">Tìm kiếm</button>
+                      </div>
+                    </div>
+                  </div>
+				</form>
+				
+				
+				
 				<!-- Pagination -->
-				<%-- <div>
+				<div>
 					 <jsp:useBean id="pagedListHolder" scope="request"
 						type="org.springframework.beans.support.PagedListHolder" />
-					<c:url value="admin/product/" var="pagedLink">
+					<c:url value="admin/product/index.html" var="pagedLink">
 						<c:param name="p" value="~" />
 					</c:url> 
 					
-					<div class="d-flex flex-row justify-content-between">
-						
-						 <div>
-							<tg:paging pagedListHolder="${pagedListHolder}"
-								pagedLink="${pagedLink}" />
-						</div>  
-		
-		
-		
-					</div>  --%>
+						    
 				<!-- Pagination -->
                   <table class="table table-bordered">
+                  	<div>
+							
+						</div>
                     <thead>
                     
                     
@@ -73,6 +87,9 @@
                           Giá 
                         </th >
                         <th style="width: 10%">
+                          Khuyến mãi 
+                        </th >
+                        <th style="width: 10%">
                           Hình ảnh
                         </th >
                         <th style="width: 10%">
@@ -86,8 +103,8 @@
                     <tbody>
  
                     <% int count = 1; %>
-                   <c:forEach var="s" items="${product }" varStatus="count"> 
-                   <%-- <c:forEach var="s" items="${pagedListHolder.pageList}">   --%>
+                   <%-- <c:forEach var="s" items="${product }" varStatus="count"> --%> 
+                  <c:forEach var="s" items="${pagedListHolder.pageList}"> 
 	                    <tr>
 	                        <td>
 	                          <%=count++%>
@@ -103,12 +120,18 @@
 	                          	${s.getUnit() }
 	                        </td>
 	                        <td>
-	                          	${s.getNumber() }
+	                          	
+	                          	<fmt:formatNumber value="${s.getNumber() }" type="number" />
+	                        </td>
+	                        <td>	
+	                        	
+	                          	<fmt:formatNumber value="${s.getPrice() }"
+											currencySymbol="VND" type="currency" />
 	                        </td>
 	                        <td>
-	                          	${s.getPrice() }
+	                          	
+	                          	<fmt:formatNumber value="${s.getDiscount() }" type="percent" />
 	                        </td>
-	                        
 	                        <td>
 	                      		<c:if test="${s.getImage() != null}">
 	                      			<img alt="" src="UploadFiles/${s.getImage() }" style="width: 100px; height: 50px; border-radius: 4px;">
@@ -158,10 +181,12 @@
                     
                   </table>
                   <!-- Pagination -->
-                  <%-- <tg:paging pagedListHolder="${pagedListHolder}"
+                   <div class="pt-2">
+                   	<tg:paging pagedListHolder="${pagedListHolder}"
 				pagedLink="${pagedLink}" />
+                   </div>
 
-		</div>  --%>
+		</div> 
 				<!-- Pagination -->
                   <a href="admin/product/add-product.html" class="btn btn-gradient-primary mr-2" style="margin-top: 15px;">Thêm sản phẩm</a>
                 </div>
