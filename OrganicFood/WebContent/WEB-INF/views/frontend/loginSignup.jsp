@@ -4,6 +4,7 @@
 <!doctype html>
 <html lang="en">
   <head>
+  	<link rel = "icon" href = "resources/images/icon.svg" type = "image/x-icon">
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -59,7 +60,7 @@
                     <input name="rememberMe" type="checkbox" checked="checked"/>
                     <div class="control__indicator"></div>
                   </label>
-                  <span class="ml-auto"><a href="#" class="forgot-pass">Quên mật khẩu</a></span> 
+                  <span class="ml-auto"><a href="forgot-password/form.html" class="forgot-pass">Quên mật khẩu</a></span> 
                 </div>
 
                 <input type="submit" value="Đăng nhập" class="btn btn-block py-2 btn-success">

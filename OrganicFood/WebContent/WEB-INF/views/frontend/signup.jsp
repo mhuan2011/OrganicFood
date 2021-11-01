@@ -13,9 +13,9 @@
     <meta name="description" content="Colorlib Templates">
     <meta name="author" content="Colorlib">
     <meta name="keywords" content="Colorlib Templates">
-
+	<link rel = "icon" href = "resources/images/icon.svg" type = "image/x-icon">
     <!-- Title Page-->
-    <title>Au Register Forms by Colorlib</title>
+    <title>OrganicFood-	Signup</title>
 	<base href="${pageContext.servletContext.contextPath}/">
     <!-- Icons font CSS-->
     <link href="resources/frontend/signup/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
@@ -59,7 +59,7 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Số điện thoại</label>
-                                    <input name="phone" class="input--style-4" placeholder="Nhập số điện thoại" value=""/>
+                                    <input name="phone" class="input--style-4" placeholder="Nhập số điện thoại" value="${phone }"/>
                                     <form:errors path = "phone" style="color: brown;" />
                                 </div>
                             </div>

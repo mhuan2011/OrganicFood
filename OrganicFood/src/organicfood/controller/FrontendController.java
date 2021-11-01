@@ -2,7 +2,9 @@ package organicfood.controller;
 
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -17,16 +19,22 @@ import org.hibernate.Transaction;
 import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.portlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import organicfood.bean.Account;
+import organicfood.bean.Mailer;
 import organicfood.entity.KhachHang;
 import organicfood.model.RecCaptchaResponse;
 import organicfood.recaptcha.RecaptchaVerification;
@@ -35,7 +43,8 @@ import organicfood.recaptcha.RecaptchaVerification;
 @Transactional
 public class FrontendController {
 	public static String message;
-	
+	private String code = "";
+	private KhachHang khachHang = null;
 	@Autowired
 	SessionFactory factory;
 
@@ -46,7 +55,10 @@ public class FrontendController {
 	}
 	
 	@RequestMapping("index")
-	public String showIndex() {
+	public String showIndex(HttpServletRequest request, HttpSession session, ModelMap model) {
+		
+		Account user = (Account) session.getAttribute("user");
+		model.addAttribute("phoneNumber", user.getUsername());
 		return "frontend/index";
 	}
 	
@@ -202,6 +214,7 @@ public class FrontendController {
 		
 		String repassword = request.getParameter("repassword");
 		user.setPhone(request.getParameter("phone"));
+		model.addAttribute("phone", request.getParameter("phone"));
 		boolean check = true;
 		if(user.getName().trim().isEmpty()) {
 			check = false;
@@ -282,5 +295,168 @@ public class FrontendController {
 			return true;
 		}
 		return false;
+	}
+	//forgot password
+	@RequestMapping("forgot-password/form")
+	public String forgotPasswordForm() {
+		return "frontend/forgotPassword/form";
+	}
+	
+	
+	@RequestMapping(value="forgot-password/send-email-verify", method = RequestMethod.POST)
+	public String  forgotPassword(ModelMap model, @RequestParam("phone") String phone, HttpServletRequest request) {
+		KhachHang client = getUser(phone);
+		String lang = request.getParameter("language");
+		if(client != null) {
+			//gui email cho khach hang link thay doi mat khau
+			
+			int leftLimit = 48; // letter 'a'
+		    int rightLimit = 57; // letter 'z'
+		    int targetStringLength = 20;
+		    Random random = new Random();
+
+		    String generatedString = random.ints(leftLimit, rightLimit + 1)
+		      .limit(targetStringLength)
+		      .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+		      .toString();
+
+		    this.code = generatedString;
+			String from = "phongthietbiptit@gmail.com";
+		    String email = client.getEmail();
+			String subject = "Lấy lại mật khẩu đăng nhập";
+			String body = "http://localhost/OrganicFood/forgot-password/" + generatedString+".html";
+			
+			boolean result = send(from, email, subject, body);
+			if(result) {
+//				this.message = "Email gửi thành công";
+				this.khachHang = client;
+				return "redirect:/forgot-password/success.html";
+			}
+			else this.message = "Xảy ra lỗi hệ thống";
+			
+			model.addAttribute("message", this.message);
+			System.out.print(this.message);
+			return "redirect:/forgot-password/form.html";
+		}else {
+			if(lang == null || lang == "vi") {
+				this.message = "Số điện thoại chưa được đăng ký / Unregistered phone number";
+			}else {
+				this.message = "Unregistered phone number";
+			}
+			
+			
+		}
+		model.addAttribute("phone", phone);
+		
+		model.addAttribute("message", this.message);
+		String referer = request.getHeader("Referer");
+		//return "frontend/forgotPassword/form";
+		
+		return "redirect:" + referer;
+	}
+	@RequestMapping(value="forgot-password/{code}.html", method = RequestMethod.GET)
+	public String verify(@PathVariable("code") String codeClient) {
+		System.out.println(this.code);
+		System.out.print(codeClient);
+		
+		if(codeClient.equals(this.code)) {
+			return "frontend/forgotPassword/resetPass";
+		}else {
+			return "error404";
+		}
+		
+	}
+	
+	
+	private KhachHang getUser(String phoneNumber) {
+		KhachHang kh = null;
+		Session session = factory.getCurrentSession();
+		String hql = "FROM KhachHang WHERE phone = '"+phoneNumber+"'";
+		Query query = session.createQuery(hql);
+		List<Object[]> list = query.list();
+		if(list.size() != 0){
+			kh = (KhachHang) query.list().get(0);
+		}
+		
+		return kh;
+	}
+	
+	//send email
+	@Autowired
+	Mailer mailer;
+	
+	public boolean send( String from, String to,String subject, String body ) {
+		try {
+			mailer.send(from, to, subject, body);
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			return false;
+		}
+		
+	}
+	//success
+	@RequestMapping(value="forgot-password/success.html", method = RequestMethod.GET)
+	public String successChange(ModelMap model) {
+		model.addAttribute("name", this.khachHang.getName());
+		return "frontend/forgotPassword/success";
+		
+	}
+	
+	@RequestMapping("forgot-password/reset.html")
+	public String resetPassword(ModelMap model, HttpServletRequest request) {
+		if(khachHang==null) return "error404";
+		
+		String password = request.getParameter("password");
+		String confirm_password = request.getParameter("confirm-password");
+		boolean check = true;
+		if(password.isEmpty()) {
+			check = false;
+			model.addAttribute("passworder", "Vui lòng nhập mật khẩu!");
+		}
+		if(confirm_password.isEmpty()) {
+			check = false;
+			model.addAttribute("confirmpassworder", "Vui lòng nhập mật khẩu!");
+		}
+		if(check) {
+			if(password.equals(confirm_password)) {
+				this.khachHang.setPassword(password);
+				int result = updateUser(this.khachHang);
+				if(result==1) {
+					model.addAttribute("message", "Thay đổi mật khẩu thành công!");
+					this.code = null;
+					this.khachHang = null;
+					return "frontend/forgotPassword/final";
+				}else {
+					model.addAttribute("password", password);
+					model.addAttribute("confirm_password", confirm_password);
+					model.addAttribute("message", "Có lỗi hệ thống reset không thành công!");
+					return "frontend/forgotPassword/resetPass";
+				}
+			}else {
+				model.addAttribute("confirmpassworder", "Mật khẩu không đúng!");
+				model.addAttribute("password", password);
+				model.addAttribute("confirm_password", confirm_password);
+				return "frontend/forgotPassword/resetPass";
+			}
+		}
+		
+		return "";
+	}
+	public Integer updateUser(KhachHang user) {
+		Session session = factory.openSession();
+		Transaction t = session.beginTransaction();
+		try {
+			session.update(user);
+			t.commit();
+			return 1;
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			t.rollback();	
+		} finally {
+			session.close();
+		}
+		return 0;
 	}
 }
