@@ -22,7 +22,7 @@
 	<bean id="uploadfile" 
 		class="organicfood.bean.Uploadfile">
 	 	<!-- maxUploadSize=2MB -->
-	 	<property name="basePath" value="D:\\Document PTIT\\Hoc ki 7\\LAP TRINH WEB\\BT\\DuLieu\\OrganicFood\\WebContent\\UploadFiles"/>
+	 	<property name="basePath" value="D:\\ki 1 nam 4\\lap trinh web\\DoAn\\OrganicFood\\OrganicFood\\WebContent\\UploadFiles"/>
 	</bean>
 </beans>
 

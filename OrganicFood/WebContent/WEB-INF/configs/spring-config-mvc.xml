@@ -26,6 +26,6 @@
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"/>
    	
    	<!-- Cấu hình package chứa các controller -->
-	<context:component-scan base-package="organicfood.controller,organicfood.bean"/>
+	<context:component-scan base-package="organicfood.controller"/>
 
 </beans>
