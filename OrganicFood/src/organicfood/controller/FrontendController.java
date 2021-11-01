@@ -40,15 +40,12 @@ public class FrontendController {
 	SessionFactory factory;
 
 	
-	@RequestMapping("")
-	public String index() {
-		return "frontend/index";
-	}
-	
-	@RequestMapping("index")
-	public String showIndex() {
-		return "frontend/index";
-	}
+	/*
+	 * @RequestMapping("") public String index() { return "frontend/index"; }
+	 * 
+	 * @RequestMapping("index") public String showIndex() { return "frontend/index";
+	 * }
+	 */
 	
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String showlogin(ModelMap model, HttpSession session, HttpServletRequest request) {

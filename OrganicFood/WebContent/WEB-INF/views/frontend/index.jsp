@@ -14,7 +14,7 @@
                             <li class="active"><a href="./index.html">Home</a></li>
                             <li><a href="shop.html">Shop</a></li>
                             
-                            <li><a href="blog/index.html">Blog</a></li>
+                            <li><a href="blog/blogView.html">Blog</a></li>
                             <li><a href="./contact.html">Contact</a></li>
                         </ul>
                     </nav>
@@ -47,18 +47,11 @@
                             <span>All departments</span>
                         </div>
                         <ul>
-                            <li><a href="#">Fresh Meat</a></li>
-                            <li><a href="#">Vegetables</a></li>
-                            <li><a href="#">Fruit & Nut Gifts</a></li>
-                            <li><a href="#">Fresh Berries</a></li>
-                            <li><a href="#">Ocean Foods</a></li>
-                            <li><a href="#">Butter & Eggs</a></li>
-                            <li><a href="#">Fastfood</a></li>
-                            <li><a href="#">Fresh Onion</a></li>
-                            <li><a href="#">Papayaya & Crisps</a></li>
-                            <li><a href="#">Oatmeal</a></li>
-                            <li><a href="#">Fresh Bananas</a></li>
-                        </ul>
+                        <c:forEach var="s" items="${categoryProducts }">
+                        	<li> <a href="#"> ${s.getName()}</a> </li>
+                        </c:forEach>
+                	</ul>
+                       
                     </div>
                 </div>
                 <div class="col-lg-9">
@@ -101,31 +94,14 @@
         <div class="container">
             <div class="row">
                 <div class="categories__slider owl-carousel">
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="resources/frontend/img/categories/cat-1.jpg">
-                            <h5><a href="#">Fresh Fruit</a></h5>
+                <c:forEach var="s" items="${categoryProducts }">
+                	 <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="UploadFiles/${s.getImage() }">
+                            <h5><a href="#"> ${s.getName() }</a></h5>
                         </div>
                     </div>
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="resources/frontend/img/categories/cat-2.jpg">
-                            <h5><a href="#">Dried Fruit</a></h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="resources/frontend/img/categories/cat-3.jpg">
-                            <h5><a href="#">Vegetables</a></h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="resources/frontend/img/categories/cat-4.jpg">
-                            <h5><a href="#">drink fruits</a></h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="resources/frontend/img/categories/cat-5.jpg">
-                            <h5><a href="#">drink fruits</a></h5>
-                        </div>
-                    </div>
+                </c:forEach>
+                   
                 </div>
             </div>
         </div>
@@ -142,17 +118,19 @@
                     </div>
                     <div class="featured__controls">
                         <ul>
-                            <li class="active" data-filter="*">All</li>
-                            <li data-filter=".oranges">Oranges</li>
-                            <li data-filter=".fresh-meat">Fresh Meat</li>
-                            <li data-filter=".vegetables">Vegetables</li>
-                            <li data-filter=".fastfood">Fastfood</li>
+                        	<li class="active" data-filter="*">All</li>
+                        	<c:forEach var="s" items="${featuredCategory }">
+                        		  <li data-filter=".${s.getId() }">${s.getName() }</li>
+                        	</c:forEach>
+                            
+                       
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="row featured__filter">
-                <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
+            <c:forEach var="s" items="${featuredCategory }">
+            	 <div class="col-lg-3 col-md-4 col-sm-6 mix">
                     <div class="featured__item">
                         <div class="featured__item__pic set-bg" data-setbg="resources/frontend/img/featured/feature-1.jpg">
                             <ul class="featured__item__pic__hover">
@@ -167,6 +145,8 @@
                         </div>
                     </div>
                 </div>
+            </c:forEach>
+               
                 <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fastfood">
                     <div class="featured__item">
                         <div class="featured__item__pic set-bg" data-setbg="resources/frontend/img/featured/feature-2.jpg">
