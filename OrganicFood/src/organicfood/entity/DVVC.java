@@ -1,8 +1,12 @@
 package organicfood.entity;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -20,7 +24,20 @@ public class DVVC {
 	
 	@Column(name = "THOIGIANVC")
 	String thoigianvc;
+	
+	@OneToMany(mappedBy = "dvvc", fetch = FetchType.EAGER)
+	private Collection<DatHang> dathang;
 
+	public Collection<DatHang> getDathang() {
+		return dathang;
+	}
+
+	public void setDathang(Collection<DatHang> dathang) {
+		this.dathang = dathang;
+	}
+
+	
+	
 	public String getMadv() {
 		return madv;
 	}

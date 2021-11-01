@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,17 +24,20 @@ public class DatHang {
 	@DateTimeFormat(pattern = "MM/dd/yyyy")
 	private Date ngay;
 	
-	@Column(name = "MANV")
-	String manv;
+	@ManyToOne
+	@JoinColumn(name="MANV")
+	NhanVien nhanvien;
 	
-	@Column(name = "MAKH")
-	String makh;
+	@ManyToOne
+	@JoinColumn(name="MAKH")
+	KhachHang khachhang;
 	
 	@Column(name = "TRANGTHAI")
 	String trangthai;
 	
-	@Column(name = "MADV")
-	String madv;
+	@ManyToOne
+	@JoinColumn(name="MADV")
+	DVVC dvvc;
 	
 	@Column(name = "MAKM")
 	String makm;
@@ -53,20 +58,24 @@ public class DatHang {
 		this.ngay = ngay;
 	}
 
-	public String getManv() {
-		return manv;
+	
+
+	public NhanVien getNhanvien() {
+		return nhanvien;
 	}
 
-	public void setManv(String manv) {
-		this.manv = manv;
+	public void setNhanvien(NhanVien nhanvien) {
+		this.nhanvien = nhanvien;
 	}
 
-	public String getMakh() {
-		return makh;
+	
+
+	public KhachHang getKhachhang() {
+		return khachhang;
 	}
 
-	public void setMakh(String makh) {
-		this.makh = makh;
+	public void setKhachhang(KhachHang khachhang) {
+		this.khachhang = khachhang;
 	}
 
 	public String getTrangthai() {
@@ -77,12 +86,13 @@ public class DatHang {
 		this.trangthai = trangthai;
 	}
 
-	public String getMadv() {
-		return madv;
+
+	public DVVC getDvvc() {
+		return dvvc;
 	}
 
-	public void setMadv(String madv) {
-		this.madv = madv;
+	public void setDvvc(DVVC dvvc) {
+		this.dvvc = dvvc;
 	}
 
 	public String getMakm() {

@@ -74,13 +74,13 @@
 	                          	${s.getNgay() }
 	                        </td>
 	                        <td>
-	                          	${s.getManv() }
+	                          	${s.getNhanvien().getId() }
 	                        </td>
 	                        <td>
-	                          	${s.getMakh() }
+	                          	${s.getKhachhang().getPhone() }
 	                        </td>
 	                        <td>
-	                          	${s.getMadv() }
+	                          	${s.getDvvc().getMadv() }
 	                        </td>
 	                        <td>
 	                          	${s.getMakm() }

@@ -23,15 +23,15 @@
 	                  </div>
 	                  <div class="form-group">
 	                    <label>Mã nhân viên</label>
-	                    <form:input path="manv" type="text" class="form-control form-control-lg" placeholder="Nhập mã nhân viên" aria-label="Username" readonly="true"/>
+	                    <form:input path="nhanvien.id" type="text" class="form-control form-control-lg" placeholder="Nhập mã nhân viên" aria-label="Username" readonly="true"/>
 	                  </div>
 	                  <div class="form-group">
 	                    <label>Mã khách hàng</label>
-	                    <form:input path="makh" type="text" class="form-control form-control-lg" placeholder="Nhập mã khách hàng" aria-label="Username" readonly="true"/>
+	                    <form:input path="khachhang.phone" type="text" class="form-control form-control-lg" placeholder="Nhập mã khách hàng" aria-label="Username" readonly="true"/>
 	                  </div>
 	                  <div class="form-group">
 	                    <label>Mã đơn vị</label>
-	                    <form:input path="madv" type="text" class="form-control form-control-lg" placeholder="Nhập mã đơn vị" aria-label="Username" readonly="true"/>
+	                    <form:input path="dvvc.madv" type="text" class="form-control form-control-lg" placeholder="Nhập mã đơn vị" aria-label="Username" readonly="true"/>
 	                  </div>
 	                  <div class="form-group">
 	                    <label>Mã khuyến mãi</label>
@@ -40,21 +40,9 @@
 	                    
 						<div class="form-group">
 							<label>Trạng thái</label>
-						  <form:select path="trangthai" class="form-control form-control-lg" placeholder="Chọn trạng thái" aria-label="Username">
-						    <option selected="${DatHang.getTrangthai()}">${DatHang.getTrangthai()}</option>
-						    <option value="Chưa duyệt">Chưa duyệt</option>
-						    <option value="Đã duyệt">Đã duyệt</option>
-						    <option value="Đang giao">Đang giao</option>
-						    <option value="Đã giao">Đã giao</option>
+						  <form:select path="trangthai" class="form-control form-control-lg" items="${dstrangthai }">
 						  </form:select>
 						</div>
-						<%-- <div class="form-group">
-							<label>Trạng thái</label>
-							<form:radiobutton path="trangthai" class="form-control form-control-lg" value="Chưa duyệt" label="Chưa duyệt"/>
-							<form:radiobutton path="trangthai" class="form-control form-control-lg" value="Đã duyệt" label="Đã duyệt"/>
-							<form:radiobutton path="trangthai" class="form-control form-control-lg" value="Đang giao" label="Đang giao"/>
-							<form:radiobutton path="trangthai" class="form-control form-control-lg" value="Đã giao" label="Đã giao"/>
-						</div> --%>
 	                  <button class="btn btn-gradient-info btn-fw">Lưu</button>
                   </form:form>
                 </div>

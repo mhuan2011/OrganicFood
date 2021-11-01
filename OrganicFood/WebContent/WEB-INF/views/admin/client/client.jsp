@@ -24,10 +24,20 @@
 					  </button>
 					</div>
 				</c:if>
+				<!-- Search -->
+				<form class="form-group col-6 float-right m-0 pr-0" action="admin/search-client.html" method="post">
+					<div class="form-group ">
+                    <div class="input-group">
+                      <input name="search" type="text" value="${searchText }"  class="form-control" placeholder="Nhập tên khách hàng cần tìm" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                      <div class="input-group-append">
+                        <button name="btnsearch" class="btn btn-sm btn-gradient-primary" type="submit">Tìm kiếm</button>
+                      </div>
+                    </div>
+                  </div>
+				</form>
+				
                   <table class="table table-bordered">
                     <thead>
-                    
-                    
                       <tr>
                         <th style="width: 5%">
                           STT
@@ -74,27 +84,7 @@
                       
                     </tbody>
                   </table>
-                  <div class="card">
-                  <nav aria-label="Page navigation example">
-					  <ul class="pagination">
-					    <li class="page-item">
-					      <a class="page-link" href="#" aria-label="Previous">
-					        <span aria-hidden="true">&laquo;</span>
-					        <span class="sr-only">Previous</span>
-					      </a>
-					    </li>
-					    <li class="page-item"><a class="page-link" href="#">1</a></li>
-					    <li class="page-item"><a class="page-link" href="#">2</a></li>
-					    <li class="page-item"><a class="page-link" href="#">3</a></li>
-					    <li class="page-item">
-					      <a class="page-link" href="#" aria-label="Next">
-					        <span aria-hidden="true">&raquo;</span>
-					        <span class="sr-only">Next</span>
-					      </a>
-					    </li>
-					  </ul>
-					</nav>
-                  </div>
+                  
                 </div>
                 
               </div>

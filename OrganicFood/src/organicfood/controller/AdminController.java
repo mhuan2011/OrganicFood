@@ -1,5 +1,6 @@
 package organicfood.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,20 +12,24 @@ import org.hibernate.Transaction;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import organicfood.bean.Account;
 import organicfood.entity.DVVC;
 import organicfood.entity.DatHang;
 import organicfood.entity.KhachHang;
 import organicfood.entity.LoaiNongSan;
+import organicfood.entity.NongSan;
 
 
 
@@ -224,6 +229,36 @@ public class AdminController {
 		List<KhachHang> list = query.list();
 		return list;
 	}
+	//search
+		@RequestMapping(value = "/search-client", params = "btnsearch")
+		public String seachPro(HttpServletRequest request, ModelMap model,
+				@RequestParam("search") String client_name
+				
+				) {
+			
+
+			List<KhachHang> clients = this.searchClients(client_name);
+			PagedListHolder pagedListHolder = new PagedListHolder(clients); 
+			 int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+			 pagedListHolder.setPage(page); 
+			 pagedListHolder.setMaxLinkedPages(5);
+			 pagedListHolder.setPageSize(2);
+			 model.addAttribute("pagedListHolder", pagedListHolder);
+			model.addAttribute("searchText", client_name);
+			model.addAttribute("KhachHang", clients);
+			return "admin/client/client";
+		}
+		
+		public List<KhachHang> searchClients(String client_name) {
+
+			Session session = factory.getCurrentSession();
+			String hql = "FROM KhachHang where name LIKE :client_name";
+			Query query = session.createQuery(hql);
+			query.setParameter("client_name", "%" + client_name + "%");
+			List<KhachHang> list = query.list();
+
+			return list;
+		}
 //	--------------------------------------------------------------don vi van chuyen------------------------------------------------------------------
 	@RequestMapping("/dvvc")
 	public String showDVVC(ModelMap model) {
@@ -375,6 +410,15 @@ public class AdminController {
 				session.close();
 			}
 			return 0;
+		}
+		@ModelAttribute("dstrangthai")
+		public List<String> getTT(){
+			List<String> tt = new ArrayList<String>();
+			tt.add("Chưa duyệt");
+			tt.add("Đã duyệt");
+			tt.add("Đang giao");
+			tt.add("Đã giao");
+			return tt;
 		}
 }
 

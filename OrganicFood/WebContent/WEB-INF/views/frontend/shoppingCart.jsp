@@ -123,33 +123,38 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="shoping__cart__item">
-                                        <img src="resources/frontend/img/cart/cart-1.jpg" alt="">
-                                        <h5>Vegetable’s Package</h5>
-                                    </td>
-                                    <td class="shoping__cart__price">
-                                        $55.00
-                                    </td>
-                                    <td class="shoping__cart__quantity">
-                                        <div >
-                                            <div >
-                                            	
-                                                <input id="ip" type="number" value="1" onchange="changeNumber()">
-                                           	</div>
-                                        </div>
-                                    </td>
-                                    <td class="shoping__cart__total">
-                                        $110.00
-                                    </td>
-                                    <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
-                                    </td>
-                                </tr>
+	                            <c:forEach var="ns" items="${listNS }">
+	                                <tr>
+	                                    <td class="shoping__cart__item">
+	                                        <c:if test="${ns.getImage() != null}">
+				                      			<img alt="" src="UploadFiles/${ns.getImage() }" style="width: 100px; height: 50px; border-radius: 4px;">
+				                      		</c:if>
+	                                        <h5>${ns.getName() }</h5>
+	                                    </td>
+	                                    <td class="shoping__cart__price">
+	                                        ${ns.getPrice() }
+	                                    </td>
+	                                    <td class="shoping__cart__quantity">
+	                                        <div >
+	                                            <div >
+	                                            	
+	                                                <input id="ip" type="number" value="1" onchange="changeNumber()">
+	                                           	</div>
+	                                        </div>
+	                                    </td>
+	                                    <td class="shoping__cart__total">
+	                                        ${pricett}
+	                                    </td>
+	                                    <td class="shoping__cart__item__close">
+	                                        <span class="icon_close"></span>
+	                                    </td>
+	                                </tr>
+	                             </c:forEach>
                                 <script>
                                 	function changeNumber() {
 										var quantity = document.getElementById("ip").value;
 										alert(quantity);
+										/*var pricett = quantity* 100; */
 									}
                                 </script>
                                 
@@ -161,9 +166,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="shoping__cart__btns">
-                        <a href="#" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
+                        <a href="shop/shop.html" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
                         <a href="#" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
-                            Upadate Cart</a>
+                            Update Cart</a>
                     </div>
                 </div>
                 <div class="col-lg-6">

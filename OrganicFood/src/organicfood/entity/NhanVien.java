@@ -1,10 +1,13 @@
 package organicfood.entity;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,6 +40,19 @@ public class NhanVien {
 	
 	@Column(name = "MATKHAU")
 	private String password;
+
+	@OneToMany(mappedBy = "nhanvien", fetch = FetchType.EAGER)
+	private Collection<DatHang> dathang;
+	
+	
+	
+	public Collection<DatHang> getDathang() {
+		return dathang;
+	}
+
+	public void setDathang(Collection<DatHang> dathang) {
+		this.dathang = dathang;
+	}
 
 	public String getId() {
 		return id;

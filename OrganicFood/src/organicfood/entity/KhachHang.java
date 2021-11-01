@@ -26,6 +26,19 @@ public class KhachHang {
 	@Column(name = "MATKHAU")
 	private String password;
 
+	@OneToMany(mappedBy = "khachhang", fetch = FetchType.EAGER)
+	private Collection<DatHang> dathang;
+	
+	
+	
+	public Collection<DatHang> getDathang() {
+		return dathang;
+	}
+
+	public void setDathang(Collection<DatHang> dathang) {
+		this.dathang = dathang;
+	}
+
 	public String getPhone() {
 		return phone;
 	}
