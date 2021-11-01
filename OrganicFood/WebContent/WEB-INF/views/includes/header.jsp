@@ -259,8 +259,8 @@
             </a>
             <div class="collapse" id="general-pages" style="">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="admin/categoryBlog/index.html"> Danh mục bài viết </a></li>
-                <li class="nav-item"> <a class="nav-link" href="admin/blog/index.html"> Danh sách bài viết </a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/blank-page.html"> Danh mục bài viết </a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/login.html"> Danh sách bài viết </a></li>
               </ul>
               </div>
           </li>

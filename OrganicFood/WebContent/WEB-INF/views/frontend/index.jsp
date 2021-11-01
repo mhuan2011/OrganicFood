@@ -130,7 +130,7 @@
             </div>
             <div class="row featured__filter">
             <c:forEach var="s" items="${featuredCategory }">
-            	 <div class="col-lg-3 col-md-4 col-sm-6 mix">
+            	 <div class="col-lg-3 col-md-4 col-sm-6 mix ${s.get }">
                     <div class="featured__item">
                         <div class="featured__item__pic set-bg" data-setbg="resources/frontend/img/featured/feature-1.jpg">
                             <ul class="featured__item__pic__hover">

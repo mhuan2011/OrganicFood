@@ -1,21 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
 <head>
+	
     <meta charset="UTF-8">
     <meta name="description" content="Ogani Template">
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ogani</title>
+    <title>OrganicFood</title>
 	<base href="${pageContext.servletContext.contextPath}/">
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
-
+	<link rel = "icon" href = "resources/images/icon.svg" type = "image/x-icon">
     <!-- Css Styles -->
     <link rel="stylesheet" href="resources/frontend/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="resources/frontend/css/font-awesome.min.css" type="text/css">
@@ -116,7 +115,7 @@
                                 </ul>
                             </div>
                             <div class="header__top__right__auth">
-                                <a href="#"><i class="fa fa-user"></i> Login</a>
+                                <a href="#"><i class="fa fa-user"></i>${phoneNumber}</a>
                             </div>
                         </div>
                     </div>

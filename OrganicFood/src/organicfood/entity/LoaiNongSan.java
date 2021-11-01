@@ -21,12 +21,14 @@ public class LoaiNongSan {
 	@Column(name = "TENLOAI")
 	private String name;
 	
+
 	@Column(name="HINHANH")
 	private String image;
 	
 	@Column(name="YEUTHICH")
 	private int featured;
 	
+
 	
 	@OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
 	private Collection<NongSan> product;
@@ -64,6 +66,9 @@ public class LoaiNongSan {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	
+
 
 	public Collection<NongSan> getProduct() {
 		return product;

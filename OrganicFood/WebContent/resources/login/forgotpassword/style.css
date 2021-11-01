@@ -1,0 +1,90 @@
+body {
+  background-position: center;
+  background-color: #eee;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #505050;
+  font-family: "Rubik", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.5;
+  text-transform: none;
+}
+
+.forgot {
+  background-color: #fff;
+  padding: 12px;
+  border: 1px solid #dfdfdf;
+}
+
+.padding-bottom-3x {
+  padding-bottom: 72px !important;
+}
+
+.card-footer {
+  background-color: #fff;
+}
+
+.btn {
+  font-size: 13px;
+}
+
+.form-control:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #76b7e9;
+  outline: 0;
+  box-shadow: 0 0 0 0px #28a745;
+}
+.btn-success {
+	background-color: #28a745;
+}
+.header-form {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+
+.language-group {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	
+}
+.language-item {
+	cursor: pointer;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+	padding-bottom: 6px;
+	font-size: 13px;
+	font-weight: 300;
+	align-items: baseline;
+	padding: 5px;
+	
+}
+.language-item a {
+	text-decoration: none;
+	color: #111;
+	align-items: center;
+	display: flex;
+	align-items: flex-end;
+	
+}
+.language-item:first-child {
+	margin-right: 5px;
+	border-right: 2px solid #888;
+	padding: 5px;
+}
+.language-group .language-item img {
+	width: 25px;
+	height: 15px;
+	padding-right: 3px;
+}
+.validate-phone {
+  color: #f14242;
+  font-size: 13px;
+  font-weight: bold;
+  font-style: italic;
+}

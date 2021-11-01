@@ -1,9 +1,9 @@
 eclipse.preferences.version=1
-encoding//i18n-res/adminlogin_en.properties=UTF-8
+encoding//WebContent/resources/login/forgotpassword/script.js=UTF-8
+encoding//i18n-res/adminlogin.properties=UTF-8
 encoding//i18n-res/adminlogin_vi.properties=UTF-8
+encoding//i18n-res/forggotpassword_vi.properties=UTF-8
 encoding//src/organicfood/controller/AdminController.java=UTF-8
-encoding//src/organicfood/controller/CategoryBlogController.java=UTF-8
 encoding//src/organicfood/controller/FrontendController.java=UTF-8
-encoding//src/organicfood/controller/ManagerBlogController.java=UTF-8
 encoding//src/organicfood/controller/ProductController.java=UTF-8
 encoding//src/organicfood/entity/NongSan.java=UTF-8

@@ -33,9 +33,7 @@
 	            <prop key="hibernate.show_sql">false</prop>
 	       </props>
 	    </property>
-
 		<property name="packagesToScan" value="organicfood.entity"/>
-	
 	</bean>
 	
 	<!-- Transaction Manager -->
