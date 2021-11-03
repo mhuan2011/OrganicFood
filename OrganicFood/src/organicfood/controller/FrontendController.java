@@ -45,13 +45,14 @@ public class FrontendController {
 		return "frontend/index";
 	}
 	
-	@RequestMapping("index")
-	public String showIndex(HttpServletRequest request, HttpSession session, ModelMap model) {
-		
-		Account user = (Account) session.getAttribute("user");
-		model.addAttribute("phoneNumber", user.getUsername());
-		return "frontend/index";
-	}
+	/*
+	 * @RequestMapping("index") public String showIndex(HttpServletRequest request,
+	 * HttpSession session, ModelMap model) {
+	 * 
+	 * Account user = (Account) session.getAttribute("user");
+	 * model.addAttribute("phoneNumber", user.getUsername()); return
+	 * "frontend/index"; }
+	 */
 
 	
 	@RequestMapping(value = "login", method = RequestMethod.GET)

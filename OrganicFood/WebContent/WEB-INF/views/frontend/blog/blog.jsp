@@ -38,58 +38,7 @@
     </header>
     <!-- Header Section End -->
 
-    <!-- Hero Section Begin -->
-    <section class="hero hero-normal">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="hero__categories">
-                        <div class="hero__categories__all">
-                            <i class="fa fa-bars"></i>
-                            <span>All departments</span>
-                        </div>
-                        <ul>
-                            <li><a href="#">Fresh Meat</a></li>
-                            <li><a href="#">Vegetables</a></li>
-                            <li><a href="#">Fruit & Nut Gifts</a></li>
-                            <li><a href="#">Fresh Berries</a></li>
-                            <li><a href="#">Ocean Foods</a></li>
-                            <li><a href="#">Butter & Eggs</a></li>
-                            <li><a href="#">Fastfood</a></li>
-                            <li><a href="#">Fresh Onion</a></li>
-                            <li><a href="#">Papayaya & Crisps</a></li>
-                            <li><a href="#">Oatmeal</a></li>
-                            <li><a href="#">Fresh Bananas</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-9">
-                    <div class="hero__search">
-                        <div class="hero__search__form">
-                            <form action="#">
-                                <div class="hero__search__categories">
-                                    All Categories
-                                    <span class="arrow_carrot-down"></span>
-                                </div>
-                                <input type="text" placeholder="What do yo u need?">
-                                <button type="submit" class="site-btn">SEARCH</button>
-                            </form>
-                        </div>
-                        <div class="hero__search__phone">
-                            <div class="hero__search__phone__icon">
-                                <i class="fa fa-phone"></i>
-                            </div>
-                            <div class="hero__search__phone__text">
-                                <h5>+65 11.188.888</h5>
-                                <span>support 24/7 time</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Hero Section End -->
+   
 
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-section set-bg" data-setbg="resources/frontend/img/breadcrumb.jpg">
@@ -142,8 +91,8 @@
                         <div class="blog__sidebar__item">
                             <h4>Recent News</h4>
                             <div class="blog__sidebar__recent">
-                            	 <c:forEach var="s" items="${blogs }" varStatus="count">
-                         	 <a href="blog/blogDetail/${s.getMaBV() }.html" class="blog__sidebar__recent__item">
+                            	 <c:forEach var="s" items="${recentBlogs }" varStatus="count">
+                         	 <a href="blog/blogDetails/${s.getMaBV() }.html" class="blog__sidebar__recent__item">
                                     <div class="blog__sidebar__recent__item__pic">
                                         <img style="width:50px; height: 50px" src="UploadFiles/${s.getHinhAnh() }" alt="">
                                     </div>
@@ -172,11 +121,11 @@
            <div class="blog__item__text">
                <ul>
                    <li><i class="fa fa-calendar-o"></i> ${ s.getNgay()}</li>
-                   <li><i class="fa fa-comment-o"></i> 5</li>
+                  
                </ul>
                <h5><a href="#">${s.getTieuDe() }</a></h5>
                <p>${s.getTrichDan() }</p>
-               <a href="#" class="blog__btn">READ MORE <span class="arrow_right"></span></a>
+               <a href="blog/blogDetails/${s.getMaBV() }.html" class="blog__btn">READ MORE <span class="arrow_right"></span></a>
            </div>
        </div>
    </div>

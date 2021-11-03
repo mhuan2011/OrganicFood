@@ -64,4 +64,12 @@ public class BlogController {
 		model.addAttribute("blogs", BlogDao.getBlogBySearch(factory, word));
 		return "frontend/blog/blog";
 	}
+	@RequestMapping("blogDetails/{id}.html")
+	public String blogDetails(ModelMap model, @PathVariable("id") int id) {
+		BaiViet bv = BlogDao.getBlog(factory, id);
+		String loaiBV = bv.getLoaiBV().getMaLoai();
+		model.addAttribute("relatedBlogs", BlogDao.getBlogByCategory(factory, loaiBV));
+		model.addAttribute("blog", bv);
+		return "frontend/blog/blogDetails";
+	}
 }

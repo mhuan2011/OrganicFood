@@ -24,44 +24,44 @@ import organicfood.entity.NongSan;
 @Transactional
 @Controller
 public class HomeController {
-	
+
 	@Autowired
 	SessionFactory factory;
-	
+
 	public void initHomeView(ModelMap model) {
-		
+
 		model.addAttribute("categoryProducts", NongSanDao.getCategoryProducts(factory));
-		model.addAttribute("featuredCategory", NongSanDao.getFeaturedCategoryProduct(factory,  4));
+		model.addAttribute("featuredCategory", NongSanDao.getFeaturedCategoryProduct(factory, 4));
 		model.addAttribute("recentBlogs", BlogDao.getRecentBlogs(factory, 3));
 	}
-	@ModelAttribute("featuredProducts")
-	public List<NongSan> featuredProducts(Model model){
-		return NongSanDao.getProductByCategory(factory, "a");
-	}
+
+
 	
-	/*
-	 * @RequestMapping("index") public String viewBlog(ModelMap model) {
-	 * initHomeView(model); return "frontend/index"; }
-	 */
-	
-	
+	  
+	  @RequestMapping("index") 
+	  public String viewBlog(ModelMap model) {
+	  initHomeView(model); 
+	  return "frontend/index"; }
+	  
+	 
+
 	@ModelAttribute("categoryBlogs")
-	public List<LoaiBV> getCategoryBlogs(){
+	public List<LoaiBV> getCategoryBlogs() {
 		return CategoryBlogDao.getCategoryBlogs(factory);
 	}
-	
+
 	@ModelAttribute("recentBlogs")
-	public List<BaiViet> getRecentBlogs(){
+	public List<BaiViet> getRecentBlogs() {
 		return BlogDao.getRecentBlogs(factory, 3);
 	}
-	
+
 	@RequestMapping("searchByCategory/{id}")
 	public String searchByCategory(ModelMap model, @PathVariable("id") String maLoai) {
 		/* initBlogView(model); */
 		model.addAttribute("blogs", BlogDao.getBlogByCategory(factory, maLoai));
 		return "frontend/blog/blog";
 	}
-	
+
 	@RequestMapping("searchByWord")
 	public String searchByWord(ModelMap model, HttpServletRequest request) {
 		/* initBlogView(model); */
