@@ -196,3 +196,9 @@ h2 {
 	font-size: 20px;
 	color: #444;
 }
+.mess-alert {
+	color: #d95741;
+	align-items: center;
+	width: 100%;
+	color: #ea4335;
+}

@@ -35,6 +35,10 @@ public class NhanVien {
 	@DateTimeFormat(pattern = "MM/dd/yyyy")
 	private Date date;
 	
+	/*
+	 * @OneToMany(mappedBy="NV", fetch=FetchType.EAGER) Collection<BaiViet>
+	 * baiViets;
+	 */
 	@Column(name = "LUONG")
 	private float salary;
 	
@@ -58,6 +62,9 @@ public class NhanVien {
 		return id;
 	}
 
+	public String getFullName() {
+		return firstName + lastName;
+	}
 	public void setId(String id) {
 		this.id = id;
 	}

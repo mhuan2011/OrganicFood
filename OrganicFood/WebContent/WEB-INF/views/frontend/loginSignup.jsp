@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!doctype html>
 <html lang="en">
   <head>
+  	<link rel = "icon" href = "resources/images/icon.svg" type = "image/x-icon">
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -35,6 +37,12 @@
               	<img alt="" src="resources/images/logoOF.svg">
               </div>
               <!-- <h3 class="text-uppercase"><strong>Đăng nhập</strong></h3> -->
+              <c:if test="${not empty message}">
+                    
+                    	<div class="mess-alert">
+                    		${message }
+                    	</div>
+                    </c:if>
               <form action="login.html" method="post" modelAttribute="user">
                 <div class="form-group first">
                   <label for="username">Số điện thoại</label>
@@ -52,7 +60,7 @@
                     <input name="rememberMe" type="checkbox" checked="checked"/>
                     <div class="control__indicator"></div>
                   </label>
-                  <span class="ml-auto"><a href="#" class="forgot-pass">Quên mật khẩu</a></span> 
+                  <span class="ml-auto"><a href="forgot-password/form.html" class="forgot-pass">Quên mật khẩu</a></span> 
                 </div>
 
                 <input type="submit" value="Đăng nhập" class="btn btn-block py-2 btn-success">
@@ -61,7 +69,7 @@
                 
                 
                 
-                <div class="signup">Chưa có tài khoản <a href="signup">Đăng ký ngay</a></div>
+                <div class="signup">Chưa có tài khoản <a href="signup.html">Đăng ký ngay</a></div>
                 <div class="">
                 <a href="#" class="btn btn-block py-2 btn-facebook">
                   <span class="icon-facebook mr-3"></span> Đăng nhập với facebook

@@ -21,23 +21,26 @@
 		<property name="defaultEncoding" value="UTF-8"></property>
 		<property name="basenames">
 			<list>
+				
+				<value>classpath:adminlogin</value>
 				<value>classpath:adminlogin_vi</value>
-				<value>classpath:adminlogin_en</value>
+				<value>classpath:forggotpassword</value>
+				<value>classpath:forggotpassword_vi</value>
 			</list>
 		</property>
 	</bean>
 	<!-- I18N -->
-<bean id="localeResolver" 
-   	class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
-    <property name="defaultLocale" value="vi" />
-    <property name="cookieMaxAge" value="43200" />
-</bean>
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="defaultLocale" value="en" />
+		<property name="cookieMaxAge" value="43200" />
+	</bean>
 
-   <mvc:interceptors>
-       <bean id="localeChangeInterceptor" 
-       	class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-           <property name="paramName" value="language" />
-       </bean>
-   </mvc:interceptors>
+	<mvc:interceptors>
+		<bean id="localeChangeInterceptor"
+			class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="language" />
+		</bean>
+	</mvc:interceptors>
 
 </beans>

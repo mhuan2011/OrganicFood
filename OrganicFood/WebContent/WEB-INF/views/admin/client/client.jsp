@@ -54,6 +54,9 @@
                         <th >
                           Địa chỉ
                         </th>
+                        <th >
+                          Email
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -76,6 +79,9 @@
 	                        </td>
 	                        <td>
 	                          ${s.getAddress() }
+	                        </td>
+	                        <td>
+	                          ${s.getEmail() }
 	                        </td>
 	                      </tr>
                     

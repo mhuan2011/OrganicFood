@@ -32,8 +32,9 @@
 							<c:if test="${btnStatus == 'btnAdd'}">  
 		                    	<form:input path="id" type="text" class="form-control"/>
 							</c:if>
-							<form:errors path = "id" class="text-danger" />
+							<form:errors path = "id" class="text-danger mess-error-validate" />
                           </div>
+                          
                         </div>
                       </div> 
                       <div class="col-md-6">
@@ -41,7 +42,7 @@
                           <label class="col-sm-3 col-form-label">Tên sản phẩm</label>
                           <div class="col-sm-9">
                             <form:input path="name" type="text" class="form-control"/>
-                            
+                            <form:errors path = "name" class="text-danger  mess-error-validate" />
                           </div>
                         </div>
                       </div>
@@ -53,7 +54,7 @@
                           <div class="col-sm-9">
        
                               <form:input path="Unit" type="text" class="form-control"/>
-            					
+            					<form:errors path = "Unit" class="text-danger  mess-error-validate" />
                           </div>
                         </div>
                       </div>
@@ -83,7 +84,7 @@
                           <label class="col-sm-3 col-form-label">Giá</label>
                           <div class="col-sm-9">
                             <form:input path="price" type="money" class="form-control" />
-                           
+                           <form:errors path = "price" class="text-danger mess-error-validate" />
                           </div>
                           
                         </div>
