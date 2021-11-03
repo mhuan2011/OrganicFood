@@ -1,6 +1,11 @@
 package organicfood.controller;
 
+
 import java.util.ArrayList;
+
+import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +29,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import org.springframework.web.multipart.MultipartFile;
+
+
 import organicfood.bean.Account;
+import organicfood.bean.Uploadfile;
 import organicfood.entity.DVVC;
 import organicfood.entity.DatHang;
 import organicfood.entity.KhachHang;
@@ -41,6 +50,9 @@ import organicfood.entity.NongSan;
 public class AdminController {
 	@Autowired
 	SessionFactory factory;
+	
+	@Autowired
+	Uploadfile baseuploadfile;
 	
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String showLogin(ModelMap model) {
@@ -117,20 +129,59 @@ public class AdminController {
 		return "admin/product/addCategory";
 	}
 	@RequestMapping(value="/product/insert-category", method=RequestMethod.POST, params = "btnAdd")
-	public String insert(ModelMap model, @ModelAttribute("CategoryProduct") LoaiNongSan lns) {
-		Session session = factory.openSession();
-		Transaction t = session.beginTransaction();
-		try {
-			session.save(lns);
-			t.commit();
-			model.addAttribute("message", "Thêm mới thành công!");
-		} catch (Exception e) {
-			// TODO: handle exception
-			t.rollback();
-			model.addAttribute("message", "Thêm mới thất bại!");
-		} finally {
-			session.close();
+	public String insert(ModelMap model, @ModelAttribute("CategoryProduct") LoaiNongSan lns, @RequestParam("hinhanh") MultipartFile image, BindingResult errors) {
+		
+		boolean check = true;
+		
+		if(lns.getId().equals("")) {
+			errors.rejectValue("id", "CategoryProduct", "Vui lòng nhập id !");
+			check=false;
 		}
+		if(lns.getName().equals("")) {
+			errors.rejectValue("name", "CategoryProduct", "Vui lòng nhập tên !");
+			check=false;
+		}
+		if(lns.getImage().equals("")) {
+			errors.rejectValue("image", "CategoryProduct", "Vui lòng chọn hình ảnh !");
+			check=false;
+		}
+		
+		if(!check) {
+			model.addAttribute("btnStatus", "btnAdd");
+			return "admin/product/addCategory";
+		}
+		
+		if(check ) {
+			try {
+				String date =
+						 LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyMMddHHmmss"));
+						 String imgName = date +image.getOriginalFilename(); 
+						 String photoPath =
+						 baseuploadfile.getBasePath()+File.separator +imgName; image.transferTo(new
+						 File(photoPath));
+						 Thread.sleep(3000);
+				lns.setImage(imgName);
+				Session session = factory.openSession();
+				Transaction t = session.beginTransaction();
+				try {
+					session.save(lns);
+					t.commit();
+					model.addAttribute("message", "Thêm mới thành công!");
+				} catch (Exception e) {
+					// TODO: handle exception
+					t.rollback();
+					model.addAttribute("message", "Thêm mới thất bại!");
+				} finally {
+					
+					session.close();
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
 		List<LoaiNongSan> list = getCategoryList();
 		model.addAttribute("LoaiNongSan", list);
 		return "redirect:/admin/product/category.html";
@@ -140,6 +191,7 @@ public class AdminController {
 		String hql = "FROM LoaiNongSan";
 		Query query = session.createQuery(hql);
 		List<LoaiNongSan> list = query.list();
+		
 		return list;
 	}
 	//update category
@@ -160,7 +212,27 @@ public class AdminController {
 		return u;
 	}
 	@RequestMapping(value="/product/insert-category", method=RequestMethod.POST, params = "btnUpdate")
-	public String updateCategory(ModelMap model, @ModelAttribute("CategoryProduct") LoaiNongSan lns) {
+	public String updateCategory(ModelMap model, @ModelAttribute("CategoryProduct") LoaiNongSan lns, @RequestParam("hinhanh") MultipartFile image) {
+		
+		if(!image.isEmpty()) {
+			try { 
+				String date =
+			 LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyMMddHHmmss"));
+			 String imgName = date +image.getOriginalFilename(); 
+			 String photoPath =
+			 baseuploadfile.getBasePath()+File.separator +imgName; 
+			 image.transferTo(new File(photoPath));
+			 
+			 lns.setImage(imgName);
+			 Thread.sleep(3000);
+			}
+			catch (Exception e) {
+			 model.addAttribute("message", "Lỗi lưu file!"); 
+			 
+			 }
+			
+		}
+		
 		Integer temp = this.updateCategory(lns);
 		
 		if(temp==1) {
@@ -181,40 +253,65 @@ public class AdminController {
 		try {
 			session.update(category);
 			t.commit();
-			return 1;
+			
 			
 		} catch (Exception e) {
 			// TODO: handle exception
 			t.rollback();	
+			return 0;
 		} finally {
 			session.close();
 		}
-		return 0;
+		return 1;
 	}
 	//delete category
 	@RequestMapping(value="/product/category/delete/{id}.html")
-	public String deleteCategory( ModelMap model, @PathVariable("id") String id, @ModelAttribute("LoaiNongSan") LoaiNongSan lns) {
+	public String deleteCategory( ModelMap model, @PathVariable("id") String id) {
 		
-		lns = this.getCategoryProduct(id);
-		Session session = factory.openSession();
-		Transaction t = session.beginTransaction();
-		try {
-			session.delete(lns);
-			t.commit();
+		LoaiNongSan lns = this.getCategoryProduct(id);
+		
+		int result = deleteCategories2(lns);
+		if(result == 1) {
 			model.addAttribute("message", "Xóa thành công");
-		} catch (Exception e) {
-			// TODO: handle exception
-			t.rollback();
+		}
+		else {
 			model.addAttribute("message", "Xóa thất bại");
-		} finally {
-			session.close();
 		}
 		List<LoaiNongSan> list = getCategoryList();
 		model.addAttribute("LoaiNongSan", list);
 		return "redirect:/admin/product/category.html";
 	}
 	
-	
+	public Integer deleteCategories(LoaiNongSan lns) {
+		Session session = factory.getCurrentSession();
+		Transaction t = session.beginTransaction();
+		try {
+			session.delete(lns);
+			t.commit();
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			t.rollback();
+			
+			e.printStackTrace();
+			return 0;
+		} finally {
+			session.close();
+		}
+		return 1;
+	}
+	public Integer deleteCategories2(LoaiNongSan lns) {
+		Session session = factory.getCurrentSession();
+		String hql = "delete LoaiNongSan where id = :id";
+		
+		Query query = session.createQuery(hql);
+		query.setParameter("id", lns.getId());
+		int result = query.executeUpdate();
+		if(result > 0) return 1;
+		return 0;
+		
+	}
 	//Nhan da o day ===============================================================
 //	-------------------------------------------------------------------client-----------------------------------------------------------------------
 	@RequestMapping("/client")

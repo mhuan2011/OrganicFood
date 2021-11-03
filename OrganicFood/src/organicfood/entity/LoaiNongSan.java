@@ -21,10 +21,36 @@ public class LoaiNongSan {
 	@Column(name = "TENLOAI")
 	private String name;
 	
+
+	@Column(name="HINHANH")
+	private String image;
+	
+	@Column(name="YEUTHICH")
+	private int featured;
+	
+
 	
 	@OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
 	private Collection<NongSan> product;
 	
+	
+	
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public int getFeatured() {
+		return featured;
+	}
+
+	public void setFeatured(int featured) {
+		this.featured = featured;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -40,6 +66,9 @@ public class LoaiNongSan {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	
+
 
 	public Collection<NongSan> getProduct() {
 		return product;
