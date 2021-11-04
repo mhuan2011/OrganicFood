@@ -29,7 +29,7 @@
     <!-- -------------------------------- -->
     
   
-  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- plugins:css -->
   <link rel="stylesheet" href="resources/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
 
@@ -283,7 +283,12 @@
               <i class="mdi mdi-home menu-icon"></i>
             </a>
           </li>
-          
+          <li class="nav-item">
+            <a class="nav-link" href="admin/discount/discount-list.html">
+              <span class="menu-title">Khuyến mãi</span>
+              <i class="mdi mdi-sale menu-icon"></i>
+            </a>
+          </li>
           
    
           
