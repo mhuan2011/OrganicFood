@@ -1,6 +1,9 @@
 package organicfood.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -23,9 +26,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import organicfood.bean.Account;
+import organicfood.bean.Mailer;
 import organicfood.bean.Uploadfile;
 import organicfood.entity.ChiTietDDH;
 import organicfood.entity.DatHang;
+import organicfood.entity.KhachHang;
 import organicfood.entity.LoaiNongSan;
 import organicfood.entity.NongSan;
 
@@ -195,22 +201,55 @@ public class ShopController {
 		
 		//check out
 		@RequestMapping("checkout")
-		public String showCheckout(ModelMap model) {
+		public String showCheckout(ModelMap model,HttpSession httpsession) {
+			Account a=(Account)httpsession.getAttribute("user");
+			KhachHang client = getUser(a.getUsername());
+			
+			
+			DatHang dh=new DatHang();
+			int maso=getMaSo()+1;
+			dh.setMasoddh(maso+"");
+			dh.setKhachhang(client);
+			
+			Date date = new Date();
+	        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+	        String strDate = formatter.format(date);
+	        Date date1;
+			try {
+				date1 = new SimpleDateFormat("dd-MM-yyyy").parse(strDate);
+				dh.setNgay(date1);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
 			float tongtien=0;
 			for(int i=0;i<listNS.size();i++) {
 				tongtien+=listNS.get(i).getPrice()*listSLNS.get(i);
-				
 			}
-			
-			model.addAttribute("DatHang", new DatHang());
+			model.addAttribute("DatHang", dh);
 			model.addAttribute("listNS",listNS);
 			model.addAttribute("listSLNS",listSLNS);
 			model.addAttribute("tongtien",tongtien);
 			return "frontend/checkout";
 		}
-		
+		public int getMaSo() {
+			Session session = factory.getCurrentSession();
+			String hql = "SELECT masoddh FROM DatHang";
+			Query query = session.createQuery(hql);
+			List<String> list = query.list();
+			int a=0,max=0;
+			for(int i=0;i<list.size();i++) {
+				a=Integer.parseInt(list.get(i).trim());
+				if(a>max) {
+					max=a;
+				}
+			}
+			return a;
+		}
 		@RequestMapping(value="insertOrder", method=RequestMethod.POST)
-		public String insert(ModelMap model, @ModelAttribute("DatHang") DatHang dh) {
+		public String insert(ModelMap model, @ModelAttribute("DatHang") DatHang dh,HttpSession httpsession) {
+			Account a=(Account)httpsession.getAttribute("user");
+			KhachHang client = getUser(a.getUsername());
 			Session session = factory.openSession();
 			Transaction t = session.beginTransaction();
 			try {
@@ -236,9 +275,74 @@ public class ShopController {
 				insertCTDDH(ct);
 				
 			}
-			listNS.removeAll(listNS);
-			listSLNS.removeAll(listSLNS);
-			return "frontend/shoppingCart";
+			/////////////////////////////
+//			listNS.removeAll(listNS);
+//			listSLNS.removeAll(listSLNS);
+//			return "frontend/shoppingCart";
+			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+	        String strDate = formatter.format(dh.getNgay());
+			String nd="Thông tin đơn hàng:"+
+					"<br>"+"Mã số đơn đặt hàng: "+dh.getMasoddh().toString()+
+					"<br>"+"Tên khách hàng: "+dh.getKhachhang().getPhone()+
+					"<br>"+"Ngày đặt hàng: "+strDate+
+					"<br>"+"Tên nhân viên: "+dh.getNhanvien().getId()+
+					"<br>"+"Tên đơn vị vận chuyển: "+dh.getDvvc().getMadv()+
+					"<br>"+"Trạng thái đơn hàng: "+dh.getTrangthai()+
+					"<br>"+"Mã khuyến mãi được áp dụng: "+dh.getMakm()+
+					"<br>";
+			nd+="Chi tiết đơn hàng:"+"<br>";
+			nd+="Tên sản phẩm		Số lượng		Đơn giá			Thành tiền";
+			
+			for(int i=0;i<listNS.size();i++) {
+				nd+="<br>";
+				nd+="Tên sản phẩm" +listNS.get(i).getName()+"		";
+				
+				nd+="Số lượng"+listSLNS.get(i)+"		";
+				//format lại số tiền
+				int tien=Math.round(listNS.get(i).getPrice()*100)/100;
+				nd+="Đơn giá"+tien+"		";
+				int tongtien=Math.round(listNS.get(i).getPrice()*listSLNS.get(i));
+				nd+="Thành tiền"+tongtien+"		";
+				
+			}
+			
+			String from = "phongthietbiptit@gmail.com";
+		    String email = client.getEmail();
+			String subject = "Gửi thông tin chi tiết đơn hàng của bạn đã đặt";
+			String body = nd;
+			
+			boolean result = send(from, email, subject, body);
+			if(result) {
+//				this.message = "Email gửi thành công";
+				return "frontend/orderSuccess";
+			}
+			return "frontend/checkout";
+		}
+		//send email
+		@Autowired
+		Mailer mailer;
+		
+		public boolean send( String from, String to,String subject, String body ) {
+			try {
+				mailer.send(from, to, subject, body);
+				return true;
+			} catch (Exception e) {
+				// TODO: handle exception
+				return false;
+			}
+			
+		}
+		private KhachHang getUser(String phoneNumber) {
+			KhachHang kh = null;
+			Session session = factory.getCurrentSession();
+			String hql = "FROM KhachHang WHERE phone = '"+phoneNumber+"'";
+			Query query = session.createQuery(hql);
+			List<Object[]> list = query.list();
+			if(list.size() != 0){
+				kh = (KhachHang) query.list().get(0);
+			}
+			
+			return kh;
 		}
 		public void insertCTDDH(ChiTietDDH ct) {
 			Session session = factory.openSession();
