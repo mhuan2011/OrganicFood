@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -380,24 +381,49 @@ public class AdminController {
 		return "admin/dvvc/addDVVC";
 	}
 	@RequestMapping(value="/dvvc/insert-dvvc", method=RequestMethod.POST, params = "btnAdd")
-	public String insertDvvc(ModelMap model, @ModelAttribute("DVVC") DVVC dvvc) {
-		Session session = factory.openSession();
-		Transaction t = session.beginTransaction();
-		try {
-			session.save(dvvc);
-			t.commit();
-			model.addAttribute("message", "Thêm mới thành công!");
-		} catch (Exception e) {
-			// TODO: handle exception
-			t.rollback();
-			model.addAttribute("message", "Thêm mới thất bại!");
-		} finally {
-			session.close();
+	public String insertDvvc(ModelMap model,@Validated @ModelAttribute("DVVC") DVVC dvvc, BindingResult errors) {
+		
+		boolean check = true;
+		if(dvvc.getMadv().equals("")) {
+			errors.rejectValue("madv", "DVVC", "Vui lòng nhập mã đơn vị !");
+			check=false;
 		}
-		List<DVVC> list = getDVVC();
-		model.addAttribute("DVVC", list);
-		return "redirect:/admin/dvvc.html";
-		//return "admin/dvvc/dvvc";
+		if(dvvc.getTendv().equals("")) {
+			errors.rejectValue("tendv", "DVVC", "Vui lòng nhập tên đơn vị !");
+			check=false;
+		}
+		if(dvvc.getGiavc()==null) {
+			errors.rejectValue("giavc", "DVVC", "Vui lòng nhập giá vận chuyển !");
+			check=false;
+		}
+		if(dvvc.getThoigianvc().equals("")) {
+			errors.rejectValue("thoigianvc", "DVVC", "Vui lòng nhập thời gian vận chuyển !");
+			check=false;
+		}
+		if(!check) {
+			model.addAttribute("btnStatus", "btnAdd");
+			return "admin/dvvc/addDVVC";
+		}{
+			//start - save db
+			Session session = factory.openSession();
+			Transaction t = session.beginTransaction();
+			try {
+				session.save(dvvc);
+				t.commit();
+				model.addAttribute("message", "Thêm mới thành công!");
+			} catch (Exception e) {
+				// TODO: handle exception
+				t.rollback();
+				model.addAttribute("message", "Thêm mới thất bại!");
+			} finally {
+				session.close();
+			}
+			List<DVVC> list = getDVVC();
+			model.addAttribute("DVVC", list);
+			return "redirect:/admin/dvvc.html";
+			//return "admin/dvvc/dvvc";
+		}
+		
 	}
 	//update đơn vị vận chuyển
 		@RequestMapping(value="/dvvc/update/{madv}.html")

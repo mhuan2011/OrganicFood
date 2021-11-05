@@ -125,7 +125,7 @@
 				                  </div>
 				                  <div class="form-group">
 			                      	<label>Ngày:</label> 
-			                    	<form:input path="ngay"  type="text" class="form-control form-control-lg"/>
+			                    	<form:input path="ngay"  type="date" class="form-control form-control-lg"/>
 				                  </div>
 					              <div class="form-group">
 			                      	<label>Mã NV:</label> 

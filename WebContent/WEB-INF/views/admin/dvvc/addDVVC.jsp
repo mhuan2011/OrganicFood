@@ -16,24 +16,27 @@
                   	<div class="form-group">
                     <label>Mã đơn vị:</label>
                     <c:if test="${btnStatus == 'btnUpdate'}">  
-                    	<form:input path="madv"  type="text" class="form-control form-control-lg" placeholder="Nhập mã đơn vị" aria-label="Username" readonly="true"/>
+                    	<form:input path="madv"  type="text" class="form-control form-control-lg" placeholder="Nhập mã đơn vị" readonly="true"/>
 					</c:if>
 					<c:if test="${btnStatus == 'btnAdd'}">  
-                    	<form:input path="madv"  type="text" class="form-control form-control-lg" placeholder="Nhập mã đơn vị" aria-label="Username"/>
+                    	<form:input path="madv"  type="text" class="form-control form-control-lg" placeholder="Nhập mã đơn vị" />
 					</c:if>
-                    
+                    <form:errors path = "madv" class="text-danger mess-error-validate" />
 	                  </div>
 	                  <div class="form-group">
 	                    <label>Tên đơn vị</label>
-	                    <form:input path="tendv" type="text" class="form-control form-control-lg" placeholder="Nhập tên đơn vị" aria-label="Username"/>
+	                    <form:input path="tendv" type="text" class="form-control form-control-lg" placeholder="Nhập tên đơn vị" />
+	                  	<form:errors path = "tendv" class="text-danger mess-error-validate" />
 	                  </div>
 	                  <div class="form-group">
 	                    <label>Giá vận chuyển</label>
-	                    <form:input path="giavc" type="text" class="form-control form-control-lg" placeholder="Nhập giá vận chuyển" aria-label="Username"/>
+	                    <form:input path="giavc" type="money" class="form-control form-control-lg" placeholder="Nhập giá vận chuyển" />
+	                  	<form:errors path = "giavc" class="text-danger mess-error-validate" />
 	                  </div>
 	                  <div class="form-group">
 	                    <label>Thời gian vận chuyển</label>
-	                    <form:input path="thoigianvc" type="text" class="form-control form-control-lg" placeholder="Nhập thời gian vận chuyển" aria-label="Username"/>
+	                    <form:input path="thoigianvc" type="text" class="form-control form-control-lg" placeholder="Nhập thời gian vận chuyển" />
+	                  	<form:errors path = "thoigianvc" class="text-danger mess-error-validate" />
 	                  </div>
 	                  <button name="${btnStatus }" class="btn btn-gradient-info btn-fw">Lưu</button>
                   </form:form>
