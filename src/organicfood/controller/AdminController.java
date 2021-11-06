@@ -35,6 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import organicfood.bean.Account;
 import organicfood.bean.Uploadfile;
+import organicfood.entity.ChiTietDDH;
 import organicfood.entity.DVVC;
 import organicfood.entity.DatHang;
 import organicfood.entity.KhachHang;
@@ -494,7 +495,18 @@ public class AdminController {
 			
 			dathang = this.get1Dathang(masoddh);
 			model.addAttribute("DatHang", dathang);
+			
+			List<ChiTietDDH> ctddh=getCTDDH(masoddh);
+			model.addAttribute("CTDDH",ctddh);
 			return "admin/dathang/editDathang";
+		}
+		public List<ChiTietDDH> getCTDDH(String masoddh) {
+			Session session = factory.getCurrentSession();
+			String hql = "FROM ChiTietDDH WHERE masoddh = :masoddh";
+			Query query = session.createQuery(hql);
+			query.setParameter("masoddh", masoddh);
+			List<ChiTietDDH> list = query.list();
+			return list;
 		}
 		public DatHang get1Dathang(String masoddh) {
 			Session session = factory.getCurrentSession();

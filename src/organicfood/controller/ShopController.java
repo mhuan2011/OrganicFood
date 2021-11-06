@@ -4,7 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -193,12 +195,43 @@ public class ShopController {
 				listSLNS.add(soluong);
 			}
 			
-			model.addAttribute("tongtien",tongtien);
+			
 			model.addAttribute("listNS",listNS);
 			model.addAttribute("listSLNS",listSLNS);
+			System.out.print("tong tien:"+tongtien);
+			model.addAttribute("tongtien",tongtien);
+			String magg=request.getParameter("discount");
+			maKhuyenMai=magg;
+			float hesogiam=getHesogiam(magg);
+			if(hesogiam==0) {
+				model.addAttribute("messDiscount","Khuyến mãi quá hạn hoặc không tồn tại");
+			}else {
+				model.addAttribute("messDiscount","Bạn được giảm "+hesogiam*100+"%");
+			}
+			float tiendagiam=tongtien-hesogiam*tongtien;
+			model.addAttribute("tiendagiam",tiendagiam);
 			return "frontend/shoppingCart";
 		}
-		
+		public String maKhuyenMai;
+		public float getHesogiam(String id) {
+			Session session = factory.getCurrentSession();
+			Date now=new Date();
+			String hql = "SELECT discount FROM KhuyenMai WHERE id = :id";
+			//String hql = "SELECT discount FROM KhuyenMai WHERE id = :id and begin<=now and end>=now";
+			Query query = session.createQuery(hql);
+			query.setParameter("id", id);
+			//query.setParameter("now", now);
+			System.out.print("string list:"+query.list().get(0));
+			String tam=query.list().get(0).toString();
+			System.out.print("string tam:"+tam);
+			float kq =0f;
+			try {
+				kq=Float.parseFloat(tam);
+			}catch(Exception e) {
+			}
+			System.out.print("he so giam:"+kq);
+			return kq;
+		}
 		//check out
 		@RequestMapping("checkout")
 		public String showCheckout(ModelMap model,HttpSession httpsession) {
@@ -210,7 +243,7 @@ public class ShopController {
 			int maso=getMaSo()+1;
 			dh.setMasoddh(maso+"");
 			dh.setKhachhang(client);
-			
+			dh.setMakm(maKhuyenMai);
 			Date date = new Date();
 	        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 	        String strDate = formatter.format(date);
@@ -230,6 +263,9 @@ public class ShopController {
 			model.addAttribute("listNS",listNS);
 			model.addAttribute("listSLNS",listSLNS);
 			model.addAttribute("tongtien",tongtien);
+			float hesogiam=getHesogiam(maKhuyenMai);
+			float tiendagiam=tongtien-hesogiam*tongtien;
+			model.addAttribute("tiendagiam",tiendagiam);
 			return "frontend/checkout";
 		}
 		public int getMaSo() {
@@ -357,5 +393,34 @@ public class ShopController {
 				session.close();
 			}
 			
+		}
+		
+		
+		@ModelAttribute("dsDonVi")
+		public Map<String,String> getTenDV(){
+			Session session = factory.getCurrentSession();
+			String hql0 = "SELECT madv FROM DVVC";
+			Query query0 = session.createQuery(hql0);
+			List<String> list0 = query0.list();
+			
+			String hql = "SELECT tendv FROM DVVC";
+			Query query = session.createQuery(hql);
+			List<String> list = query.list();
+			
+			String hql1 = "SELECT giavc FROM DVVC";
+			Query query1 = session.createQuery(hql1);
+			List<Float> list1 = query1.list();
+			
+			String hql2 = "SELECT thoigianvc FROM DVVC";
+			Query query2 = session.createQuery(hql2);
+			List<String> list2 = query2.list();
+			
+			
+			
+		    Map<String, String> tt = new HashMap<>();
+		    for(int i=0;i<list.size();i++) {
+		    	tt.put(list0.get(i).toString(),list.get(i).toString()+" Giá:"+list1.get(i).toString()+" Thời gian:"+list2.get(i).toString());
+			}
+			return tt;
 		}
 }

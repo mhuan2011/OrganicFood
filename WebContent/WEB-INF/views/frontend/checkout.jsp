@@ -117,27 +117,30 @@
                         <div class="col-lg-8 col-md-6">
                             	  <div class="form-group">
 			                      	<label>Mã số đơn đặt hàng:</label> 
-			                    	<form:input path="masoddh"  type="text" class="form-control form-control-lg"/>
+			                    	<form:input path="masoddh"  type="text" class="form-control form-control-lg" readonly="true"/>
 				                  </div>
 			                  	  <div class="form-group">
 			                      	<label>Số điện thoại:</label> 
-			                    	<form:input path="khachhang.phone"  type="text" class="form-control form-control-lg"/>
+			                    	<form:input path="khachhang.phone"  type="text" class="form-control form-control-lg" readonly="true"/>
 				                  </div>
 				                  <div class="form-group">
 			                      	<label>Ngày:</label> 
-			                    	<form:input path="ngay"  type="date" class="form-control form-control-lg"/>
+			                    	<form:input path="ngay"  type="text" class="form-control form-control-lg" readonly="true"/>
 				                  </div>
 					              <div class="form-group">
 			                      	<label>Mã NV:</label> 
-			                    	<form:input path="nhanvien.id"  type="text" class="form-control form-control-lg"/>
+			                    	<form:input path="nhanvien.id"  type="text" class="form-control form-control-lg" readonly="true"/>
 				                  </div>
 				                  <div class="form-group">
-			                      	<label>Mã DV:</label> 
-			                    	<form:input path="dvvc.madv"  type="text" class="form-control form-control-lg"/>
-				                  </div>
+									<label>Mã DV:</label>
+									<br>
+									<form:select path="dvvc.madv" class="form-control form-control-lg" items="${dsDonVi }">
+									</form:select>
+									<br>
+								  </div>
 				                  <div class="form-group">
 			                      	<label>Mã KM:</label> 
-			                    	<form:input path="makm"  type="text" class="form-control form-control-lg"/>
+			                    	<form:input path="makm"  type="text" class="form-control form-control-lg" readonly="true"/>
 				                  </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
@@ -151,7 +154,7 @@
                                 	</c:forEach>
                                 </ul>
                                 <div class="checkout__order__subtotal">Subtotal <span>${tongtien }</span></div>
-                                <div class="checkout__order__total">Total <span>$</span></div>
+                                <div class="checkout__order__total">Total <span>${tiendagiam }</span></div>
                                 
                                 
                                 <button type="submit" class="site-btn">PLACE ORDER</button>

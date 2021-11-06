@@ -109,9 +109,10 @@
 
 	<section class="shoping-cart spad">
         <div class="container">
+        <form action="shop/updateCart.html">
             <div class="row">
                 <div class="col-lg-12">
-	                <form action="shop/updateCart.html">
+	                
 	                    <div class="shoping__cart__table">
 	                        <table>
 	                            <thead>
@@ -174,7 +175,7 @@
 	                    
                     <button type="submit" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
                             Update Cart</button>
-                    </form>
+                    
                 </div>
             </div>
             <div class="row">
@@ -187,11 +188,10 @@
                 <div class="col-lg-6">
                     <div class="shoping__continue">
                         <div class="shoping__discount">
-                            <h5>Discount Codes</h5>
-                            <form action="#">
-                                <input type="text" placeholder="Enter your coupon code">
-                                <button type="submit" class="site-btn">APPLY COUPON</button>
-                            </form>
+                            
+                                <input id="discount" name="discount" type="text" placeholder="Enter your coupon code">
+                                ${messDiscount }
+                            
                         </div>
                     </div>
                 </div>
@@ -200,12 +200,13 @@
                         <h5>Cart Total</h5>
                         <ul>
                             <li>Subtotal <span>${tongtien}</span></li>
-                            <li>Total <span>$</span></li>
+                            <li>Total <span>${tiendagiam }</span></li>
                         </ul>
                         <a href="shop/checkout.html" class="primary-btn">PROCEED TO CHECKOUT</a>
                     </div>
                 </div>
             </div>
+            </form>
         </div>
     </section>
 

@@ -9,9 +9,6 @@
           	<div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Thông tin đơn đặt hàng chi tiết</h4>
-                  <p class="card-description">
-                    Add classes like <code>.form-control-lg</code> and <code>.form-control-sm</code>.
-                  </p>
                   <form:form action="admin/dathang/edit-dathang.html" method="post" modelAttribute="DatHang">
                   	  <div class="form-group">
                       	<label>Mã số đơn đặt hàng:</label> 
@@ -43,6 +40,60 @@
 						  <form:select path="trangthai" class="form-control form-control-lg" items="${dstrangthai }">
 						  </form:select>
 						</div>
+					  
+					  <table class="table table-bordered">
+	                    <thead>
+	                      <tr>
+	                        <th style="width: 5%">
+	                          STT
+	                        </th>
+	                        <th style="width: 12%">
+	                          Mã số DDH
+	                        </th>
+	                        <th >
+	                          Nông sản
+	                        </th>
+	                        <th >
+	                          Số lượng
+	                        </th>
+	                        <th >
+	                          Đơn giá
+	                        </th>
+	                        <th >
+	                          Tổng tiền
+	                        </th>
+	                      </tr>
+	                    </thead>
+	                    <tbody>
+	 
+	                    <% int count = 1; %>
+	                   <c:forEach var="s" items="${CTDDH }" varStatus="count">
+		                    <tr>
+		                        <td>
+		                          <%=count++%>
+		                          
+		                        </td>
+		                        <td>
+		                         	${s.getMasoddh() }
+		                        </td>
+		                        <td>
+		                          	${s.getNongsan().getName() }
+		                        </td>
+		                        <td>
+		                          	${s.getSoluong() }
+		                        </td>
+		                        <td>
+		                          	${s.getDongia() }
+		                        </td>
+		                        <td>
+		                          	${s.getSoluong()*s.getDongia() }
+		                        </td>
+		                      </tr>
+	                    </c:forEach>
+	                    </tbody>
+	                  </table>
+					  
+					  <br>
 	                  <button class="btn btn-gradient-info btn-fw">Lưu</button>
                   </form:form>
                 </div>

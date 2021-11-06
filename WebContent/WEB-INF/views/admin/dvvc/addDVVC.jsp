@@ -9,9 +9,6 @@
           	<div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Thông tin đơn vị vận chuyển chi tiết</h4>
-                  <p class="card-description">
-                    Add classes like <code>.form-control-lg</code> and <code>.form-control-sm</code>.
-                  </p>
                   <form:form action="admin/dvvc/insert-dvvc.html" method="post" modelAttribute="DVVC">
                   	<div class="form-group">
                     <label>Mã đơn vị:</label>
