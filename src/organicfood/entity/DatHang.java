@@ -45,8 +45,9 @@ public class DatHang {
 	@JoinColumn(name="MADV")
 	DVVC dvvc;
 	
-	@Column(name = "MAKM")
-	String makm;
+	@ManyToOne
+	@JoinColumn(name="MAKM")
+	KhuyenMai makm;
 
 	public String getMasoddh() {
 		return masoddh;
@@ -101,11 +102,11 @@ public class DatHang {
 		this.dvvc = dvvc;
 	}
 
-	public String getMakm() {
+	public KhuyenMai getMakm() {
 		return makm;
 	}
 
-	public void setMakm(String makm) {
+	public void setMakm(KhuyenMai makm) {
 		this.makm = makm;
 	}
 	

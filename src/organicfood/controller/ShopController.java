@@ -31,9 +31,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import organicfood.bean.Account;
 import organicfood.bean.Mailer;
 import organicfood.bean.Uploadfile;
+import organicfood.entity.BaiViet;
 import organicfood.entity.ChiTietDDH;
 import organicfood.entity.DatHang;
 import organicfood.entity.KhachHang;
+import organicfood.entity.KhuyenMai;
 import organicfood.entity.LoaiNongSan;
 import organicfood.entity.NongSan;
 
@@ -213,26 +215,80 @@ public class ShopController {
 			return "frontend/shoppingCart";
 		}
 		public String maKhuyenMai;
+		
 		public float getHesogiam(String id) {
 			Session session = factory.getCurrentSession();
 			Date now=new Date();
-			String hql = "SELECT discount FROM KhuyenMai WHERE id = :id";
-			//String hql = "SELECT discount FROM KhuyenMai WHERE id = :id and begin<=now and end>=now";
+			Date begin=null,end=null;
+			
+			String hql = "SELECT discount FROM KhuyenMai WHERE id = :id AND quantity>0 ";
+			//String hql = "SELECT discount FROM KhuyenMai AS K WHERE K.id = :id AND :now BETWEEN K.begin AND K.end";
+			
 			Query query = session.createQuery(hql);
 			query.setParameter("id", id);
+			//query.setDate("now",now);
+			
 			//query.setParameter("now", now);
-			System.out.print("string list:"+query.list().get(0));
-			String tam=query.list().get(0).toString();
-			System.out.print("string tam:"+tam);
+			
+//			String hql1 = "SELECT begin FROM KhuyenMai WHERE id = :id";
+//			Query query1 = session.createQuery(hql1);
+//			query1.setParameter("id", id);
+//			
+//			String hql2 = "SELECT end FROM KhuyenMai WHERE id = :id";
+//			Query query2 = session.createQuery(hql2);
+//			query2.setParameter("id", id);
+//			
+//			try {
+//				begin = new SimpleDateFormat("dd-MM-yyyy").parse(query1.list().get(0).toString());
+//				end = new SimpleDateFormat("dd-MM-yyyy").parse(query2.list().get(0).toString());
+//			} catch (ParseException e1) {
+//				e1.printStackTrace();
+//			}
+			
+			
+			//System.out.print("string list:"+query.list().get(0));
+			String tam="0";
+			try {
+				tam=query.list().get(0).toString();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+//			if(query.list().get(0).toString()!=null) {
+//				tam=query.list().get(0).toString();
+//			}
+//			String tam="0";tam=query.list().get(0).toString();
+			//System.out.print("string tam:"+tam);
 			float kq =0f;
+//			if(now.after(begin)&&now.before(end)) {
+//				return kq;
+//			}
 			try {
 				kq=Float.parseFloat(tam);
 			}catch(Exception e) {
 			}
+			
+			
+			
 			System.out.print("he so giam:"+kq);
 			return kq;
 		}
 		//check out
+		
+		public KhuyenMai getKhuyenMai(String id) {
+			Session session = factory.getCurrentSession();
+			String hql = "FROM KhuyenMai where id = :id";
+			Query query = session.createQuery(hql);
+			query.setParameter("id", id);
+			KhuyenMai u =null;
+			try {
+				u = (KhuyenMai) query.list().get(0);
+			}catch(Exception e) {
+				
+			}
+			 
+			return u;
+		}
+		
 		@RequestMapping("checkout")
 		public String showCheckout(ModelMap model,HttpSession httpsession) {
 			Account a=(Account)httpsession.getAttribute("user");
@@ -243,7 +299,7 @@ public class ShopController {
 			int maso=getMaSo()+1;
 			dh.setMasoddh(maso+"");
 			dh.setKhachhang(client);
-			dh.setMakm(maKhuyenMai);
+			dh.setMakm(getKhuyenMai(maKhuyenMai));
 			Date date = new Date();
 	        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 	        String strDate = formatter.format(date);
@@ -304,7 +360,7 @@ public class ShopController {
 			}
 			for(int i=0;i<listNS.size();i++) {
 				ChiTietDDH ct=new ChiTietDDH();
-				ct.setMasoddh(dh.getMasoddh());;
+				ct.setMasoddh(dh);;
 				ct.setNongsan(listNS.get(i));
 				ct.setSoluong(listSLNS.get(i));
 				ct.setDongia(listNS.get(i).getPrice());
@@ -348,11 +404,8 @@ public class ShopController {
 			String body = nd;
 			
 			boolean result = send(from, email, subject, body);
-			if(result) {
-//				this.message = "Email gửi thành công";
-				return "frontend/orderSuccess";
-			}
-			return "frontend/checkout";
+			
+			return "frontend/orderSuccess";
 		}
 		//send email
 		@Autowired

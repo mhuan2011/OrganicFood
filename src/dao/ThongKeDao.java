@@ -26,8 +26,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ThongKeDao {
 
-	public static long sumListOrder(SessionFactory factory, List<DatHang> list) {
-		long sum = 0;
+	public static float sumListOrder(SessionFactory factory, List<DatHang> list) {
+		float sum = 0;
 		Session session = factory.getCurrentSession();
 		String hql = "";
 		Query query = null;
@@ -39,13 +39,17 @@ public class ThongKeDao {
 			listOrder = query.list();
 			for(ChiTietDDH s :listOrder) {
 				sum += s.getDongia()*s.getSoluong();
+				
+			}
+			if(i.getMakm()!=null) {
+				sum*=(1-i.getMakm().getDiscount());
 			}
 		}
 		
 		return sum;
 	}
 	
-	public static long thongKeDoanhSo(SessionFactory factory, Date fromDate, Date toDate) {
+	public static float thongKeDoanhSo(SessionFactory factory, Date fromDate, Date toDate) {
 		Session session = factory.getCurrentSession();
 		List<DatHang> list= new ArrayList<>();
 		Query query = null;
@@ -87,23 +91,7 @@ public class ThongKeDao {
 	}
 	
 	
-	public static HashMap<String, Integer> thongKeTrangThaiDonHang2(SessionFactory factory, Date fromDate, Date toDate){
-		String hql = "FROM DatHang where ngay BETWEEN :fromDate AND :toDate AND trangthai='Ä�Ă£ giao'";
-		Session session = factory.getCurrentSession();
-		Query query = session.createQuery(hql);
-		query.setDate("fromDate", fromDate); 
-		 query.setDate("toDate", toDate); 
-		List<DatHang> list = query.list();
-		HashMap<String, Integer> map = new HashMap<>();
-		for(DatHang s: list) {
-			if(map.get(s.getTrangthai())==null) {// chua co trang thai trong danh sach thi them vao ds
-				map.put(s.getTrangthai(), 1);
-			}else {
-				map.put(s.getTrangthai(), map.get(s.getTrangthai())+1);
-			}
-		}
-		return map;
-	}
+
 	
 	public static List<Object[]> thongKeTrangThaiDonHang(SessionFactory factory, Date fromDate, Date toDate){
 		String hql = "select trangthai, count(trangthai) FROM DatHang where ngay BETWEEN :fromDate AND :toDate group by trangthai";
@@ -114,7 +102,7 @@ public class ThongKeDao {
 		return query.list();
 	}
 	
-	public static  HashMap<NongSan, Long> thongKeTungSanPham(SessionFactory factory, Date fromDate, Date toDate){
+	public static  HashMap<NongSan, Float> thongKeTungSanPham(SessionFactory factory, Date fromDate, Date toDate){
 		String hql = "FROM DatHang where ngay BETWEEN :fromDate AND :toDate AND trangthai=:trangthai";
 		Session session = factory.getCurrentSession();
 		Query query = session.createQuery(hql);
@@ -123,7 +111,7 @@ public class ThongKeDao {
 		 query.setString("trangthai", "Đã giao");
 		 List<DatHang> datHang = query.list();
 		 System.out.println("List dathang:" + datHang.size());
-		 HashMap<String, Long> map = new HashMap<>();
+		 HashMap<String, Float> map = new HashMap<>();
 		 for(DatHang i : datHang) {
 			 
 			 String hql2 = "FROM ChiTietDDH where masoddh.id=:masoddh";
@@ -132,7 +120,10 @@ public class ThongKeDao {
 			 List<ChiTietDDH> CTDDH = query.list();// tra ve ds ctddh
 			 System.out.println("Chi tiet ddh size:" + CTDDH.size());
 			 for(ChiTietDDH ctDDH: CTDDH) {
-				 long doanhThu = (long) (ctDDH.getSoluong()*ctDDH.getDongia());
+				 float doanhThu = (long) (ctDDH.getSoluong()*ctDDH.getDongia());
+				 if(i.getMakm()!=null) {
+					 doanhThu = doanhThu *(1 - i.getMakm().getDiscount());
+				 }
 				 String idNongSan = ctDDH.getNongsan().getId();
 				 if(map.get(idNongSan)==null) {// chua co trang thai trong danh sach thi them vao ds
 						map.put(idNongSan, doanhThu);
@@ -142,7 +133,7 @@ public class ThongKeDao {
 					}
 			 }
 		 }
-		 HashMap<NongSan, Long> mapNS = new HashMap<>();
+		 HashMap<NongSan, Float> mapNS = new HashMap<>();
 		 List<Object[]> list = new ArrayList<>();
 		 int max=10;
 		 int i=0;

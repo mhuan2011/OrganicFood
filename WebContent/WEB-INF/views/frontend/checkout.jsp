@@ -140,7 +140,7 @@
 								  </div>
 				                  <div class="form-group">
 			                      	<label>Mã KM:</label> 
-			                    	<form:input path="makm"  type="text" class="form-control form-control-lg" readonly="true"/>
+			                    	<form:input path="makm.id"  type="text" class="form-control form-control-lg" readonly="true"/>
 				                  </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
