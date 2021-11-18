@@ -26,6 +26,7 @@
   <!-- endinject -->
   <!-- Custom js for this page-->
   <script src="resources/js/dashboard.js"></script>
+    <script src="resources/js/stats.js"></script>
   <!-- End custom js for this page-->
 </body>
 

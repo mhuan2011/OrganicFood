@@ -15,7 +15,7 @@
                             <li><a href="index.html">Home</a></li>
                             <li><a href="shop/shop.html">Shop</a></li>
                       	
-                            <li class="active"><a href="blog/index.html">Blog</a></li>
+                            <li class="active"><a href="blog/blogView.html">Blog</a></li>
                             <li><a href="./contact.html">Contact</a></li>
                         </ul>
                     </nav>
@@ -38,59 +38,7 @@
     </header>
     <!-- Header Section End -->
 
-    <!-- Hero Section Begin -->
-    <section class="hero hero-normal">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="hero__categories">
-                        <div class="hero__categories__all">
-                            <i class="fa fa-bars"></i>
-                            <span>All departments</span>
-                        </div>
-                        <ul>
-                            <li><a href="#">Fresh Meat</a></li>
-                            <li><a href="#">Vegetables</a></li>
-                            <li><a href="#">Fruit & Nut Gifts</a></li>
-                            <li><a href="#">Fresh Berries</a></li>
-                            <li><a href="#">Ocean Foods</a></li>
-                            <li><a href="#">Butter & Eggs</a></li>
-                            <li><a href="#">Fastfood</a></li>
-                            <li><a href="#">Fresh Onion</a></li>
-                            <li><a href="#">Papayaya & Crisps</a></li>
-                            <li><a href="#">Oatmeal</a></li>
-                            <li><a href="#">Fresh Bananas</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-9">
-                    <div class="hero__search">
-                        <div class="hero__search__form">
-                            <form action="#">
-                                <div class="hero__search__categories">
-                                    All Categories
-                                    <span class="arrow_carrot-down"></span>
-                                </div>
-                                <input type="text" placeholder="What do yo u need?">
-                                <button type="submit" class="site-btn">SEARCH</button>
-                            </form>
-                        </div>
-                        <div class="hero__search__phone">
-                            <div class="hero__search__phone__icon">
-                                <i class="fa fa-phone"></i>
-                            </div>
-                            <div class="hero__search__phone__text">
-                                <h5>+65 11.188.888</h5>
-                                <span>support 24/7 time</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Hero Section End -->
-
+   
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-section set-bg" data-setbg="resources/frontend/img/breadcrumb.jpg">
         <div class="container">
@@ -142,7 +90,7 @@
                         <div class="blog__sidebar__item">
                             <h4>Recent News</h4>
                             <div class="blog__sidebar__recent">
-                            	 <c:forEach var="s" items="${blogs }" varStatus="count">
+                            	 <c:forEach var="s" items="${recentBlogs }" varStatus="count">
                          	 <a href="blog/blogDetail/${s.getMaBV() }.html" class="blog__sidebar__recent__item">
                                     <div class="blog__sidebar__recent__item__pic">
                                         <img style="width:50px; height: 50px" src="UploadFiles/${s.getHinhAnh() }" alt="">
@@ -161,8 +109,18 @@
                 
                                         
  <!--=========================================load bài viết lên=============================  -->
+ 
+ 
                 <div class="col-lg-8 col-md-7">
+                <%--  <div>
+				
+				 <jsp:useBean id="pagedListHolder" scope="request"
+						type="org.springframework.beans.support.PagedListHolder" />
+					<c:url value="admin/blog/blogView.html" var="pagedLink">
+						<c:param name="p" value="~" />
+					</c:url>  --%>
                     <div class="row">
+                   
                     <c:forEach var="s" items="${blogs }">
   <div class="col-lg-6 col-md-6 col-sm-6">
        <div class="blog__item">
@@ -172,26 +130,26 @@
            <div class="blog__item__text">
                <ul>
                    <li><i class="fa fa-calendar-o"></i> ${ s.getNgay()}</li>
-                   <li><i class="fa fa-comment-o"></i> 5</li>
                </ul>
-               <h5><a href="#">${s.getTieuDe() }</a></h5>
+               <h5><a href="blog/blogDetails/${s.getMaBV()}.html">${s.getTieuDe() }</a></h5>
                <p>${s.getTrichDan() }</p>
-               <a href="#" class="blog__btn">READ MORE <span class="arrow_right"></span></a>
+               <a href="blog/blogDetails/${s.getMaBV()}.html" class="blog__btn">READ MORE <span class="arrow_right"></span></a>
            </div>
        </div>
    </div>
    
    </c:forEach>
-                        <div class="col-lg-12">
-                            <div class="product__pagination blog__pagination">
-                                <a href="#">1</a>
-                                <a href="#">2</a>
-                                <a href="#">3</a>
-                                <a href="#"><i class="fa fa-long-arrow-right"></i></a>
-                            </div>
-                        </div>
+                        
                     </div>
+                  <%--   <div class="pt-2">
+                   	<tg:paging pagedListHolder="${pagedListHolder}"
+						pagedLink="${pagedLink}" />
+                   </div>
+                  
+                  </div> --%>
                 </div>
+                
+                
             </div>
         </div>
     </section>

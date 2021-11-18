@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.hibernate.Query;
@@ -11,13 +12,19 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import dao.CategoryBlogDao;
 import organicfood.entity.LoaiBV;
 
 @Transactional
@@ -31,9 +38,24 @@ public class CategoryBlogController {
 	SessionFactory factory;
 	
 	@RequestMapping("index")
-	public String catalogory(ModelMap model) {
+	public String catalogory(ModelMap model, HttpServletRequest request) {
+		
 		List<LoaiBV> list = this.getCategoryBlogs();
+		String search=request.getParameter("search");
+		if(search!=null) {
+			list= CategoryBlogDao.search(search, factory);
+		}else {
+			model.addAttribute("searchText", search);
+		}
+		
+		 PagedListHolder pagedListHolder = new PagedListHolder(list); 
+		 int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		 pagedListHolder.setPage(page); 
+		 pagedListHolder.setMaxLinkedPages(5);
+		 pagedListHolder.setPageSize(2);
+		 model.addAttribute("pagedListHolder", pagedListHolder);
 		model.addAttribute("categoryBlogs", list);
+		
 		return "admin/categoryBlog/index";
 	}
 	
@@ -64,18 +86,22 @@ public class CategoryBlogController {
 		return "admin/categoryBlog/addCategory";
 	}
 	@RequestMapping(value="insert-category", method=RequestMethod.POST, params = "btnAdd")
-	public String insert(ModelMap model, @ModelAttribute("LoaiBV") LoaiBV loaiBV) {
+	public String insert(ModelMap model,@Validated @ModelAttribute("LoaiBV") LoaiBV loaiBV, BindingResult errors) {
+		if(errors.hasErrors()) {
+			model.addAttribute("btnStatus", "btnAdd");
+			return "admin/categoryBlog/addCategory";
+		}
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
 		try {
 			loaiBV.setMaLoai(loaiBV.getMaLoai().trim());
 			session.save(loaiBV);
 			t.commit();
-			model.addAttribute("message", "ThĂªm má»›i thĂ nh cĂ´ng!");
+			model.addAttribute("message", "Thêm thành công!");
 		} catch (Exception e) {
 			// TODO: handle exception
 			t.rollback();
-			model.addAttribute("message", "ThĂªm má»›i tháº¥t báº¡i!");
+			model.addAttribute("message", "Thêm thất bại!");
 		} finally {
 			session.close();
 		}
@@ -97,10 +123,10 @@ public class CategoryBlogController {
 		Integer temp = this.updateCategory(lns);
 		System.out.print(lns.getMaLoai()+lns.getTenLoai()+lns.getTag());
 		if(temp==1) {
-			model.addAttribute("message", "Cáº­p nháº­t thĂ nh cĂ´ng");
+			model.addAttribute("message", "CĂ¡ÂºÂ­p nhĂ¡ÂºÂ­t thÄ‚Â nh cÄ‚Â´ng");
 		}
 		else {
-			model.addAttribute("message", "Cáº­p nháº­t tháº¥t báº¡i");
+			model.addAttribute("message", "CĂ¡ÂºÂ­p nhĂ¡ÂºÂ­t thĂ¡ÂºÂ¥t bĂ¡ÂºÂ¡i");
 		}
 		List<LoaiBV> list = this.getCategoryBlogs();
 		model.addAttribute("categoryBlogs", list);
@@ -126,32 +152,15 @@ public class CategoryBlogController {
 	}
 	
 	@RequestMapping(value="delete/{id}.html")
-	public String deleteCategory(ModelMap model,@ModelAttribute("LoaiBV") LoaiBV loaiBV, @PathVariable("id") String id) {
-		loaiBV = this.getCategoryBlog(id);
-		System.out.print(loaiBV.getMaLoai()+loaiBV.getTenLoai()+loaiBV.getTag());
-		Session session=null;
-		Transaction t = null;
-		try {
-			session = factory.openSession();
-			t = session.beginTransaction();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
+	public String deleteCategory(ModelMap model, @PathVariable("id") String id) {
+		if(CategoryBlogDao.delete(factory, id)) {
+			model.addAttribute("message","Xóa thành công!");
+		}else model.addAttribute("message", "Xóa thất bại!");
 		
-		try {
-			session.delete(loaiBV);
-			t.commit();
-			model.addAttribute("message", "Xóa thành công");
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			t.rollback();
-			model.addAttribute("message", "Xóa thất bại");
-		} finally {
-			session.close();
-		}
 		List<LoaiBV> list = this.getCategoryBlogs();
 		model.addAttribute("categoryBlogs", list);
 		return "redirect:/admin/categoryBlog/index.html";
 	}
+	
+	
 }

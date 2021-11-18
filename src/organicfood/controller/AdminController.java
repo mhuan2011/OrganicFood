@@ -103,10 +103,7 @@ public class AdminController {
 		}
 		
 	}
-	@RequestMapping("home")
-	public String showHomePages() {
-		return "admin/home";
-	}
+	
 //	logout
 	
 	@RequestMapping("/logout")

@@ -76,11 +76,9 @@ public static List<LoaiNongSan> getFeaturedCategoryProduct(SessionFactory factor
 	Session session = factory.getCurrentSession();
 	String hql = "FROM LoaiNongSan order by featured ASC";
 	Query query = session.createQuery(hql);
+	query.setMaxResults(max);
 	List<LoaiNongSan> u = query.list();
-	List<LoaiNongSan> list = new ArrayList<>();
-	for(int i=0; i< max; i++) {
-		list.add(u.get(i));
-	}
-	return list;
+	
+	return u;
 }
 }

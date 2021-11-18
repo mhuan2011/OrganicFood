@@ -1,12 +1,15 @@
 package organicfood.entity;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,7 +24,7 @@ public class DatHang {
 	
 	@Column(name = "NGAY")
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "MM/dd/yyyy")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date ngay;
 	
 	@ManyToOne
@@ -34,6 +37,9 @@ public class DatHang {
 	
 	@Column(name = "TRANGTHAI")
 	String trangthai;
+	
+	@OneToMany(mappedBy="masoddh", fetch=FetchType.EAGER)
+	private Collection<ChiTietDDH> listOrder; 
 	
 	@ManyToOne
 	@JoinColumn(name="MADV")
@@ -103,6 +109,33 @@ public class DatHang {
 		this.makm = makm;
 	}
 	
+
+	public void showListOrder() {
+		System.out.println("List order: " + masoddh);
+		for(ChiTietDDH i : listOrder) {
+			System.out.println("Chi tiết đơn đặt hàng:" + i.getMasoddh().getMasoddh());
+			System.out.println("Nông sản:" + i.getNongsan().getName());
+			System.out.println("Đơn giá:" + i.getDongia());
+			System.out.println("Số lượng:" + i.getSoluong());
+		}
+	}
 	
+	public Collection<ChiTietDDH> getListOrder() {
+		return listOrder;
+	}
+
+	public void setListOrder(Collection<ChiTietDDH> listOrder) {
+		this.listOrder = listOrder;
+	}
+	
+	public long sumListOrder() {
+		showListOrder();
+		long tong = 0;
+		for(ChiTietDDH s :listOrder) {
+			tong += s.getDongia()*s.getSoluong();
+		}
+		return tong;
+	}
+
 	
 }

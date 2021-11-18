@@ -17,20 +17,24 @@
                     <label>Mã loại:</label>
                     <c:if test="${btnStatus == 'btnUpdate'}">  
                     	<form:input path="maLoai"  type="text" class="form-control form-control-lg" placeholder="Nhập mã danh mục" aria-label="Username" readonly="true"/>
+						 <form:errors path = "maLoai" class="text-danger  mess-error-validate" />
 					</c:if>
 					<c:if test="${btnStatus == 'btnAdd'}">  
                     	<form:input path="maLoai"  type="text" class="form-control form-control-lg" placeholder="Nhập mã danh mục" aria-label="Username"/>
+						 <form:errors path = "maLoai" class="text-danger  mess-error-validate" />
 					</c:if>
-                    
+                   
 	                  </div>
 	                  <div class="form-group">
 	                    <label>Tên loại:</label>
 	                    <form:input path="tenLoai" type="text" class="form-control form-control-lg" placeholder="Nhập tên danh mục" aria-label="Username"/>
+	                  	<form:errors path = "tenLoai" class="text-danger  mess-error-validate" />
 	                  </div>
 	                  
 	                   <div class="form-group">
 	                    <label>Thẻ (tag):</label>
 	                    <form:input path="tag" type="text" class="form-control form-control-lg" placeholder="Nhập thẻ cho danh mục" aria-label="Username"/>
+	                  	
 	                  </div>
 	                  
 	                  <button name="${btnStatus }" class="btn btn-gradient-info btn-fw">Lưu</button>

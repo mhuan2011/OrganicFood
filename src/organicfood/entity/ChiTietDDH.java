@@ -1,21 +1,29 @@
 package organicfood.entity;
 
-import javax.persistence.CascadeType;
+
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+
+
+
 @Entity
-@Table(name="CTDDH")
+@Table(name="CTDDH") @IdClass(MyKey.class)
 public class ChiTietDDH {
-	@Id
-	@Column(name = "MasoDDH")
-	String masoddh;
 	
+	
+	@Id
+	@ManyToOne
+	@JoinColumn(name="MasoDDH")
+	DatHang masoddh;
+	
+	@Id
 	@ManyToOne
 	@JoinColumn(name = "MANS")
 	NongSan nongsan;
@@ -26,11 +34,14 @@ public class ChiTietDDH {
 	@Column(name = "DONGIA")
 	float dongia;
 
-	public String getMasoddh() {
+
+	
+
+	public DatHang getMasoddh() {
 		return masoddh;
 	}
 
-	public void setMasoddh(String masoddh) {
+	public void setMasoddh(DatHang masoddh) {
 		this.masoddh = masoddh;
 	}
 

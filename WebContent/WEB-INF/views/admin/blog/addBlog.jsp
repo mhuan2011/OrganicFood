@@ -11,11 +11,13 @@
                   <h4 class="card-title">Thêm bài viết mới</h4>
     
                   
-                  <form:form action="admin/blog/insertBlog.html" class="form-sample"
-                    modelAttribute="blog" method="post"   enctype="multipart/form-data"> <!-- enctype="multipart/form-data" -->
+                  <form:form action="admin/blog/insertBlog.html" class="form-sample" modelAttribute="blog" method="post" enctype="multipart/form-data">
 	                  <p class="card-description">
 	                      Thông tin bài viết	
 	                    </p>
+	               
+                    
+	                    
                   		<div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
@@ -23,6 +25,7 @@
                           
                           <div class="col-sm-9">
 		                    	<form:input path="tieuDe" type="text" class="form-control" />
+		                    	<form:errors path = "tieuDe" class="text-danger  mess-error-validate" />
                           </div>
                         </div>
                       </div> 
@@ -31,7 +34,7 @@
                           <label class="col-sm-3 col-form-label">Trích dẫn</label>
                           <div class="col-sm-9">
                             <form:input path="trichDan" type="text" class="form-control"/>
-                            
+                            <form:errors path = "trichDan" class="text-danger  mess-error-validate" />
                           </div>
                         </div>
                       </div>
@@ -48,6 +51,7 @@
                             
                             
                             <form:input path="hinhAnh" type="text" class="form-control" id="fullImgPath"/>
+                            <form:errors path = "hinhAnh" class="text-danger  mess-error-validate" />
                           </div>
                         </div>
                       </div> 
@@ -87,15 +91,16 @@
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group row">
-                          <label class="col-sm-2 col-form-label">Mô tả:</label>
+                          <label class="col-sm-2 col-form-label">Nội dung:</label>
                           <div class="col-sm-10">
                             <form:textarea id="descriptionBlog" path="noiDung" rows="10" cols="100" class="form-control"/>
+                            <form:errors path = "noiDung" class="text-danger  mess-error-validate" />
                           </div>
                         </div>
                       </div>
                       
                     </div>  
-                  		<button name="${btnStatus }" type="submit" class="btn btn-gradient-info btn-fw">Lưu</button>
+                  		<button name="${btnStatus}" type="submit" class="btn btn-gradient-info btn-fw">Lưu</button>
                   </form:form > 
                   
                   
@@ -103,11 +108,22 @@
               </div>
             </div>   
         </div>
-	
+		
 		 <script type="text/javascript">
 		var ckeditor=CKEDITOR.replace('descriptionBlog');
 		CKFinder.setupCKEditor(ckeditor,'${pageContext.request.contextPath}/resources/ckfinder/');
 		</script>
+			<script type="text/javascript">
+                            	imgChoosen.onchange = evt => {
+                            	  const [file] = imgChoosen.files
+                            	  if (file) {
+                            		  showImg.src = URL.createObjectURL(file);
+                            		  fullImgPath.value =  URL.createObjectURL(file)
+                            	  }
+                            	}
+                            	
+                            </script>
+        
 
 <!-- main-panel ends -->
 <%@include file="/WEB-INF/views/includes/footer.jsp"%>

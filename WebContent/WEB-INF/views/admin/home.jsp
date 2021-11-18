@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/views/includes/header.jsp"%>
+
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
@@ -12,24 +13,91 @@
               </span>
               Tổng quan
             </h3>
+           
             <nav aria-label="breadcrumb">
               <ul class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
                   <span></span>Overview
                   <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
                 </li>
+                
+                 
+                
               </ul>
             </nav>
+            
+            
           </div>
+         <form action="admin/home/thongKe.html" class="form-sample"  method="POST">
+          <div class="row">
+            <div class="col-md-4 stretch-card grid-margin">
+              <div class="card bg-gradient-danger card-img-holder text-white" >
+                <div class="card-body">
+                  <h4 class="font-weight-normal mb-3">Từ ngày (MM/dd/yyyy)
+                  </h4>
+                  <input name="fromDate" type="date" value="${fromDate }"  class="form-control"  aria-label="Recipient's username" aria-describedby="basic-addon2">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 stretch-card grid-margin">
+              <div class="card bg-gradient-info card-img-holder text-white">
+                 <div class="card-body">
+                  <h4 class="font-weight-normal mb-3">Dến ngày (MM/dd/yyyy)
+                  </h4>
+                  <input name="toDate" type="date" value="${toDate }"  class="form-control"  aria-label="Recipient's username" aria-describedby="basic-addon2">
+                	</div>
+              </div>
+            </div>
+            <div class="col-md-4 stretch-card grid-margin">
+              <div class="card bg-gradient-success card-img-holder text-white " style="margin: 0px auto;">
+                <div class="card-body">
+                <h4 class="font-weight-normal mb-3"> Chức năng
+                  </h4>
+                   <button   name="btnThongKe" type="submit" class="btn btn-gradient-info btn-fw">Thống kê</button>	
+                	</div>
+                
+               
+              </div>
+            </div>
+          </div>
+          </form>
+          <%-- <div class="row"  style="margin-left:10px; margin-bottom:50px; display:  inline-block;" >
+          <form action="admin/home/thongKe.html" class="form-sample"  method="POST">
+             
+                          <div class="hero__search__form">
+                             <form action="shop/search.html" method="post">
+                             From <input name="ngay" type="date" value="${today }"  class="form-control"  aria-label="Recipient's username" aria-describedby="basic-addon2">	
+                                To<input name="ngay" type="date" value="${today }"  class="form-control"  aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                  <button name="btnThongKe" type="submit" class="btn btn-gradient-info btn-fw">Thống kê</button>
+                            </form>
+                        </div>
+						
+						 <label>Thời gian (MM/dd/yyyy):</label>
+						 
+						<input style="display: inline;" name="thoiGian" type="date"  class="form-control" value="${today }"/>
+						
+						
+						 <label>Thời gian (MM/dd/yyyy):</label>
+						 
+						<input style="display: inline;" name="thoiGian" type="date"  class="form-control" value="${today }"/>
+                         
+                              <input name="thoiGian" type="date" class="form-control" value="<%= new java.util.Date(System.currentTimeMillis()) %>"/>
+                   <br>
+                       
+             
+           
+             </form>
+             
+          </div> --%>
           <div class="row">
             <div class="col-md-4 stretch-card grid-margin">
               <div class="card bg-gradient-danger card-img-holder text-white">
                 <div class="card-body">
                   <img src="resources/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image"/>
-                  <h4 class="font-weight-normal mb-3">Doanh số hằng tuần
+                  <h4 class="font-weight-normal mb-3">Doanh số
                     <i class="mdi mdi-chart-line mdi-24px float-right"></i>
                   </h4>
-                  <h2 class="mb-5">130,500,0000 VNĐ</h2>
+                  <h2>${doanhSo }</h2>
                   <h6 class="card-text">Increased by 60%</h6>
                 </div>
               </div>
@@ -41,7 +109,7 @@
                   <h4 class="font-weight-normal mb-3">Số đơn đặt hàng
                     <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
                   </h4>
-                  <h2 class="mb-5">45,6334</h2>
+                  <h2 class="mb-5">${donDatHang }</h2>
                   <h6 class="card-text">Decreased by 10%</h6>
                 </div>
               </div>
@@ -53,7 +121,7 @@
                   <h4 class="font-weight-normal mb-3">Tổng số khách hàng
                     <i class="mdi mdi-diamond mdi-24px float-right"></i>
                   </h4>
-                  <h2 class="mb-5">25,5741</h2>
+                  <h2 class="mb-5">${khachHang }</h2>
                   <h6 class="card-text">Increased by 5%</h6>
                 </div>
               </div>
@@ -64,20 +132,23 @@
               <div class="card">
                 <div class="card-body">
                   <div class="clearfix">
-                    <h4 class="card-title float-left">Visit And Sales Statistics</h4>
+                    <h4 class="card-title float-left">Biểu đồ doanh thu sản phẩm</h4>
                     <div id="visit-sale-chart-legend" class="rounded-legend legend-horizontal legend-top-right float-right"></div>                                     
                   </div>
-                  <canvas id="visit-sale-chart" class="mt-4"></canvas>
+                  <canvas id="barChart" ></canvas>
                 </div>
               </div>
             </div>
+            
+            
+           
             <div class="col-md-5 grid-margin stretch-card">
               <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Traffic Sources</h4>
-                  <canvas id="traffic-chart"></canvas>
-                  <div id="traffic-chart-legend" class="rounded-legend legend-vertical legend-bottom-left pt-4"></div>                                                      
-                </div>
+               <h4 style="text-align:center; margin-top:30px"class="card-title">Trạng thái đơn hàng</h4>	
+               <br>
+               <br>
+               <br>
+              <canvas id="traffic-chart2"></canvas>
               </div>
             </div>
           </div>
@@ -85,249 +156,55 @@
             <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Recent Tickets</h4>
+                  <h4 class="card-title">Doanh thu từng sản phẩm</h4>
                   <div class="table-responsive">
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <th>
-                            Assignee
-                          </th>
-                          <th>
-                            Subject
-                          </th>
-                          <th>
-                            Status
-                          </th>
-                          <th>
-                            Last Update
-                          </th>
-                          <th>
-                            Tracking ID
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>
-                            <img src="resources/images/faces/face1.jpg" class="mr-2" alt="image">
-                            David Grey
-                          </td>
-                          <td>
-                            Fund is not recieved
-                          </td>
-                          <td>
-                            <label class="badge badge-gradient-success">DONE</label>
-                          </td>
-                          <td>
-                            Dec 5, 2017
-                          </td>
-                          <td>
-                            WD-12345
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <img src="resources/images/faces/face2.jpg" class="mr-2" alt="image">
-                            Stella Johnson
-                          </td>
-                          <td>
-                            High loading time
-                          </td>
-                          <td>
-                            <label class="badge badge-gradient-warning">PROGRESS</label>
-                          </td>
-                          <td>
-                            Dec 12, 2017
-                          </td>
-                          <td>
-                            WD-12346
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <img src="resources/images/faces/face3.jpg" class="mr-2" alt="image">
-                            Marina Michel
-                          </td>
-                          <td>
-                            Website down for one week
-                          </td>
-                          <td>
-                            <label class="badge badge-gradient-info">ON HOLD</label>
-                          </td>
-                          <td>
-                            Dec 16, 2017
-                          </td>
-                          <td>
-                            WD-12347
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <img src="resources/images/faces/face4.jpg" class="mr-2" alt="image">
-                            John Doe
-                          </td>
-                          <td>
-                            Loosing control on server
-                          </td>
-                          <td>
-                            <label class="badge badge-gradient-danger">REJECTED</label>
-                          </td>
-                          <td>
-                            Dec 3, 2017
-                          </td>
-                          <td>
-                            WD-12348
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Recent Updates</h4>
-                  <div class="d-flex">
-                    <div class="d-flex align-items-center mr-4 text-muted font-weight-light">
-                      <i class="mdi mdi-account-outline icon-sm mr-2"></i>
-                      <span>jack Menqu</span>
-                    </div>
-                    <div class="d-flex align-items-center text-muted font-weight-light">
-                      <i class="mdi mdi-clock icon-sm mr-2"></i>
-                      <span>October 3rd, 2018</span>
-                    </div>
-                  </div>
-               
                   
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Project Status</h4>
-                  <div class="table-responsive">
                     <table class="table">
                       <thead>
                         <tr>
-                          <th>
-                            #
+                        
+                         <th>
+                            STT
                           </th>
                           <th>
-                            Name
+                            Mã sản phẩm
                           </th>
                           <th>
-                            Due Date
+                            Tên sản phẩm
                           </th>
                           <th>
-                            Progress
+                            Hình ảnh
+                          </th>
+                          <th>
+                           Doanh thu
                           </th>
                         </tr>
                       </thead>
+                      
                       <tbody>
+                        <% int count = 1; %>
+                      <c:forEach var="trangThai" items="${sanPham }">
                         <tr>
+                        	
+                        		 <td>
+	                          <%=count++%>
+	                          
+	                        </td>
                           <td>
-                            1
+                            ${trangThai.key.getId()}
+                          </td>
+                           <td>
+                            ${trangThai.key.getName()}
+                          </td>
+                           <td>
+                            <img src="UploadFiles/${trangThai.key.getImage()}"/>
                           </td>
                           <td>
-                            Herman Beck
+                             ${trangThai.value}
                           </td>
-                          <td>
-                            May 15, 2015
-                          </td>
-                          <td>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                          </td>
+                        
                         </tr>
-                        <tr>
-                          <td>
-                            2
-                          </td>
-                          <td>
-                            Messsy Adam
-                          </td>
-                          <td>
-                            Jul 01, 2015
-                          </td>
-                          <td>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            3
-                          </td>
-                          <td>
-                            John Richards
-                          </td>
-                          <td>
-                            Apr 12, 2015
-                          </td>
-                          <td>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-warning" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            4
-                          </td>
-                          <td>
-                            Peter Meggik
-                          </td>
-                          <td>
-                            May 15, 2015
-                          </td>
-                          <td>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-primary" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            5
-                          </td>
-                          <td>
-                            Edward
-                          </td>
-                          <td>
-                            May 03, 2015
-                          </td>
-                          <td>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-danger" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            5
-                          </td>
-                          <td>
-                            Ronald
-                          </td>
-                          <td>
-                            Jun 05, 2015
-                          </td>
-                          <td>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-info" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                          </td>
-                        </tr>
+                        </c:forEach>
                       </tbody>
                     </table>
                   </div>
@@ -335,6 +212,31 @@
               </div>
             </div>
           </div>
+         
+          
         </div>
-   
+ 
+    		<script type="text/javascript">
+    		
+    		window.addEventListener("load",function() {
+    			let cateLabels=[], cateInfos=[];
+    			<c:forEach var="o" items="${trangThaiDonHang}">
+        			cateLabels.push('${o[0]}')
+        			cateInfos.push('${o[1]}')
+        		</c:forEach>
+    			cateChart("traffic-chart2", cateLabels, cateInfos)
+    		},false);
+    		 window.addEventListener("load",function() {
+    			let cateLabels=[], cateInfos=[];
+    			<c:forEach var="i" items="${sanPham}">
+        			cateLabels.push('${i.key.getName()}')
+        			cateInfos.push('${i.value}')
+        		</c:forEach>
+    			barChart("barChart", cateLabels, cateInfos)
+    		},false); 
+   			</script>
+   			
+   			
+   			
+
 <%@include file="/WEB-INF/views/includes/footer.jsp"%>

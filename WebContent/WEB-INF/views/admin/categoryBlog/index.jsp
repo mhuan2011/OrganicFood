@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="tg" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@include file="/WEB-INF/views/includes/header.jsp"%>
       <!-- partial -->
       <div class="main-panel">
@@ -18,16 +20,35 @@
                   </p>
  
                   <%-- Hello <b><%= request.getParameter("message") %></b>! --%>
-                  <c:set var = "mess"  value = "${message }"/>
+                    <c:set var = "mess"  value = "${message }"/>
                   <c:out value="${mess}"></c:out>
-                  <c:if test="${message != null}">  
-					<div class="alert alert-success alert-dismissible fade show " role="alert">
-					  <strong>${message}</strong>
-					  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					    <span aria-hidden="true">&times;</span>
-					  </button>
-					</div>
-				</c:if>
+                  <%
+					    if (request.getParameter("message") != null) {
+					        out.println("<div class='alert alert-success alert-dismissible fade show'> <strong>"+request.getParameter("message")+"</strong> <button type='button' class='close' data-dismiss='alert' aria-label='Close'> <span aria-hidden='true'>&times;</span> </button> </div>");
+					    }
+					%>
+				
+				<!-- searcch -->
+				
+					<form class="form-group col-6 float-right m-0 pr-0" action="admin/categoryBlog/index.html" method="post">
+					<div class="form-group ">
+                    <div class="input-group">
+                      <input name="search" type="text" value="${searchText }"  class="form-control" placeholder="Nhập tên sản phẩm cần tìm" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                      <div class="input-group-append">
+                        <button name="btnsearch" class="btn btn-sm btn-gradient-primary" type="submit">Tìm kiếm</button>
+                      </div>
+                    </div>
+                  </div>
+				</form>
+				
+				<!-- list -->
+				
+				<div>
+				 <jsp:useBean id="pagedListHolder" scope="request"
+						type="org.springframework.beans.support.PagedListHolder" />
+					<c:url value="admin/categoryBlog/index.html" var="pagedLink">
+						<c:param name="p" value="~" />
+					</c:url> 
                   <table class="table table-bordered">
                     <thead>
                     
@@ -56,7 +77,8 @@
                     <tbody>
  
                     <% int count = 1; %>
-                   <c:forEach var="s" items="${categoryBlogs}" varStatus="count">
+                  <%--  <c:forEach var="s" items="${categoryBlogs}" varStatus="count"> --%>
+                   <c:forEach var="s" items="${pagedListHolder.pageList}"> 
 	                    <tr>
 	                        <td>
 	                          <%=count++%>
@@ -113,13 +135,19 @@
                     </tbody>
                     
                   </table>
+                  
+                  <div class="pt-2">
+                   	<tg:paging pagedListHolder="${pagedListHolder}"
+						pagedLink="${pagedLink}" />
+                   </div>
+                  
+                  </div>
                   <a href="admin/categoryBlog/add.html" class="btn btn-gradient-primary mr-2" style="margin-top: 15px;">Thêm Danh Mục</a>
                 </div>
               </div>
             </div>
             
         </div>
-		
-        
+	
       <!-- main-panel ends -->
 <%@include file="/WEB-INF/views/includes/footer.jsp"%>
