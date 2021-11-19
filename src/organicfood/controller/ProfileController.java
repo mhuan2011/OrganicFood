@@ -71,6 +71,7 @@ public class ProfileController {
 		} catch (Exception e) {
 			// TODO: handle exception
 			t.rollback();	
+			e.printStackTrace();
 		} finally {
 			session.close();
 		}
