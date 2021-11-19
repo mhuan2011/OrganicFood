@@ -1,4 +1,4 @@
-package ptithcm.Interceptor;
+package organicfood.Interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

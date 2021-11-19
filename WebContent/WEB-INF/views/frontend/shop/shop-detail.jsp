@@ -11,11 +11,12 @@
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li ><a href="index.html">Home</a></li>
-                            <li class="active"><a href="shop/shop.html">Shop</a></li>
-                            
-                            <li><a href="blog/index.html">Blog</a></li>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="shop/shop.html">Shop</a></li>
+                      	
+                            <li class="active"><a href="blog/blogView.html">Blog</a></li>
                             <li><a href="./contact.html">Contact</a></li>
+                            <li><a href="ordered.html">Ordered</a></li>
                         </ul>
                     </nav>
                 </div>

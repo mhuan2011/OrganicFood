@@ -20,6 +20,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 	<link rel = "icon" href = "resources/images/icon.svg" type = "image/x-icon">
     <!-- Css Styles -->
+    <link rel="stylesheet" href="resources/frontend/css/contact.css" type="text/css">
     <link rel="stylesheet" href="resources/frontend/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="resources/frontend/css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="resources/frontend/css/elegant-icons.css" type="text/css">
@@ -28,6 +29,7 @@
     <link rel="stylesheet" href="resources/frontend/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="resources/frontend/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="resources/frontend/css/style.css" type="text/css">
+    
 </head>
 
 <body>
@@ -69,19 +71,20 @@
                 <li><a href="shop/shop.html">Shop</a></li>
                
                 <li><a href="blog/blogView.html">Blog</a></li>
-                <li><a href="./contact.html">Contact</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="ordered.html">Ordered</a></li>
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
         <div class="header__top__right__social">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-linkedin"></i></a>
-            <a href="#"><i class="fa fa-pinterest-p"></i></a>
+            <a href="https://www.facebook.com/huunhan28"><i class="fa fa-facebook"></i></a>
+            <a href="https://www.instagram.com/huu.nhan.28/"><i class="fa fa-instagram"></i></a>
+            <a href="https://twitter.com/huunhan28"><i class="fa fa-twitter"></i></a>
+            <a href="https://pinterest.com/huu_nhan_28"><i class="fa fa-pinterest"></i></a>
         </div>
         <div class="humberger__menu__contact">
             <ul>
-                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+                <li><i class="fa fa-envelope"></i> phongthietbiptit@gmail.com</li>
                 <li>Free Shipping for all Order of $99</li>
             </ul>
         </div>
@@ -96,7 +99,7 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__left">
                             <ul>
-                                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+                                <li><i class="fa fa-envelope"></i> phongthietbiptit@gmail.com</li>
                                 <li>Free Shipping for all Order of $99</li>
                             </ul>
                         </div>
@@ -104,10 +107,10 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__right">
                             <div class="header__top__right__social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
-                                <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                                <a href="https://www.facebook.com/huunhan28"><i class="fa fa-facebook"></i></a>
+	                            <a href="https://www.instagram.com/huu.nhan.28/"><i class="fa fa-instagram"></i></a>
+	                            <a href="https://twitter.com/huunhan28"><i class="fa fa-twitter"></i></a>
+	                            <a href="https://pinterest.com/huu_nhan_28"><i class="fa fa-pinterest"></i></a>
                             </div>
                             <div class="header__top__right__language">
                                 <img src="resources/frontend/img/language.png" alt="">
@@ -119,7 +122,7 @@
                                 </ul>
                             </div>
                             <div class="header__top__right__auth">
-                                <a href="#"><i class="fa fa-user"></i>${phoneNumber}</a>
+                                <a href="profile.html"><i class="fa fa-user"></i>${phoneNumber}</a>
                             </div>
                         </div>
                     </div>

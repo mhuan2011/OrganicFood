@@ -1,0 +1,108 @@
+/* body {
+    background: linear-gradient(90deg, #145889 0%, #AB47BC 100%)
+} */
+
+.container1 {
+    background-color: white;
+    text-align: center;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, .2);
+    margin-bottom: 50px
+}
+
+.title1 {
+    font-size: 25px;
+    font-weight: 100
+}
+
+.icon1 {
+    position: relative;
+    bottom: 11px
+}
+
+.mt-1001 {
+    margin-top: 100px
+}
+
+.profile1 img {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%
+}
+
+.card1 {
+    border-radius: 15px;
+    margin-left: 30px;
+    margin-right: 30px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .2)
+}
+
+.card-body1 {
+    position: relative;
+    bottom: 35px
+}
+
+.btn1 {
+    margin-top: 36px;
+    margin-bottom: 45px;
+    background-color: #AB47BC;
+    border: none;
+    color: #fff
+}
+
+.btn1:hover {
+    -webkit-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    transform: scale(1.05);
+    color: #fff
+}
+
+.header1 {
+    padding-top: 40px
+}
+
+
+/* body {
+    background: rgb(99, 39, 120)
+} */
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #BA68C8
+}
+
+.profile-button {
+    background: rgb(99, 39, 120);
+    box-shadow: none;
+    border: none
+}
+
+.profile-button:hover {
+    background: #682773
+}
+
+.profile-button:focus {
+    background: #682773;
+    box-shadow: none
+}
+
+.profile-button:active {
+    background: #682773;
+    box-shadow: none
+}
+
+.back:hover {
+    color: #682773;
+    cursor: pointer
+}
+
+.labels {
+    font-size: 11px
+}
+
+.add-experience:hover {
+    background: #BA68C8;
+    color: #fff;
+    cursor: pointer;
+    border: solid 1px #BA68C8
+}

@@ -11,18 +11,12 @@
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li><a href="./index.html">Home</a></li>
-                            <li class="active"><a href="./shop-grid.html">Shop</a></li>
-                            <li><a href="#">Pages</a>
-                                <ul class="header__menu__dropdown">
-                                    <li><a href="./shop-details.html">Shop Details</a></li>
-                                    <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                                    <li><a href="./checkout.html">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="./blog.html">Blog</a></li>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="shop/shop.html">Shop</a></li>
+                      	
+                            <li class="active"><a href="blog/blogView.html">Blog</a></li>
                             <li><a href="./contact.html">Contact</a></li>
+                            <li><a href="ordered.html">Ordered</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -139,7 +133,7 @@
 		                                        <h5>${ns.getName() }</h5>
 		                                    </td>
 		                                    <td class="shoping__cart__price">
-		                                        ${ns.getPrice() }
+		                                        ${ns.getPrice()-ns.getPrice()*ns.getDiscount() }
 		                                    </td>
 		                                    <td class="shoping__cart__quantity">
 		                                        <div >
@@ -150,8 +144,9 @@
 		                                           	</div>
 		                                        </div>
 		                                    </td>
+		                                    
 		                                    <td class="shoping__cart__total">
-		                                        ${ns.getPrice()*listSLNS.get(count.index)}
+		                                        ${ns.getPrice()*listSLNS.get(count.index)-ns.getPrice()*ns.getDiscount()*listSLNS.get(count.index)}
 		                                    </td>
 		                                    <td class="shoping__cart__item__close">
 		                                        <a href="shop/deleteShoppingCart/<%=count%>.html">

@@ -11,11 +11,12 @@
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li ><a href="index.html">Home</a></li>
+                            <li><a href="index.html">Home</a></li>
                             <li class="active"><a href="shop/shop.html">Shop</a></li>
-                            
+                      	
                             <li><a href="blog/blogView.html">Blog</a></li>
                             <li><a href="./contact.html">Contact</a></li>
+                            <li><a href="ordered.html">Ordered</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -206,7 +207,7 @@
 		                                            </div>
 		                                            <ul class="product__item__pic__hover">
 		                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-		                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+		                                                <li><a href="shop/shoppingCart/${s.getId()}.html"><i class="fa fa-shopping-cart"></i></a></li>
 		                                            </ul>
 		                                        </div>
 		                                        <div class="product__discount__item__text">
@@ -257,7 +258,7 @@
 	                                <div class="product__item__pic set-bg" data-setbg="UploadFiles/${s.getImage() }" >
 	                                    <ul class="product__item__pic__hover">
 	                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-	                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+	                                        <li><a href="shop/shoppingCart/${s.getId()}.html"><i class="fa fa-shopping-cart"></i></a></li>
 	                                    </ul>
 	                                </div>
 	                                <div class="product__item__text">

@@ -1,9 +1,61 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/views/includes/header.jsp"%>
-      <!-- partial -->
-      <div class="main-panel">
-        <div class="content-wrapper">
+<%@include file="/WEB-INF/views/includes/frontend/header.jsp"%>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="header__logo">
+                        <a href="./index.html"><img src="resources/frontend/img/logo.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <nav class="header__menu">
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="shop/shop.html">Shop</a></li>
+                      	
+                            <li><a href="blog/blogView.html">Blog</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                            <li class="active"><a href="ordered.html">Ordered</a></li>
+                            
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__cart">
+                        <ul>
+                            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
+                            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                        </ul>
+                        <div class="header__cart__price">item: <span>$150.00</span></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="humberger__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+
+   
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="resources/frontend/img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Đơn hàng</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+	<div class='container1 mx-auto mt-5 col-md-10 mt-100'>
+    <div class="content-wrapper">
       
           
           <div class="col-lg-12 grid-margin stretch-card">
@@ -11,20 +63,8 @@
               <div class="card">
               
                 <div class="card-body">
-                  <h4 class="card-title">Danh sách đơn đặt hàng</h4>
-                  <p class="card-description">
-                    Quản lí danh sách đơn đặt hàng của công ty
-                    ${message}
-                  </p>
-                  <c:if test="${message != null}">  
-					<div class="alert alert-success alert-dismissible fade show " role="alert">
-					  <strong>${message}</strong>
-					  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					    <span aria-hidden="true">&times;</span>
-					  </button>
-					</div>
-				</c:if>
-                  <table class="table table-bordered">
+
+                  <table class="table table-borderless">
                     <thead>
                     
                     
@@ -89,30 +129,12 @@
 	                          	${s.getTrangthai() }
 	                        </td>
 	                        <td>
-	                          <a href="admin/dathang/edit/${s.getMasoddh()}.html">Chi tiết</a>
+	                          <a href="order/details/${s.getMasoddh()}.html">Chi tiết</a>
 	                        </td>
 	                      </tr>
                     
                     
                     </c:forEach>
-                      <!-- <tr>
-	                        <td>
-	                          1
-	                        </td>
-	                        <td>
-	                         	MNS
-	                        </td>
-	                        <td>
-	                          	TAM
-	                        </td>
-	                        <td>
-	                          Delete
-	                        </td>
-	                        <td>
-	                          Edit
-	                        </td>
-	                      </tr>
-                       -->
                     </tbody>
                   </table>
                 </div>
@@ -120,8 +142,5 @@
             </div>
             
         </div>
-
-
-        
-      <!-- main-panel ends -->
-<%@include file="/WEB-INF/views/includes/footer.jsp"%>
+	</div>
+  <%@include file="/WEB-INF/views/includes/frontend/footer.jsp"%>

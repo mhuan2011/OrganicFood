@@ -23,19 +23,19 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/admin/**"/>
 			<mvc:exclude-mapping path="/admin/login.html"/>
-			<bean class="ptithcm.Interceptor.LoginInterceptor" />
+			<bean class="organicfood.Interceptor.LoginInterceptor" />
 		</mvc:interceptor>
 		
 		 <mvc:interceptor>
 		 	<mvc:mapping path="/logout.html"/>
 			<mvc:mapping path="/user/change**"/>
 			<mvc:mapping path="/user/edit**"/>
-		 	<bean class="ptithcm.Interceptor.AuthorizeInterceptor"/>
+		 	<bean class="organicfood.Interceptor.AuthorizeInterceptor"/>
 		 </mvc:interceptor>
 		 
 		 <mvc:interceptor>
 		 	<mvc:mapping path="/user/major/**"/>
-		 	<bean class="ptithcm.Interceptor.GlobalInterceptor"/>
+		 	<bean class="organicfood.Interceptor.GlobalInterceptor"/>
 		 </mvc:interceptor>
 		 
 

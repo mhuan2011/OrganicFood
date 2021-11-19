@@ -499,7 +499,7 @@ public class AdminController {
 		}
 		public List<ChiTietDDH> getCTDDH(String masoddh) {
 			Session session = factory.getCurrentSession();
-			String hql = "FROM ChiTietDDH WHERE masoddh = :masoddh";
+			String hql = "FROM ChiTietDDH WHERE masoddh.masoddh = :masoddh";
 			Query query = session.createQuery(hql);
 			query.setParameter("masoddh", masoddh);
 			List<ChiTietDDH> list = query.list();

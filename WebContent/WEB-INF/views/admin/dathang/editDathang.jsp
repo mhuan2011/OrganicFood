@@ -32,7 +32,7 @@
 	                  </div>
 	                  <div class="form-group">
 	                    <label>Mã khuyến mãi</label>
-	                    <form:input path="makm" type="text" class="form-control form-control-lg" placeholder="Nhập mã khuyến mãi" aria-label="Username" readonly="true"/>
+	                    <form:input path="makm.id" type="text" class="form-control form-control-lg" placeholder="Nhập mã khuyến mãi" aria-label="Username" readonly="true"/>
 	                  </div>
 	                    
 						<div class="form-group">
@@ -74,7 +74,7 @@
 		                          
 		                        </td>
 		                        <td>
-		                         	${s.getMasoddh() }
+		                         	${s.getMasoddh().getMasoddh() }
 		                        </td>
 		                        <td>
 		                          	${s.getNongsan().getName() }

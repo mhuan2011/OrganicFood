@@ -11,9 +11,9 @@
                             <a href="./index.html"><img src="resources/frontend/img/logo.png" alt=""></a>
                         </div>
                         <ul>
-                            <li>Address: 60-49 Road 11378 New York</li>
-                            <li>Phone: +65 11.188.888</li>
-                            <li>Email: hello@colorlib.com</li>
+                            <li>Address: 97 Man Thien, Hiep Phu, Thanh Pho Thu Duc</li>
+                            <li>Phone: +8499.999.999</li>
+                            <li>Email: phongthietbiptit@gmail.com</li>
                         </ul>
                     </div>
                 </div>
@@ -47,10 +47,10 @@
                             <button type="submit" class="site-btn">Subscribe</button>
                         </form>
                         <div class="footer__widget__social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                            <a href="https://www.facebook.com/huunhan28"><i class="fa fa-facebook"></i></a>
+                            <a href="https://www.instagram.com/huu.nhan.28/"><i class="fa fa-instagram"></i></a>
+                            <a href="https://twitter.com/huunhan28"><i class="fa fa-twitter"></i></a>
+                            <a href="https://pinterest.com/huu_nhan_28"><i class="fa fa-pinterest"></i></a>
                         </div>
                     </div>
                 </div>

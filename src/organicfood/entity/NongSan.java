@@ -34,7 +34,7 @@ public class NongSan {
 	private int number;
 	
 	@Column(name = "GIA")
-	private float price;
+	private int price;
 	
 	@Column(name = "HINHANH")
 	private String image;
@@ -82,11 +82,11 @@ public class NongSan {
 		this.number = number;
 	}
 
-	public float getPrice() {
+	public int getPrice() {
 		return price;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 
