@@ -1,5 +1,8 @@
 package organicfood.bean;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 public class StringUtil {
 	public static String baCham(String s, int soKiTu, String loaiBaCham) {
 		if(s==null) return "";
@@ -14,5 +17,12 @@ public class StringUtil {
 			    sb.replace(i, i + 1, "\n");
 			}
 			return sb.toString();
+	}
+	
+	public static double roundDouble(double n) {
+		DecimalFormat df = new DecimalFormat("#.##");
+		df.setRoundingMode(RoundingMode.CEILING);
+		System.out.println("format double"+Double.parseDouble(df.format(n)));
+		return Double.parseDouble(df.format(n));
 	}
 }

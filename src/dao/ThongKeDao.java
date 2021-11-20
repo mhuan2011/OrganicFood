@@ -14,6 +14,7 @@ import java.util.Vector;
 import javax.persistence.StoredProcedureQuery;
 import javax.transaction.Transaction;
 
+import organicfood.bean.StringUtil;
 import organicfood.entity.ChiTietDDH;
 import organicfood.entity.DatHang;
 import organicfood.entity.NongSan;
@@ -26,8 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ThongKeDao {
 
-	public static float sumListOrder(SessionFactory factory, List<DatHang> list) {
-		float sum = 0;
+	public static double sumListOrder(SessionFactory factory, List<DatHang> list) {
+		double sum = 0d;
 		Session session = factory.getCurrentSession();
 		String hql = "";
 		Query query = null;
@@ -49,7 +50,7 @@ public class ThongKeDao {
 		return sum;
 	}
 	
-	public static float thongKeDoanhSo(SessionFactory factory, Date fromDate, Date toDate) {
+	public static double thongKeDoanhSo(SessionFactory factory, Date fromDate, Date toDate) {
 		Session session = factory.getCurrentSession();
 		List<DatHang> list= new ArrayList<>();
 		Query query = null;
@@ -102,7 +103,7 @@ public class ThongKeDao {
 		return query.list();
 	}
 	
-	public static  HashMap<NongSan, Float> thongKeTungSanPham(SessionFactory factory, Date fromDate, Date toDate){
+	public static  HashMap<NongSan, Double> thongKeTungSanPham(SessionFactory factory, Date fromDate, Date toDate){
 		String hql = "FROM DatHang where ngay BETWEEN :fromDate AND :toDate AND trangthai=:trangthai";
 		Session session = factory.getCurrentSession();
 		Query query = session.createQuery(hql);
@@ -111,7 +112,7 @@ public class ThongKeDao {
 		 query.setString("trangthai", "Đã giao");
 		 List<DatHang> datHang = query.list();
 		 System.out.println("List dathang:" + datHang.size());
-		 HashMap<String, Float> map = new HashMap<>();
+		 HashMap<String, Double> map = new HashMap<>();
 		 for(DatHang i : datHang) {
 			 
 			 String hql2 = "FROM ChiTietDDH where masoddh.id=:masoddh";
@@ -120,12 +121,13 @@ public class ThongKeDao {
 			 List<ChiTietDDH> CTDDH = query.list();// tra ve ds ctddh
 			 System.out.println("Chi tiet ddh size:" + CTDDH.size());
 			 for(ChiTietDDH ctDDH: CTDDH) {
-				 float doanhThu = (long) (ctDDH.getSoluong()*ctDDH.getDongia());
+				 double doanhThu = (long) (ctDDH.getSoluong()*ctDDH.getDongia());
 				 if(i.getMakm()!=null) {
 					 doanhThu = doanhThu *(1 - i.getMakm().getDiscount());
 				 }
 				 String idNongSan = ctDDH.getNongsan().getId();
 				 if(map.get(idNongSan)==null) {// chua co trang thai trong danh sach thi them vao ds
+					 
 						map.put(idNongSan, doanhThu);
 					}else {
 						
@@ -133,7 +135,7 @@ public class ThongKeDao {
 					}
 			 }
 		 }
-		 HashMap<NongSan, Float> mapNS = new HashMap<>();
+		 HashMap<NongSan, Double> mapNS = new HashMap<>();
 		 List<Object[]> list = new ArrayList<>();
 		 int max=10;
 		 int i=0;

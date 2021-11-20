@@ -97,7 +97,8 @@
                   <h4 class="font-weight-normal mb-3">Doanh số
                     <i class="mdi mdi-chart-line mdi-24px float-right"></i>
                   </h4>
-                  <h2>${doanhSo }</h2>
+                  <h2>
+         <fmt:formatNumber value = "${doanhSo}" type = "currency" currencySymbol="VND"/></h2>
                   <h6 class="card-text">Increased by 60%</h6>
                 </div>
               </div>
@@ -200,7 +201,8 @@
                             <img src="UploadFiles/${trangThai.key.getImage()}"/>
                           </td>
                           <td>
-                             ${trangThai.value}
+                           <fmt:formatNumber value = "${trangThai.value}" type = "currency" currencySymbol="VND"/>
+                             
                           </td>
                         
                         </tr>
