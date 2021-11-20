@@ -99,7 +99,6 @@
                   </h4>
                   <h2>
          <fmt:formatNumber value = "${doanhSo}" type = "currency" currencySymbol="VND"/></h2>
-                  <h6 class="card-text">Increased by 60%</h6>
                 </div>
               </div>
             </div>
@@ -111,7 +110,6 @@
                     <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
                   </h4>
                   <h2 class="mb-5">${donDatHang }</h2>
-                  <h6 class="card-text">Decreased by 10%</h6>
                 </div>
               </div>
             </div>
@@ -123,7 +121,6 @@
                     <i class="mdi mdi-diamond mdi-24px float-right"></i>
                   </h4>
                   <h2 class="mb-5">${khachHang }</h2>
-                  <h6 class="card-text">Increased by 5%</h6>
                 </div>
               </div>
             </div>
