@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import dao.BlogDao;
 import dao.CategoryBlogDao;
+import dao.DiscountDao;
 import dao.NongSanDao;
 import organicfood.bean.Account;
 import organicfood.entity.BaiViet;
@@ -35,6 +36,7 @@ public class HomeController {
 		model.addAttribute("categoryProducts", NongSanDao.getCategoryProducts(factory));
 		model.addAttribute("featuredCategory", NongSanDao.getFeaturedCategoryProduct(factory, 4));
 		model.addAttribute("recentBlogs", BlogDao.getRecentBlogs(factory, 3));
+		model.addAttribute("discountList", DiscountDao.getDiscountsShow(factory));
 	}
 
 
@@ -43,7 +45,14 @@ public class HomeController {
 	  @RequestMapping("index") 
 	  public String viewBlog(HttpServletRequest request, HttpSession session, ModelMap model) {
 		  Account user = (Account) session.getAttribute("user");
-			model.addAttribute("phoneNumber", user.getUsername());
+		  
+		  if(user != null) //Huan
+		  {
+			  model.addAttribute("phoneNumber", user.getUsername());
+
+		  }
+			  
+			
 	  initHomeView(model); 
 	  return "frontend/index"; }
 	  

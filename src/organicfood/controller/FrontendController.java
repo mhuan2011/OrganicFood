@@ -33,9 +33,11 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.portlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import dao.DiscountDao;
 import organicfood.bean.Account;
 import organicfood.bean.Mailer;
 import organicfood.entity.KhachHang;
+import organicfood.entity.KhuyenMai;
 import organicfood.model.RecCaptchaResponse;
 import organicfood.recaptcha.RecaptchaVerification;
 
@@ -110,20 +112,36 @@ public class FrontendController {
 			List<Object[]> list = query.list();
 			
 			if(list.size() != 0) {
-				if(b=="on") {
-					Cookie ckUsername = new Cookie("username", a.getUsername());
-					ckUsername.setMaxAge(3600);
-					response.addCookie(ckUsername);
-					Cookie ckPassword = new Cookie("password", a.getPassword());
-					ckPassword.setMaxAge(3600);
-					response.addCookie(ckPassword);
+				if(b == null) {
+					for (Cookie cookie : request.getCookies()) {
+						if (cookie.getName().equalsIgnoreCase("username")) {
+							cookie.setMaxAge(0);
+							response.addCookie(cookie);
+						}
+						if (cookie.getName().equalsIgnoreCase("password")) {
+							cookie.setMaxAge(0);
+							response.addCookie(cookie);
+						}
+					}
 				}else {
-					
+					if(b.equals("on")) {
+						Cookie ckUsername = new Cookie("username", a.getUsername());
+						ckUsername.setMaxAge(3600);
+						response.addCookie(ckUsername);
+						Cookie ckPassword = new Cookie("password", a.getPassword());
+						ckPassword.setMaxAge(3600);
+						response.addCookie(ckPassword);
+						System.out.print("checked");
+					}else {
+						System.out.print("not check");
+					}
 				}
 				
 				
 				
+				
 				s.setAttribute("user", a);
+				model.addAttribute("id", a.getUsername());
 				return "redirect:/index.html";  
 			}
 			this.message = "Số điện thoại hoặc mật khẩu không đúng !!!";
@@ -165,6 +183,7 @@ public class FrontendController {
 	public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		// Remove session
 		session.removeAttribute("username");
+		session.removeAttribute("user");
 		// Remove cookie
 		for (Cookie cookie : request.getCookies()) {
 			if (cookie.getName().equalsIgnoreCase("username")) {
@@ -176,7 +195,8 @@ public class FrontendController {
 				response.addCookie(cookie);
 			}
 		}
-		return "redirect:/account/login";
+		return "frontend/loginSignup";
+		//return "redirect:/login.html";
 	}
 	
 	public Account checkCookie(HttpServletRequest request) {
@@ -458,5 +478,14 @@ public class FrontendController {
 			session.close();
 		}
 		return 0;
+	}
+	
+	//Discount detail
+	
+	@RequestMapping(value="discount/{id}.html")
+	public String discountDetails(ModelMap model, @PathVariable("id") String id){
+		KhuyenMai discount = DiscountDao.getDiscount(factory, id);
+		model.addAttribute("discount", discount);
+		return "frontend/discount/discountDetails";
 	}
 }
