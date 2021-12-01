@@ -79,7 +79,7 @@ public class FrontendController {
 			System.out.print(account.getUsername());
 			
 		}
-		
+		session.setAttribute("cartNumber", 0);
 		return "frontend/loginSignup";
 	}
 	
