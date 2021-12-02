@@ -158,7 +158,7 @@ public class ShopController {
 		}
 		//them vao gio hang
 		@RequestMapping(value="shoppingCart/{id}.html")
-		public String addToCart( ModelMap model, @PathVariable("id") String id, @ModelAttribute("product") NongSan ns) {
+		public String addToCart( ModelMap model, @PathVariable("id") String id, @ModelAttribute("product") NongSan ns, HttpSession session) {
 			
 			ns = this.getProduct(id);
 			String url = "UploadFiles/"+ns.getImage();                                                                                                                                                                                                                      
@@ -168,6 +168,7 @@ public class ShopController {
 			listSLNS.add(1);
 			model.addAttribute("listNS",listNS);
 			model.addAttribute("listSLNS",listSLNS);
+			setQuantityCart(session);
 			return "frontend/shoppingCart";
 		}
 		//xoa khoi gio hang
@@ -475,5 +476,14 @@ public class ShopController {
 		    	tt.put(list0.get(i).toString(),list.get(i).toString()+" Giá:"+list1.get(i).toString()+" Thời gian:"+list2.get(i).toString());
 			}
 			return tt;
+		}
+		
+		public void setQuantityCart(HttpSession session) {
+			int number = 0;
+			for(int i=0; i<listSLNS.size(); i++) {
+				number += listSLNS.get(i);
+			}
+			
+			session.setAttribute("cartNumber", number);
 		}
 }

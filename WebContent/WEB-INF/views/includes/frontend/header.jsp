@@ -1,3 +1,4 @@
+<%@page import="organicfood.bean.Account"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -49,7 +50,8 @@
                 <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
                 <li><a href="cart.html"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
             </ul>
-            <div class="header__cart__price">item: <span>$150.00</span></div>
+            <span>0</span>
+            <div class="header__cart__price">item: <span>120,300 VND</span></div>
         </div>
         <div class="humberger__menu__widget">
             <div class="header__top__right__language">
@@ -122,7 +124,15 @@
                                 </ul>
                             </div>
                             <div class="header__top__right__auth">
-                                <a href="profile.html"><i class="fa fa-user"></i>${phoneNumber}</a>
+                                <%
+								    if (session.getAttribute("user") != null) {
+								    	Account ac = (Account)session.getAttribute("user");
+								        out.println("<a href=''><i class='fa fa-user'></i>"+ac.getUsername() +"</a> <a href='logout.html'> <i class='fas fa-sign-out-alt'></i>Logout</a>");
+								    }else {
+								    	out.println("<a href='login.html'><i class='fa fa-user'></i>Login</a>");
+								    }
+								%>
+                                
                             </div>
                         </div>
                     </div>

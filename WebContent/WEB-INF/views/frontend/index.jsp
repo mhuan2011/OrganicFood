@@ -24,9 +24,20 @@
                     <div class="header__cart">
                         <ul>
                             <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                            <li><a href="cart.html"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                            <li><a href="cart.html"><i class="fa fa-shopping-bag"></i> <span>
+                            	<%
+                            		if (session.getAttribute("cartNumber") != null){
+                            			int n = (int)session.getAttribute("cartNumber");
+                            			out.println(n);
+                            		}else {
+                            			out.println(0);
+                            		}
+                            	%>
+                            	
+                            </span></a></li>
                         </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
+                        
+            			<div class="header__cart__price">item: <span>0</span></div>
                     </div>
                 </div>
             </div>
@@ -73,13 +84,58 @@
                             </div>
                         </div>
                     </div>
-                    <div class="hero__item set-bg" data-setbg="resources/frontend/img/hero/banner.jpg">
+                    <!-- <div class="hero__item set-bg" data-setbg="resources/frontend/img/hero/banner.jpg">
                         <div class="hero__text">
                             <span>FRUIT FRESH</span>
                             <h2>Vegetable <br />100% Organic</h2>
                             <p>Free Pickup and Delivery Available</p>
                             <a href="shop/shop.html" class="primary-btn">SHOP NOW</a>
                         </div>
+                    </div> -->
+                    
+                    <div class="slide-discount" >  
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="2500">
+							  <ol class="carousel-indicators">
+							    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+							    <c:forEach var="s" items="${discountList }">
+							    	<li data-target="#carouselExampleIndicators" ></li>
+							    </c:forEach>
+							    
+		
+							  </ol>
+							  <div class="carousel-inner" style="height: 400px;">
+							  		<div class="carousel-item active">
+								      <!-- <img class="d-block w-100" src="UploadFiles/cat-1.jpg" alt="First slide" style="height: 500px"> -->
+								      <div class="hero__item set-bg" data-setbg="resources/frontend/img/hero/banner.jpg">
+								      <div class="hero__text">
+                            <span>FRUIT FRESH</span>
+                            <h2>Vegetable <br />100% Organic</h2>
+                            <p>Free Pickup and Delivery Available</p>
+                            <a href="shop/shop.html" class="primary-btn">SHOP NOW</a>
+                        </div> 
+								      </div>
+								  </div>
+							  	<c:forEach var="s" items="${discountList }">
+                        		  <div class="carousel-item ">
+								      <a href="discount/${s.getId() }.html"><img class="d-block w-100" src="UploadFiles/Discount/${s.getImage() }" alt="First slide" style="height: 500px">
+								      	
+								      </a>
+								 		
+								  </div>
+                        		</c:forEach>
+							    
+							    
+							  </div>
+							  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+							    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							    <span class="sr-only">Previous</span>
+							  </a>
+							  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+							    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+							    <span class="sr-only">Next</span>
+							  </a>
+							</div>
+                        
                     </div>
                 </div>
             </div>
