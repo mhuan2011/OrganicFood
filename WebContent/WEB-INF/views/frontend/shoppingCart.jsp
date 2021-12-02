@@ -133,7 +133,9 @@
 		                                        <h5>${ns.getName() }</h5>
 		                                    </td>
 		                                    <td class="shoping__cart__price">
-		                                        ${ns.getPrice()-ns.getPrice()*ns.getDiscount() }
+		                                    	<fmt:formatNumber type = "number" 
+         										maxFractionDigits = "0" value = "${ns.getPrice()-ns.getPrice()*ns.getDiscount() }" />
+		                                        
 		                                    </td>
 		                                    <td class="shoping__cart__quantity">
 		                                        <div >
@@ -146,7 +148,9 @@
 		                                    </td>
 		                                    
 		                                    <td class="shoping__cart__total">
-		                                        ${ns.getPrice()*listSLNS.get(count.index)-ns.getPrice()*ns.getDiscount()*listSLNS.get(count.index)}
+		                                    	<fmt:formatNumber type = "number" 
+         										maxFractionDigits = "0" value = "${ns.getPrice()*listSLNS.get(count.index)-ns.getPrice()*ns.getDiscount()*listSLNS.get(count.index)}" />
+		                                        
 		                                    </td>
 		                                    <td class="shoping__cart__item__close">
 		                                        <a href="shop/deleteShoppingCart/<%=count%>.html">

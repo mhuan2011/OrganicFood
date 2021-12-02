@@ -193,7 +193,7 @@ public class ShopController {
 				System.out.print("ip"+listNS.get(i).getId());
 				System.out.print("so luong:"+soluong1);
 				int soluong=Integer.parseInt(soluong1);
-				tongtien+=listNS.get(i).getPrice()*soluong;
+				tongtien+=listNS.get(i).getPrice()*soluong-listNS.get(i).getPrice()*soluong*listNS.get(i).getDiscount();
 				listSLNS.add(soluong);
 			}
 			
@@ -313,7 +313,7 @@ public class ShopController {
 			
 			float tongtien=0;
 			for(int i=0;i<listNS.size();i++) {
-				tongtien+=listNS.get(i).getPrice()*listSLNS.get(i);
+				tongtien+=listNS.get(i).getPrice()*listSLNS.get(i)-listNS.get(i).getPrice()*listSLNS.get(i)*listNS.get(i).getDiscount();
 			}
 			model.addAttribute("DatHang", dh);
 			model.addAttribute("listNS",listNS);

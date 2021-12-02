@@ -144,7 +144,13 @@
                                 
                                 <ul>
                                 	<c:forEach var="v" items="${listNS }" varStatus="status">
-                                		<li>${v.getName() } <span>${v.getPrice()*listSLNS.get(status.index) }</span></li>
+                                		<li>${v.getName() } 
+                                		<span>
+                                		<fmt:formatNumber type = "number" 
+         										maxFractionDigits = "0" value = "${v.getPrice()*listSLNS.get(status.index)-v.getPrice()*listSLNS.get(status.index)*v.getDiscount() }" />
+                                		
+                                		</span>
+                                		</li>
                                 	</c:forEach>
                                 </ul>
                                 <div class="checkout__order__subtotal">Subtotal <span>${tongtien }</span></div>
