@@ -127,7 +127,7 @@
                                 <%
 								    if (session.getAttribute("user") != null) {
 								    	Account ac = (Account)session.getAttribute("user");
-								        out.println("<a href=''><i class='fa fa-user'></i>"+ac.getUsername() +"</a> <a href='logout.html'> <i class='fas fa-sign-out-alt'></i>Logout</a>");
+								        out.println("<a href='profile.html'><i class='fa fa-user'></i>"+ac.getUsername() +"</a> <a href='logout.html'> <i class='fas fa-sign-out-alt'></i>Logout</a>");
 								    }else {
 								    	out.println("<a href='login.html'><i class='fa fa-user'></i>Login</a>");
 								    }
