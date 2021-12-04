@@ -63,7 +63,7 @@ public class NhanVien {
 	}
 
 	public String getFullName() {
-		return firstName + lastName;
+		return firstName + " " + lastName;
 	}
 	public void setId(String id) {
 		this.id = id;
