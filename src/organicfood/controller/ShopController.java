@@ -171,23 +171,40 @@ public class ShopController {
 			setQuantityCart(session);
 			return "frontend/shoppingCart";
 		}
+		@RequestMapping(value="shoppingCart/add-product.html")
+		public String addToShoppingCart( ModelMap model, @ModelAttribute("product") NongSan ns, HttpSession session, HttpServletRequest request) {
+			
+			ns = this.getProduct((String)request.getParameter("id"));
+			System.out.print("nongsan :" + ns.getId());
+			String url = "UploadFiles/"+ns.getImage();                                                                                                                                                                                                                      
+			model.addAttribute("product", ns);
+			model.addAttribute("imageLink", url);
+			listNS.add(ns);
+			listSLNS.add(Integer.parseInt(request.getParameter("quantity")));
+			model.addAttribute("listNS",listNS);
+			model.addAttribute("listSLNS",listSLNS);
+			setQuantityCart(session);
+			return "frontend/shoppingCart";
+		}
 		//xoa khoi gio hang
 		@RequestMapping(value="deleteShoppingCart/{id}.html")
-		public String deleteFromCart( ModelMap model, @PathVariable("id") int id, @ModelAttribute("product") NongSan ns) {
+		public String deleteFromCart( ModelMap model, @PathVariable("id") int id, @ModelAttribute("product") NongSan ns, HttpSession session) {
 			
 			//ns = this.getProduct(id);
 			//String url = "UploadFiles/"+ns.getImage();
 			//model.addAttribute("imageLink", url);
 			listNS.remove(id-2);
 			listSLNS.remove(id-2);
+			setQuantityCart(session);
 			model.addAttribute("listNS",listNS);
 			model.addAttribute("listSLNS",listSLNS);
 			return "frontend/shoppingCart";
 		}
 		//tinh lai gia tien
 		@RequestMapping(value="updateCart.html")
-		public String updateCart(ModelMap model, HttpServletRequest request) {
+		public String updateCart(ModelMap model, HttpServletRequest request, HttpSession session) {
 			listSLNS.removeAll(listSLNS);
+			setQuantityCart(session);
 			float tongtien=0;
 			for(int i=0;i<listNS.size();i++) {
 				String soluong1 =request.getParameter("ip"+listNS.get(i).getId());

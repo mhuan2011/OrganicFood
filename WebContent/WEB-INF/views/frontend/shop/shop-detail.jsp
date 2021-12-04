@@ -125,15 +125,23 @@
 															currencySymbol="VND" type="currency" />
                         </div>
                         <p>${product.getDescription() }</p>
+                        <form action="shop/shoppingCart/add-product.html">
+                        
+                        <input name="id" style="display: none" value="${product.getId() }">
+                        
+                      
                         <div class="product__details__quantity">
                             <div class="quantity">
                                 <div class="pro-qty">
-                                    <input type="text" value="1">
+                                    <input type="text" value="1" name="quantity">
                                 </div>
                             </div>
                         </div>
-                        <a href="shop/shoppingCart/${product.getId()}.html" class="primary-btn">ADD TO CARD</a>
-                        <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
+                        <%-- <a href="shop/shoppingCart/${product.getId()}.html" class="primary-btn">ADD TO CARD</a> --%>
+                         <button type="submit" class="primary-btn" style="border: none;">THÊM VÀO GIỎ</button>
+                         <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
+                        </form>
+                        
                         <ul>
                         	<li><b>Đơn vị tính</b> <span>${product.getUnit() }</span></li>
                             <li><b>Kho</b> <span>${product.getNumber() }</span></li>
