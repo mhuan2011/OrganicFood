@@ -19,7 +19,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
                     <div class="footer__widget">
-                        <h6>Useful Links</h6>
+                        <!-- <h6>Useful Links</h6>
                         <ul>
                             <li><a href="#">About Us</a></li>
                             <li><a href="#">About Our Shop</a></li>
@@ -35,7 +35,8 @@
                             <li><a href="#">Contact</a></li>
                             <li><a href="#">Innovation</a></li>
                             <li><a href="#">Testimonials</a></li>
-                        </ul>
+                        </ul> -->
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1959.261208731272!2d106.78490292578554!3d10.847813332339927!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317527131ae8b249%3A0x4d2d3c8fab7d3c2e!2zOTcgxJDGsOG7nW5nIE1hbiBUaGnhu4duLCBIaeG7h3AgUGjDuiwgUXXhuq1uIDksIFRow6BuaCBwaOG7kSBI4buTIENow60gTWluaCwgVmlldG5hbQ!5e0!3m2!1sen!2s!4v1639055130774!5m2!1sen!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-12">
