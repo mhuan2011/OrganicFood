@@ -112,6 +112,7 @@
 
 	<section class="shoping-cart spad">
         <div class="container">
+        <c:if test=""></c:if>
         <form action="shop/updateCart.html">
             <div class="row">
                 <div class="col-lg-12">

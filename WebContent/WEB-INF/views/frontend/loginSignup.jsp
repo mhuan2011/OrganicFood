@@ -39,7 +39,7 @@
               <!-- <h3 class="text-uppercase"><strong>Đăng nhập</strong></h3> -->
               <c:if test="${not empty message}">
                     
-                    	<div class="mess-alert">
+                    	<div class="alert alert-success" role="alert">
                     		${message }
                     	</div>
                     </c:if>

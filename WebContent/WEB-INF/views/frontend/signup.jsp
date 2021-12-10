@@ -17,6 +17,8 @@
     <!-- Title Page-->
     <title>OrganicFood-	Signup</title>
 	<base href="${pageContext.servletContext.contextPath}/">
+	
+	
     <!-- Icons font CSS-->
     <link href="resources/frontend/signup/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
     <link href="resources/frontend/signup/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
@@ -30,6 +32,7 @@
     <!-- Main CSS-->
     <link href="resources/frontend/signup/css/main.css" rel="stylesheet" media="all">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <link href="resources/css/substyle.css" rel="stylesheet" media="all">
 </head>
 
 <body>
@@ -43,10 +46,11 @@
                     </div>
                     <form:form method="POST" action="create-account.html" modelAttribute="user">
                     <c:if test="${not empty message}">
-                    
-                    	<div class="mess-alert">
-                    		${message }
-                    	</div>
+	                    <div class="alert">
+						  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+						  ${message }
+						</div>
+                    	
                     </c:if>
                         <div class="row row-space">
                             <div class="col-2">
@@ -67,7 +71,7 @@
                         <div class="input-group">
                             <label class="label">Email</label>
                             <div class="rs-select2 js-select-simple select--no-search">
-                                    <form:input class="input--style-4" type="text" path="email"  placeholder="Nhập email"/>
+                                    <form:input class="input--style-4" type="email" path="email"  placeholder="Nhập email"/>
                                     <form:errors path = "email" style="color: brown;" />
                             </div>
                         </div>

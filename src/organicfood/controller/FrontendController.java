@@ -3,6 +3,7 @@ package organicfood.controller;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.security.MessageDigest;
 import java.util.List;
 import java.util.Random;
 
@@ -32,6 +33,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.portlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import dao.DiscountDao;
 import organicfood.bean.Account;
@@ -41,12 +45,15 @@ import organicfood.entity.KhuyenMai;
 import organicfood.model.RecCaptchaResponse;
 import organicfood.recaptcha.RecaptchaVerification;
 
+
 @Controller
 @Transactional
 public class FrontendController {
 	public static String message;
 	private String code = "";
 	private KhachHang khachHang = null;
+	
+	
 	@Autowired
 	SessionFactory factory;
 
@@ -63,6 +70,17 @@ public class FrontendController {
 //		model.addAttribute("phoneNumber", user.getUsername());
 //		return "frontend/index";
 //	}
+	private static String bytesToHex(byte[] hash) {
+	    StringBuilder hexString = new StringBuilder(2 * hash.length);
+	    for (int i = 0; i < hash.length; i++) {
+	        String hex = Integer.toHexString(0xff & hash[i]);
+	        if(hex.length() == 1) {
+	            hexString.append('0');
+	        }
+	        hexString.append(hex);
+	    }
+	    return hexString.toString();
+	}
 	
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String showlogin(ModelMap model, HttpSession session, HttpServletRequest request) {
@@ -104,9 +122,20 @@ public class FrontendController {
 		}
 
 		if(check){
+			//ma hoa mat khau
+			MessageDigest digest = null;
+			try {
+				digest = MessageDigest.getInstance("SHA-256");
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			byte[] encodedhash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+			
 			//check exist account
 			Session session = factory.getCurrentSession();
-			String hql = "SELECT name FROM KhachHang WHERE phone = '"+phone+"' AND password = '"+password+"'";
+			
+			String hql = "SELECT name FROM KhachHang WHERE phone = '"+phone+"' AND password = '"+bytesToHex(encodedhash)+"'";
 			Query query = session.createQuery(hql);
 			Integer result = query.getFirstResult();
 			List<Object[]> list = query.list();
@@ -128,6 +157,7 @@ public class FrontendController {
 						Cookie ckUsername = new Cookie("username", a.getUsername());
 						ckUsername.setMaxAge(3600);
 						response.addCookie(ckUsername);
+						
 						Cookie ckPassword = new Cookie("password", a.getPassword());
 						ckPassword.setMaxAge(3600);
 						response.addCookie(ckPassword);
@@ -273,6 +303,7 @@ public class FrontendController {
 		}else {
 			System.out.print("ok");
 		}
+
 		
 		if(check) {
 			boolean invalidUser = checkExistUser(user.getPhone());
@@ -280,8 +311,18 @@ public class FrontendController {
 				errors.rejectValue("phone", "user", "Số điện thoại đã được đăng ký!");
 			}
 			else {
+				MessageDigest digest = null;
+				try {
+					digest = MessageDigest.getInstance("SHA-256");
+				} catch (NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				byte[] encodedhash = digest.digest(user.getPassword().getBytes(StandardCharsets.UTF_8));
+				user.setPassword( bytesToHex(encodedhash));
+				System.out.print(user.getPassword());
 				boolean n = addNewUser(user);
-				if(true) {
+				if(n) {
 					this.message = "Đăng ký thành công";
 					
 				}else this.message = "Đăng ký không thành công";
@@ -344,7 +385,7 @@ public class FrontendController {
 			String from = "phongthietbiptit@gmail.com";
 		    String email = client.getEmail();
 			String subject = "Lấy lại mật khẩu đăng nhập";
-			String body = "http://localhost/OrganicFood/forgot-password/" + generatedString+".html";
+			String body = "<h3>Đường link thay đổi mật khẩu</h3>  http://localhost/OrganicFood/forgot-password/" + generatedString+".html <br> (Không chia sẻ thông tin này để đảm bảo an toàn cho tài khoản của bạn) <br> Cảm ơn quý khách hàng đã sử dụng dịch vụ của chúng tôi!";
 			
 			boolean result = send(from, email, subject, body);
 			if(result) {
@@ -440,7 +481,16 @@ public class FrontendController {
 		}
 		if(check) {
 			if(password.equals(confirm_password)) {
-				this.khachHang.setPassword(password);
+				MessageDigest digest = null;
+				try {
+					digest = MessageDigest.getInstance("SHA-256");
+				} catch (NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				byte[] encodedhash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+				
+				this.khachHang.setPassword(bytesToHex(encodedhash));
 				int result = updateUser(this.khachHang);
 				if(result==1) {
 					model.addAttribute("message", "Thay đổi mật khẩu thành công!");

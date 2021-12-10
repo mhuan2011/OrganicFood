@@ -271,17 +271,36 @@ public class ShopController {
 			// TODO: handle exception
 		}
 
+
 		float kq = 0f;
 
 		try {
 			kq = Float.parseFloat(tam);
 		} catch (Exception e) {
+
+		
+
 		}
 
 		System.out.print("he so giam:" + kq);
 		return kq;
 	}
-	
+//	@RequestMapping(value="shoppingCart/add-product.html")
+//	public String addToShoppingCart( ModelMap model, @ModelAttribute("product") NongSan ns, HttpSession session, HttpServletRequest request) {
+//		
+//		
+//		ns = this.getProduct((String)request.getParameter("id"));
+//		System.out.print("nongsan :" + ns.getId());
+//		String url = "UploadFiles/"+ns.getImage();                                                                                                                                                                                                                      
+//		model.addAttribute("product", ns);
+//		model.addAttribute("imageLink", url);
+//		listNS.add(ns);
+//		listSLNS.add(Integer.parseInt(request.getParameter("quantity")));
+//		model.addAttribute("listNS",listNS);
+//		model.addAttribute("listSLNS",listSLNS);
+//		setQuantityCart(session);
+//		return "frontend/shoppingCart";
+//	}
 	// check out
 	public KhuyenMai getKhuyenMai(String id) {
 		Session session = factory.getCurrentSession();
@@ -301,6 +320,9 @@ public class ShopController {
 	@RequestMapping("checkout")
 	public String showCheckout(ModelMap model, HttpSession httpsession) {
 		Account a = (Account) httpsession.getAttribute("user");
+		if(a==null) {
+			return "redirect:login.html";
+		}
 		KhachHang client = getUser(a.getUsername());
 
 		DatHang dh = new DatHang();
@@ -346,6 +368,7 @@ public class ShopController {
 				max = a;
 			}
 		}
+
 		return a;
 	}
 
@@ -368,6 +391,9 @@ public class ShopController {
 			System.out.print("Thêm mới thất bại!" + e.getMessage() + "\n" + e.getStackTrace() + "\n" + e.toString());
 		} finally {
 			session.close();
+
+		
+
 		}
 		for (int i = 0; i < listNS.size(); i++) {
 			ChiTietDDH ct = new ChiTietDDH();
@@ -415,7 +441,44 @@ public class ShopController {
 
 		return "frontend/orderSuccess";
 	}
-
+//	@RequestMapping("checkout")
+//	public String showCheckout(ModelMap model,HttpSession httpsession) {
+//		Account a=(Account)httpsession.getAttribute("user");
+//		if(a==null) {
+//			return "redirect:login.html";
+//		}
+//		KhachHang client = getUser(a.getUsername());
+//		
+//		
+//		DatHang dh=new DatHang();
+//		int maso=getMaSo()+1;
+//		dh.setMasoddh(maso+"");
+//		dh.setKhachhang(client);
+//		dh.setMakm(getKhuyenMai(maKhuyenMai));
+//		Date date = new Date();
+//        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+//        String strDate = formatter.format(date);
+//        Date date1;
+//		try {
+//			date1 = new SimpleDateFormat("dd-MM-yyyy").parse(strDate);
+//			dh.setNgay(date1);
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		float tongtien=0;
+//		for(int i=0;i<listNS.size();i++) {
+//			tongtien+=listNS.get(i).getPrice()*listSLNS.get(i)-listNS.get(i).getPrice()*listSLNS.get(i)*listNS.get(i).getDiscount();
+//		}
+//		model.addAttribute("DatHang", dh);
+//		model.addAttribute("listNS",listNS);
+//		model.addAttribute("listSLNS",listSLNS);
+//		model.addAttribute("tongtien",tongtien);
+//		float hesogiam=getHesogiam(maKhuyenMai);
+//		float tiendagiam=tongtien-hesogiam*tongtien;
+//		model.addAttribute("tiendagiam",tiendagiam);
+//		return "frontend/checkout";
+//	}
 	// send email
 	@Autowired
 	Mailer mailer;

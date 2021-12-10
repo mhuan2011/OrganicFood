@@ -97,7 +97,7 @@
 	                    </div>
 	                    <div class="col-md-12">
 		                    <label class="labels">Mật khẩu</label>
-		                    <form:input path="password" type="text" class="form-control" placeholder="enter address line 2" value=""/>
+		                    <form:input path="password" type="password" class="form-control" placeholder="enter address line 2" value=""  readonly="true"/>
 	                    </div>
 	                    <div class="col-md-12">
 		                    <label class="labels">Email</label>
